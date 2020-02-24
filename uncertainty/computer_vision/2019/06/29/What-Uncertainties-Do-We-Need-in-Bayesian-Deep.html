@@ -16,7 +16,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2019-06-29T00:00:00-05:00" />
 <script type="application/ld+json">
-{"datePublished":"2019-06-29T00:00:00-05:00","headline":"What Uncertainties Do We Need in Bayesian Deep Learning for Computer Vision? 정리글","mainEntityOfPage":{"@type":"WebPage","@id":"https://rroundtable.github.io/FastPages/uncertainty/computer_vision/2019/06/29/What-Uncertainties-Do-We-Need-in-Bayesian-Deep.html"},"description":"이 논문에서는 epistemic uncertainty와 aleatoric uncertainty를 하나의 모델에서 측정하는 것을 제안하고 있습니다. (이전의 연구에서는 위의 uncertainty를 따로 분리하여 측정했다고 합니다.)","@type":"BlogPosting","url":"https://rroundtable.github.io/FastPages/uncertainty/computer_vision/2019/06/29/What-Uncertainties-Do-We-Need-in-Bayesian-Deep.html","image":"https://alexgkendall.com/assets/images/blog_uncertainty/uncertainty_types.jpg","dateModified":"2019-06-29T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://rroundtable.github.io/FastPages/uncertainty/computer_vision/2019/06/29/What-Uncertainties-Do-We-Need-in-Bayesian-Deep.html"},"description":"이 논문에서는 epistemic uncertainty와 aleatoric uncertainty를 하나의 모델에서 측정하는 것을 제안하고 있습니다. (이전의 연구에서는 위의 uncertainty를 따로 분리하여 측정했다고 합니다.)","@type":"BlogPosting","url":"https://rroundtable.github.io/FastPages/uncertainty/computer_vision/2019/06/29/What-Uncertainties-Do-We-Need-in-Bayesian-Deep.html","headline":"What Uncertainties Do We Need in Bayesian Deep Learning for Computer Vision? 정리글","dateModified":"2019-06-29T00:00:00-05:00","datePublished":"2019-06-29T00:00:00-05:00","image":"https://alexgkendall.com/assets/images/blog_uncertainty/uncertainty_types.jpg","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
   <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -218,17 +218,17 @@
 
 <ul>
   <li>
-    <p><script type="math/tex">$f^{W}(x)</script>$: BNN의 random output</p>
+    <p>$f^{W}(x)$: BNN의 random output</p>
   </li>
   <li>
-    <p><script type="math/tex">$X=[{x\_1, x\_2, \cdots, x\_{n}}]</script>$, <script type="math/tex">$Y=[y\_1, y\_2, \cdots, y\_{n}]</script>$ : datasets</p>
+    <p>$X=[{x_1, x_2, \cdots, x_{n}}]$, $Y=[y_1, y_2, \cdots, y_{n}]$ : datasets</p>
   </li>
   <li>
     <table>
       <tbody>
         <tr>
-          <td>$$$p(y</td>
-          <td>f^{W}(x))$$$: likelihood</td>
+          <td>$$p(y</td>
+          <td>f^{W}(x))$$ : likelihood</td>
         </tr>
       </tbody>
     </table>
@@ -237,8 +237,8 @@
     <table>
       <tbody>
         <tr>
-          <td>$$$p(W</td>
-          <td>X, Y)$$$: posterior distribution</td>
+          <td>$$p(W</td>
+          <td>X, Y)$$ : posterior distribution</td>
         </tr>
       </tbody>
     </table>
@@ -254,17 +254,20 @@ regression task에서 어떻게 적용되는지 아래의 수식을 보면 알 �
 
 <p>수식을 보면, likelihood는 평균이 $f^{W}(x)$이고 observation noise가 $\sigma$인 Gaussian distribution을 따르는 것을 알 수 있습니다.</p>
 
-<p><em>classification</em>
-<script type="math/tex">p(y|f^{W}(x)) = \mathbf{softmax}(f^{W}(x))</script>
-classifiaction에서는 다른 방법을 취합니다. 일반적으로 위와 같이 output에 softmax를 취하는 형태로 likelihood를 측정합니다.</p>
+<p><em>classification</em></p>
+
+<script type="math/tex; mode=display">p(y|f^{W}(x)) = \mathbf{softmax}(f^{W}(x))</script>
+
+<p>classifiaction에서는 다른 방법을 취합니다. 일반적으로 위와 같이 output에 softmax를 취하는 형태로 likelihood를 측정합니다.</p>
 
 <table>
   <tbody>
     <tr>
-      <td>하지만, bayesian neural network는 수식적으로는 쉽게 해결할 수 있으나 <em>inference</em>과정에서 어려움이 있습니다. 이는 <span style="color:red">marginal probability $p(X</span>
+      <td>하지만, bayesian neural network는 수식적으로는 쉽게 해결할 수 있으나 <em>inference</em>과정에서 어려움이 있습니다. 이는 <span style="color:red">marginal probability $$p(X</span>
 </td>
-      <td>Y)$&lt;/span&gt;때문입니다. 이 probability는 아래와 같이 posterior $p(W</td>
-      <td>X, Y)$를 계산할 때 필요합니다.</td>
+      <td>Y)<script type="math/tex">% <![CDATA[
+</span>때문입니다. 이 probability는 아래와 같이 posterior %]]></script>p(W</td>
+      <td>X, Y)$$를 계산할 때 필요합니다.</td>
     </tr>
   </tbody>
 </table>
@@ -275,7 +278,7 @@ classifiaction에서는 다른 방법을 취합니다. 일반적으로 위와 �
   <tbody>
     <tr>
       <td>marginal probability $p(X</td>
-      <td>Y)$가 가지는 의미를 한번 생각해보면, 이해하기 쉬울 것 같습니다. `</td>
+      <td>Y)$가 가지는 의미를 한번 생각해보면, 이해하기 쉬울 것 같습니다.</td>
     </tr>
   </tbody>
 </table>
@@ -285,10 +288,10 @@ classifiaction에서는 다른 방법을 취합니다. 일반적으로 위와 �
 <table>
   <tbody>
     <tr>
-      <td>위에서 posterior $p(W</td>
-      <td>X, Y)$를 계산하기 힘든 이유를 언급하였습니다. 이러한 문제를 해결하기 위해서 <strong>Variational inference</strong>라는 방법론을 사용합니다. 간단하게 생각하면, posterior $p(W</td>
-      <td>X, Y)$ 대신에 Simple distribution $q_{\theta}(W)$을 가정하고 parameter $\theta$에 의해서 posterior $p(W</td>
-      <td>X, Y)$와 유사한 분포를 가지도록 조정합니다.</td>
+      <td>위에서 posterior $$p(W</td>
+      <td>X, Y)<script type="math/tex">를 계산하기 힘든 이유를 언급하였습니다. 이러한 문제를 해결하기 위해서 **Variational inference**라는 방법론을 사용합니다. 간단하게 생각하면, posterior</script>p(W</td>
+      <td>X, Y)<script type="math/tex">대신에 Simple distribution</script>q_{\theta}(W)<script type="math/tex">을 가정하고 parameter $\theta$에 의해서 posterior</script>p(W</td>
+      <td>X, Y)$$와 유사한 분포를 가지도록 조정합니다.</td>
     </tr>
   </tbody>
 </table>
@@ -301,19 +304,21 @@ classifiaction에서는 다른 방법을 취합니다. 일반적으로 위와 �
 
 <script type="math/tex; mode=display">\mathbf{L}(\theta, p) = -\frac{1}{N}\sum\_{i=1}^{N}\log{p(y\_{i}|f^{\hat{W}\_{i}}(x_{i}))} + \frac{1-p}{2N}\lVert \theta \rVert ^2</script>
 
-<p>$N$은 data point를 의미하며, $p$는 dropout probability를 의미합니다.  <code class="language-plaintext highlighter-rouge">$\hat{W_i} \sim q_{\theta}(W)$</code>의 samples weight를 가지고 있고 $\theta$를 이용하여 최적화합니다.</p>
+<p>$N$은 data point를 의미하며, $p$는 dropout probability를 의미합니다.  $\hat{W_i} \sim q_{\theta}(W)$의 samples weight를 가지고 있고 $\theta$를 이용하여 최적화합니다.</p>
 
 <p>regression task에서는 위의 log  likelihood를 아래처럼 변형할 수 있습니다.</p>
 
-<p><script type="math/tex">-log{p(y_{i}|f^{\hat{W}_{i}}(x_{i}))} \varpropto \frac{1}{2\sigma^2}\lVert y_i -f^{\hat{W}_{i}}(x_{i}))  \rVert ^2 + \frac{1}{2}\log{\theta ^ 2}</script>
-여기서 $\theta$는 output에 대한 noise를 의미합니다. (data 자체의 noise가 아닙니다.)</p>
+<script type="math/tex; mode=display">-log{p(y_{i}|f^{\hat{W}_{i}}(x_{i}))} \varpropto \frac{1}{2\sigma^2}\lVert y_i -f^{\hat{W}_{i}}(x_{i}))  \rVert ^2 + \frac{1}{2}\log{\theta ^ 2}</script>
+
+<p>여기서 $\theta$는 output에 대한 noise를 의미합니다. (data 자체의 noise가 아닙니다.)</p>
 
 <p>위에서 언급했듯이 <span style="color:blue">epistemic uncertainty </span>는 data point를 관측하면 감소되는 uncertainty입니다.</p>
 
 <p>epistemic uncertainty를 이용하여, prediction uncertainty를 구할 수 있습니다. 아래는 classification task에서 Monte Carlo integration을 이용한 approximation입니다.</p>
 
-<p><script type="math/tex">p(y=c|x,X,Y) \approx \frac{1}{T} \sum_{t=1}^{T}\mathbf{Softmax}(f^{\hat{W}_{i}}(x_{i}))</script>
-masked model weight $\hat{W_i} \sim q_{\theta}(W)$,  $q_{\theta}(W)$은  dropout distiribution입니다..</p>
+<script type="math/tex; mode=display">p(y=c|x,X,Y) \approx \frac{1}{T} \sum_{t=1}^{T}\mathbf{Softmax}(f^{\hat{W}_{i}}(x_{i}))</script>
+
+<p>masked model weight $\hat{W_i} \sim q_{\theta}(W)$,  $q_{\theta}(W)$은  dropout distiribution입니다..</p>
 
 <p>probability vector $p$에 대한 uncertainty를 구할 때, entropy 개념을 이용하는데 이를 식으로 나타내면 아래와 같습니다.</p>
 
@@ -321,8 +326,9 @@ masked model weight $\hat{W_i} \sim q_{\theta}(W)$,  $q_{\theta}(W)$은  dropout
 
 <p>regression task의 경우 epistemic uncertainty는 predictive variance로 나타낼 수 있으며, 이는 아래의 식과 같습니다.</p>
 
-<p><script type="math/tex">\mathbf{Var}(y) \ \approx \theta^2 + \frac{1}{T}\sum_{t=1}^{T}f^{\hat{W}_{i}}(x_{i})^{T}f^{\hat{W}_{i}}(x_{i}) - \mathbf{E}(y) ^ {T}\mathbf{E}(y)</script>
-이 epistemic model은 <code class="language-plaintext highlighter-rouge">$\mathbf{E}(y) \approx \frac{1}{T}\sum_{t=1}^{T}f^{\hat{W}_{i}}(x_{i}) $</code> predictive mean과 근사하는 방향으로 학습이 진행됩니다.($E(y)$ 는 predictive mean) 첫번째 term $\theta ^ 2$은 data 자체의 noise를 의미합니다. (aleatoric) 이는 뒷부분에서 자세히 다루겠습니다. 두번째 term은 predictive variance로 예측값에 대한 uncertainty를 나타냅니다. (epistemic)</p>
+<script type="math/tex; mode=display">\mathbf{Var}(y) \ \approx \theta^2 + \frac{1}{T}\sum_{t=1}^{T}f^{\hat{W}_{i}}(x_{i})^{T}f^{\hat{W}_{i}}(x_{i}) - \mathbf{E}(y) ^ {T}\mathbf{E}(y)</script>
+
+<p>이 epistemic model은 $\mathbf{E}(y) \approx \frac{1}{T}\sum_{t=1}^{T}f^{\hat{W}<em>{i}}(x</em>{i}) $ predictive mean과 근사하는 방향으로 학습이 진행됩니다.($E(y)$ 는 predictive mean) 첫번째 term $\theta ^ 2$은 data 자체의 noise를 의미합니다. (aleatoric) 이는 뒷부분에서 자세히 다루겠습니다. 두번째 term은 predictive variance로 예측값에 대한 uncertainty를 나타냅니다. (epistemic)</p>
 
 <p>참고로 aleatoric과 epistemic은 linear regression의 SSR, SSE의 개념과 유사합니다.</p>
 
@@ -352,13 +358,15 @@ masked model weight $\hat{W_i} \sim q_{\theta}(W)$,  $q_{\theta}(W)$은  dropout
 
 <p>Epistemic uncertainty와 aleatoric uncertainty를 함께 구하기 위해서 <strong>[2. 2 Heteroscedastic Aleatoric Uncertainty]</strong>을 bayesian NN에 적용하였습니다. 본 논문에서는 BNN의 posterior를 dropout variational distribution으로 근사하였습니다. (<strong>2.1 Epistemic Uncertainty in Bayesian Deep Learning의 dropout 참고</strong>)</p>
 
-<p>위의 모델의 output은 다음과 같이 predictive mean, predictive variance를 가지게 됩니다.
-<script type="math/tex">[\hat{y}, \hat{\sigma}^2] = f^{\hat{W}}(X)</script></p>
+<p>위의 모델의 output은 다음과 같이 predictive mean, predictive variance를 가지게 됩니다.</p>
+
+<script type="math/tex; mode=display">[\hat{y}, \hat{\sigma}^2] = f^{\hat{W}}(X)</script>
 
 <p>이때 model weight ${\hat{W}} \sim q(W)$로 근사합니다.</p>
 
-<p><script type="math/tex">\mathbf{L}_{BNN}(\theta) = \frac{1}{D}\sum_{i}\frac{1}{2} \hat{\sigma}^{-2}\rVert y_i - \hat{y_i} \rVert ^2 + \frac{1}{2}\log{\hat{\sigma_i}^2}</script>
-<em>where</em></p>
+<script type="math/tex; mode=display">\mathbf{L}_{BNN}(\theta) = \frac{1}{D}\sum_{i}\frac{1}{2} \hat{\sigma}^{-2}\rVert y_i - \hat{y_i} \rVert ^2 + \frac{1}{2}\log{\hat{\sigma_i}^2}</script>
+
+<p><em>where</em></p>
 
 <ul>
   <li>$D$는 image $x$에 해당하는 output pixel $y_i$의 개수이다. (pixel 단위의 objective)</li>
@@ -372,11 +380,15 @@ masked model weight $\hat{W_i} \sim q_{\theta}(W)$,  $q_{\theta}(W)$은  dropout
   <li>uncertainty regularization: $\frac{1}{2}\log{\hat{\sigma_i}^2}$</li>
 </ol>
 
-<p>실제로 위의 수식을 적용할 때는 아래와 같이 조금 변형된 수식으로 학습을 진행합니다. 이는  <strong>division-zero</strong>의 문제를 해결하기 위해서라고 합니다.
-<script type="math/tex">\mathbf{L}_{BNN}(\theta) = \frac{1}{D}\sum_{i}\frac{1}{2} exp(-\log{\hat{\sigma}^2})\rVert y_i - \hat{y_i} \rVert ^2 + \frac{1}{2}\log{\hat{\sigma_i}^2}</script>
-아래는pixel y 에 대한 위의 모델의  predictive uncertainty를 근사하는 수식입니다.
-<script type="math/tex">Var(y) \approx \frac{1}{T}\sum_{t=1}^{T}\hat{y}_t^2-(\frac{1}{T}\sum_{t=1}^{T}\hat{y}_t)^2 +\frac{1}{T}\sum_{t=1}^T\hat{\sigma}_t^2</script>
-with $[\hat{y}<em>t, \hat{\sigma}_t]</em>{t=1}^{T}$  a set of T smapled outputs:  $[\hat{y}_t, \hat{\sigma}_t^2] = f^{\hat{W}_t}(X)$ for randomly masked weights ${\hat{W}_t} \sim q(W)$</p>
+<p>실제로 위의 수식을 적용할 때는 아래와 같이 조금 변형된 수식으로 학습을 진행합니다. 이는  <strong>division-zero</strong>의 문제를 해결하기 위해서라고 합니다.</p>
+
+<script type="math/tex; mode=display">\mathbf{L}_{BNN}(\theta) = \frac{1}{D}\sum_{i}\frac{1}{2} exp(-\log{\hat{\sigma}^2})\rVert y_i - \hat{y_i} \rVert ^2 + \frac{1}{2}\log{\hat{\sigma_i}^2}</script>
+
+<p>아래는pixel y 에 대한 위의 모델의  predictive uncertainty를 근사하는 수식입니다.</p>
+
+<script type="math/tex; mode=display">Var(y) \approx \frac{1}{T}\sum_{t=1}^{T}\hat{y}_t^2-(\frac{1}{T}\sum_{t=1}^{T}\hat{y}_t)^2 +\frac{1}{T}\sum_{t=1}^T\hat{\sigma}_t^2</script>
+
+<p>with $[\hat{y}<em>t, \hat{\sigma}_t]</em>{t=1}^{T}$  a set of T smapled outputs:  $[\hat{y}_t, \hat{\sigma}_t^2] = f^{\hat{W}_t}(X)$ for randomly masked weights ${\hat{W}_t} \sim q(W)$</p>
 
 <p>위에서의 설명을 이해하셨다면, 첫번째 term은 epistemic을 두번째 term은 aleatoric을 의미한다는 것을 알 수 있습니다.</p>
 
