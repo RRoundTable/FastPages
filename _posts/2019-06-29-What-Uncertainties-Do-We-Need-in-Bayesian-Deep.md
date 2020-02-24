@@ -6,24 +6,21 @@ branch: master
 badges: true
 comments: true
 image: https://alexgkendall.com/assets/images/blog_uncertainty/uncertainty_types.jpg
-categories: [uncertainty, computer_vision]
+categories: ['uncertainty', 'computer_vision']
 metadata_key1: uncertainty in computer vision
 ---
 
 
 이 논문에서는 epistemic uncertainty와 aleatoric uncertainty를 하나의 모델에서 측정하는 것을 제안하고 있습니다. (이전의 연구에서는 위의 uncertainty를 따로 분리하여 측정했다고 합니다.)
 
-<figure class="image">
-	<center>
-	<img src="https://alexgkendall.com/assets/images/blog_uncertainty/uncertainty_types.jpg" width=600 height=400>
-	</center>
-	aleatoric uncertainty와 epistemic uncertainty의 차이를 보여주고 있다. 주된 차이점은 aleatoric은 물체사이의 boundary에 주로 나타나는 것을 확인할 수 있다. 맨 밑의 라인은 실패한 케이스를 보여준다. 여기서는 epistemic uncertainty가 높아진 것을 확인할 수 있다.
-</figure>
+
+![]({{ site.baseurl }}/images/2019-06-29-What-Uncertainties-Do-We-Need-in-Bayesian-Deep/uncertainty_types.jpg "aleatoric uncertainty와 epistemic uncertainty의 차이를 보여주고 있다. 주된 차이점은 aleatoric은 물체사이의 boundary에 주로 나타나는 것을 확인할 수 있다. 맨 밑의 라인은 실패한 케이스를 보여준다. 여기서는 epistemic uncertainty가 높아진 것을 확인할 수 있다.")
 
 
 regression task에서 각각의 uncertainty에 대해서 알아보도록 하겠습니다.
 
 ## Epistemic uncertainty
+
 <center>
 <figure class="image">
 	<img src="https://i1.wp.com/www.aimechanic.com/wp-content/uploads/2017/03/Deep-Learning-Uncertainty.png?w=693" width=350 height=400>
@@ -155,21 +152,19 @@ $N$은 data point를 의미하며, $p$는 dropout probability를 의미합니다
 
 regression task에서는 위의 log  likelihood를 아래처럼 변형할 수 있습니다.
 
-`$$
+$$
 -log{p(y_{i}|f^{\hat{W}_{i}}(x_{i}))} \varpropto \frac{1}{2\sigma^2}\lVert y_i -f^{\hat{W}_{i}}(x_{i}))  \rVert ^2 + \frac{1}{2}\log{\theta ^ 2}
-$$`
-
+$$
 여기서 $\theta$는 output에 대한 noise를 의미합니다. (data 자체의 noise가 아닙니다.)
 
 위에서 언급했듯이 <span style="color:blue">epistemic uncertainty </span>는 data point를 관측하면 감소되는 uncertainty입니다.
 
 epistemic uncertainty를 이용하여, prediction uncertainty를 구할 수 있습니다. 아래는 classification task에서 Monte Carlo integration을 이용한 approximation입니다.
 
-`$$
+$$
 p(y=c|x,X,Y) \approx \frac{1}{T} \sum_{t=1}^{T}\mathbf{Softmax}(f^{\hat{W}_{i}}(x_{i}))
-$$`
-
-masked model weight `$\hat{W_i} \sim q_{\theta}(W)$`,  $q_{\theta}(W)$은  dropout distiribution입니다..
+$$
+masked model weight $\hat{W_i} \sim q_{\theta}(W)$,  $q_{\theta}(W)$은  dropout distiribution입니다..
 
 probability vector $p$에 대한 uncertainty를 구할 때, entropy 개념을 이용하는데 이를 식으로 나타내면 아래와 같습니다.
 
@@ -180,10 +175,9 @@ $$
 
 regression task의 경우 epistemic uncertainty는 predictive variance로 나타낼 수 있으며, 이는 아래의 식과 같습니다.
 
-`$$
+$$
 \mathbf{Var}(y) \ \approx \theta^2 + \frac{1}{T}\sum_{t=1}^{T}f^{\hat{W}_{i}}(x_{i})^{T}f^{\hat{W}_{i}}(x_{i}) - \mathbf{E}(y) ^ {T}\mathbf{E}(y)
-$$`
-
+$$
 이 epistemic model은 `$\mathbf{E}(y) \approx \frac{1}{T}\sum_{t=1}^{T}f^{\hat{W}_{i}}(x_{i}) $` predictive mean과 근사하는 방향으로 학습이 진행됩니다.($E(y)$ 는 predictive mean) 첫번째 term $\theta ^ 2$은 data 자체의 noise를 의미합니다. (aleatoric) 이는 뒷부분에서 자세히 다루겠습니다. 두번째 term은 predictive variance로 예측값에 대한 uncertainty를 나타냅니다. (epistemic)
 
 참고로 aleatoric과 epistemic은 linear regression의 SSR, SSE의 개념과 유사합니다.
@@ -196,10 +190,9 @@ $$`
 Aleatoric uncertainty는 model의 output에 distribution을 가정합니다. 그리고 이를 위해서 'observation noise parameter $\theta$'를 학습시킵니다.
 
 위에서 언급했듯이, Homoscedastic regression은 모든 data point마다 동일한 observation constant noise $\sigma$를 가집니다. 반면에, Heteroscedastic model에서는 각 data point마다 서로 다른 observation noise를 가지고 있습니다. Non-Bayesian neural network에서는 대게 constance noise $\sigma$를 가정하거나, 무시하곤 합니다. 하지만, 아래 수식과 같이 data-dependent하게 학습시킨다면, data에 대한 **fucntion**의 형태로 학습될 수 있습니다. 
-`$$
+$$
 \mathbf{L}_{NN}(\theta) = \frac{1}{N}\sum_{i=1}^{N}\frac{1}{2\sigma(x_i)^2}\rVert y_i - f(x_i) \rVert ^ 2 + \frac{1}{2}\log{\sigma(x_i)^2}
-$$`
-
+$$
 function의 형태로 학습시킨다는 것은 각 data point마다 변하는 uncertainty를 측정할 수 있다는 것을 의미합니다. 또한 epistemic uncertainty를 구하는 것과 다르게 variational inference 대신에 *MAP inference*를 사용합니다. - finding single value for the model parameters $\theta$
 
 참고로 이런 방법은 epistemic uncertainty를 측정하지 못하는데, 위의 접근방법은 data자체의 uncertainty를 구하는 방법이기 때문입니다.
@@ -225,10 +218,9 @@ $$
 
 
 
-`$$
+$$
 \mathbf{L}_{BNN}(\theta) = \frac{1}{D}\sum_{i}\frac{1}{2} \hat{\sigma}^{-2}\rVert y_i - \hat{y_i} \rVert ^2 + \frac{1}{2}\log{\hat{\sigma_i}^2}
-$$`
-
+$$
 *where*
 
 - $D$는 image $x$에 해당하는 output pixel $y_i$의 개수이다. (pixel 단위의 objective)
@@ -240,16 +232,14 @@ $$`
 2.  uncertainty regularization: $\frac{1}{2}\log{\hat{\sigma_i}^2}$
 
 실제로 위의 수식을 적용할 때는 아래와 같이 조금 변형된 수식으로 학습을 진행합니다. 이는  **division-zero**의 문제를 해결하기 위해서라고 합니다.
-`$$
+$$
 \mathbf{L}_{BNN}(\theta) = \frac{1}{D}\sum_{i}\frac{1}{2} exp(-\log{\hat{\sigma}^2})\rVert y_i - \hat{y_i} \rVert ^2 + \frac{1}{2}\log{\hat{\sigma_i}^2}
-$$`
+$$
 아래는pixel y 에 대한 위의 모델의  predictive uncertainty를 근사하는 수식입니다.
-
-`$$
+$$
 Var(y) \approx \frac{1}{T}\sum_{t=1}^{T}\hat{y}_t^2-(\frac{1}{T}\sum_{t=1}^{T}\hat{y}_t)^2 +\frac{1}{T}\sum_{t=1}^T\hat{\sigma}_t^2
-$$`
-
-with `$[\hat{y}_t, \hat{\sigma}_t]_{t=1}^{T}$` a set of T smapled outputs:  `$[\hat{y}_t, \hat{\sigma}_t^2] = f^{\hat{W}_t}(X)$` for randomly masked weights ${\hat{W}_t} \sim q(W)$
+$$
+with $[\hat{y}_t, \hat{\sigma}_t]_{t=1}^{T}$  a set of T smapled outputs:  $[\hat{y}_t, \hat{\sigma}_t^2] = f^{\hat{W}_t}(X)$ for randomly masked weights ${\hat{W}_t} \sim q(W)$
 
 위에서의 설명을 이해하셨다면, 첫번째 term은 epistemic을 두번째 term은 aleatoric을 의미한다는 것을 알 수 있습니다.
 

@@ -1,9 +1,16 @@
+
 ---
 title: "Batch Normalization에 대하여"
-date: 2019-07-08
-categories: ['interview']
-tags: ['deeplearning']
+toc: true
+branch: master
+badges: true
+comments: true
+image: https://alexgkendall.com/assets/images/blog_uncertainty/uncertainty_types.jpg
+categories: ['interview', 'deep learning']
+metadata_key1: uncertainty in computer vision
 ---
+
+
 ## Problem Define
 
 학습하는 과정에서 이전 layer의 parameter가 변하면서, 각 layer의 input들의 distribution이 training과정마다 변하게 된다. 이런 문제는 학습이 불안정하게 하며, 낮은 learning rate를 사용해야 학습이 진행된다. 결론적으로는 **saturating non-linearity**의 모델을 학습하기 어려워진다. 이런 현상을 **internal covariate shift** 라고 부른다.
