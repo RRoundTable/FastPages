@@ -80,13 +80,13 @@ $$
 
 *Notation*
 
-- $$$f^{W}(x)$$$: BNN의 random output
+- $f^{W}(x)$: BNN의 random output
 
-- $$$X=[{x\_1, x\_2, \cdots, x\_{n}}]$$$, $$$Y=[y\_1, y\_2, \cdots, y\_{n}]$$$ : datasets
+- $X=[{x\_1, x\_2, \cdots, x\_{n}}]$, $Y=[y\_1, y\_2, \cdots, y\_{n}]$ : datasets
 
-- $$$p(y|f^{W}(x))$$$: likelihood
+- $$p(y|f^{W}(x))$$ : likelihood
 
-- $$$p(W|X, Y)$$$: posterior distribution
+- $$p(W|X, Y)$$ : posterior distribution
 
 BNN에서 posterior distribution의 역할은 주어진 data에서 가장 적절한 parameter를 찾아주는 것입니다.. (주어진 데이터에서 해당 prameter가 얼마큼의 확률을 가지는지 나타내주는 값)
 
@@ -100,24 +100,26 @@ $$
 수식을 보면, likelihood는 평균이 $f^{W}(x)$이고 observation noise가 $\sigma$인 Gaussian distribution을 따르는 것을 알 수 있습니다.
 
 *classification*
+
 $$
 p(y|f^{W}(x)) = \mathbf{softmax}(f^{W}(x))
 $$
+
 classifiaction에서는 다른 방법을 취합니다. 일반적으로 위와 같이 output에 softmax를 취하는 형태로 likelihood를 측정합니다.
 
 
 
-하지만, bayesian neural network는 수식적으로는 쉽게 해결할 수 있으나 *inference*과정에서 어려움이 있습니다. 이는 <span style="color:red">marginal probability $p(X|Y)$</span>때문입니다. 이 probability는 아래와 같이 posterior $p(W|X, Y)$를 계산할 때 필요합니다.
+하지만, bayesian neural network는 수식적으로는 쉽게 해결할 수 있으나 *inference*과정에서 어려움이 있습니다. 이는 <span style="color:red">marginal probability $$p(X|Y)$$ </span>때문입니다. 이 probability는 아래와 같이 posterior $$p(W|X, Y)$$를 계산할 때 필요합니다.
 
 $$
 p(W|X, Y) =p(Y|X, W)P(W)/p(X|Y)
 $$
 
-marginal probability $p(X|Y)$가 가지는 의미를 한번 생각해보면, 이해하기 쉬울 것 같습니다. `	
+marginal probability $p(X|Y)$가 가지는 의미를 한번 생각해보면, 이해하기 쉬울 것 같습니다. 	
 
 먼저, MNIST dataset의 경우에는 label 1이 주어졌을 때 image1이 나올 확률을 구해야합니다.  이는 계산하기는 힘들지만 할 수는 있을 것 같습니다. 하지만, label = $[1, 3, 5, \cdots ]$가 주어졌을 때, $[image1, imga2, \cdots]$가 나올확률을 모두 계산하는 것은 비효율적이며 현실적으로 불가능합니다. (모든 data들의 경우의 수를 탐색해야합니다.)
 
-위에서 posterior $p(W|X, Y)$를 계산하기 힘든 이유를 언급하였습니다. 이러한 문제를 해결하기 위해서 **Variational inference**라는 방법론을 사용합니다. 간단하게 생각하면, posterior $p(W|X, Y)$ 대신에 Simple distribution $q_{\theta}(W)$을 가정하고 parameter $\theta$에 의해서 posterior $p(W|X, Y)$와 유사한 분포를 가지도록 조정합니다.
+위에서 posterior $$p(W|X, Y)$$를 계산하기 힘든 이유를 언급하였습니다. 이러한 문제를 해결하기 위해서 **Variational inference**라는 방법론을 사용합니다. 간단하게 생각하면, posterior $$p(W|X, Y)$$ 대신에 Simple distribution $$q_{\theta}(W)$$을 가정하고 parameter $\theta$에 의해서 posterior $$p(W|X, Y)$$와 유사한 분포를 가지도록 조정합니다.
 
 
 
@@ -133,13 +135,14 @@ $$
 \mathbf{L}(\theta, p) = -\frac{1}{N}\sum\_{i=1}^{N}\log{p(y\_{i}|f^{\hat{W}\_{i}}(x_{i}))} + \frac{1-p}{2N}\lVert \theta \rVert ^2
 $$
 
-$N$은 data point를 의미하며, $p$는 dropout probability를 의미합니다.  `$\hat{W_i} \sim q_{\theta}(W)$`의 samples weight를 가지고 있고 $\theta$를 이용하여 최적화합니다.
+$N$은 data point를 의미하며, $p$는 dropout probability를 의미합니다.  $\hat{W_i} \sim q_{\theta}(W)$의 samples weight를 가지고 있고 $\theta$를 이용하여 최적화합니다.
 
 regression task에서는 위의 log  likelihood를 아래처럼 변형할 수 있습니다.
 
 $$
 -log{p(y_{i}|f^{\hat{W}_{i}}(x_{i}))} \varpropto \frac{1}{2\sigma^2}\lVert y_i -f^{\hat{W}_{i}}(x_{i}))  \rVert ^2 + \frac{1}{2}\log{\theta ^ 2}
 $$
+
 여기서 $\theta$는 output에 대한 noise를 의미합니다. (data 자체의 noise가 아닙니다.)
 
 위에서 언급했듯이 <span style="color:blue">epistemic uncertainty </span>는 data point를 관측하면 감소되는 uncertainty입니다.
@@ -149,6 +152,7 @@ epistemic uncertainty를 이용하여, prediction uncertainty를 구할 수 있�
 $$
 p(y=c|x,X,Y) \approx \frac{1}{T} \sum_{t=1}^{T}\mathbf{Softmax}(f^{\hat{W}_{i}}(x_{i}))
 $$
+
 masked model weight $\hat{W_i} \sim q_{\theta}(W)$,  $q_{\theta}(W)$은  dropout distiribution입니다..
 
 probability vector $p$에 대한 uncertainty를 구할 때, entropy 개념을 이용하는데 이를 식으로 나타내면 아래와 같습니다.
@@ -163,7 +167,8 @@ regression task의 경우 epistemic uncertainty는 predictive variance로 나타
 $$
 \mathbf{Var}(y) \ \approx \theta^2 + \frac{1}{T}\sum_{t=1}^{T}f^{\hat{W}_{i}}(x_{i})^{T}f^{\hat{W}_{i}}(x_{i}) - \mathbf{E}(y) ^ {T}\mathbf{E}(y)
 $$
-이 epistemic model은 `$\mathbf{E}(y) \approx \frac{1}{T}\sum_{t=1}^{T}f^{\hat{W}_{i}}(x_{i}) $` predictive mean과 근사하는 방향으로 학습이 진행됩니다.($E(y)$ 는 predictive mean) 첫번째 term $\theta ^ 2$은 data 자체의 noise를 의미합니다. (aleatoric) 이는 뒷부분에서 자세히 다루겠습니다. 두번째 term은 predictive variance로 예측값에 대한 uncertainty를 나타냅니다. (epistemic)
+
+이 epistemic model은 $\mathbf{E}(y) \approx \frac{1}{T}\sum_{t=1}^{T}f^{\hat{W}_{i}}(x_{i}) $ predictive mean과 근사하는 방향으로 학습이 진행됩니다.($E(y)$ 는 predictive mean) 첫번째 term $\theta ^ 2$은 data 자체의 noise를 의미합니다. (aleatoric) 이는 뒷부분에서 자세히 다루겠습니다. 두번째 term은 predictive variance로 예측값에 대한 uncertainty를 나타냅니다. (epistemic)
 
 참고로 aleatoric과 epistemic은 linear regression의 SSR, SSE의 개념과 유사합니다.
 
@@ -197,17 +202,17 @@ function의 형태로 학습시킨다는 것은 각 data point마다 변하는 u
 Epistemic uncertainty와 aleatoric uncertainty를 함께 구하기 위해서 **[2. 2 Heteroscedastic Aleatoric Uncertainty]**을 bayesian NN에 적용하였습니다. 본 논문에서는 BNN의 posterior를 dropout variational distribution으로 근사하였습니다. (**2.1 Epistemic Uncertainty in Bayesian Deep Learning의 dropout 참고**)
 
 위의 모델의 output은 다음과 같이 predictive mean, predictive variance를 가지게 됩니다.
+
 $$
 [\hat{y}, \hat{\sigma}^2] = f^{\hat{W}}(X)
 $$
 
 이때 model weight ${\hat{W}} \sim q(W)$로 근사합니다.
 
-
-
 $$
 \mathbf{L}_{BNN}(\theta) = \frac{1}{D}\sum_{i}\frac{1}{2} \hat{\sigma}^{-2}\rVert y_i - \hat{y_i} \rVert ^2 + \frac{1}{2}\log{\hat{\sigma_i}^2}
 $$
+
 *where*
 
 - $D$는 image $x$에 해당하는 output pixel $y_i$의 개수이다. (pixel 단위의 objective)
@@ -219,13 +224,17 @@ $$
 2.  uncertainty regularization: $\frac{1}{2}\log{\hat{\sigma_i}^2}$
 
 실제로 위의 수식을 적용할 때는 아래와 같이 조금 변형된 수식으로 학습을 진행합니다. 이는  **division-zero**의 문제를 해결하기 위해서라고 합니다.
+
 $$
 \mathbf{L}_{BNN}(\theta) = \frac{1}{D}\sum_{i}\frac{1}{2} exp(-\log{\hat{\sigma}^2})\rVert y_i - \hat{y_i} \rVert ^2 + \frac{1}{2}\log{\hat{\sigma_i}^2}
 $$
+
 아래는pixel y 에 대한 위의 모델의  predictive uncertainty를 근사하는 수식입니다.
+
 $$
 Var(y) \approx \frac{1}{T}\sum_{t=1}^{T}\hat{y}_t^2-(\frac{1}{T}\sum_{t=1}^{T}\hat{y}_t)^2 +\frac{1}{T}\sum_{t=1}^T\hat{\sigma}_t^2
 $$
+
 with $[\hat{y}_t, \hat{\sigma}_t]_{t=1}^{T}$  a set of T smapled outputs:  $[\hat{y}_t, \hat{\sigma}_t^2] = f^{\hat{W}_t}(X)$ for randomly masked weights ${\hat{W}_t} \sim q(W)$
 
 위에서의 설명을 이해하셨다면, 첫번째 term은 epistemic을 두번째 term은 aleatoric을 의미한다는 것을 알 수 있습니다.
