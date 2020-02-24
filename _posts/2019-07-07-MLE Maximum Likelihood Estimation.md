@@ -1,12 +1,12 @@
 ---
-- title: "MLE 와 MAP에 대하여"
-- toc: true
-- branch: master
-- badges: true
-- comments: true
-- categories: [interview, machine learning]
-- metadata_key1: MLE
-- metadata_key2: MAP
+title: "MLE 와 MAP에 대하여"
+toc: true
+branch: master
+badges: true
+comments: true
+categories: [interview, machine learning]
+metadata_key1: MLE
+metadata_key2: MAP
 ---
 
 

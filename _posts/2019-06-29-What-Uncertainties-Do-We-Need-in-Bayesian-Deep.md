@@ -1,14 +1,13 @@
-
 ---
-- title: "What Uncertainties Do We Need in Bayesian Deep
+title: "What Uncertainties Do We Need in Bayesian Deep
 Learning for Computer Vision? 정리글"
-- toc: true
-- branch: master
-- badges: true
-- comments: true
-- image: https://alexgkendall.com/assets/images/blog_uncertainty/uncertainty_types.jpg
-- categories: [uncertainty, computer_vision]
-- metadata_key1: uncertainty in computer vision
+toc: true
+branch: master
+badges: true
+comments: true
+image: https://alexgkendall.com/assets/images/blog_uncertainty/uncertainty_types.jpg
+categories: [uncertainty, computer_vision]
+metadata_key1: uncertainty in computer vision
 ---
 
 
