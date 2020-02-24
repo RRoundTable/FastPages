@@ -84,9 +84,9 @@ $$
 
 - $X=[{x\_1, x\_2, \cdots, x\_{n}}]$, $Y=[y\_1, y\_2, \cdots, y\_{n}]$ : datasets
 
-- $$p(y|f^{W}(x))$$ : likelihood
+- $p(y \mid f^{W}(x))$ : likelihood
 
-- $$p(W|X, Y)$$ : posterior distribution
+- $p(W \mid X, Y)$: posterior distribution
 
 BNN에서 posterior distribution의 역할은 주어진 data에서 가장 적절한 parameter를 찾아주는 것입니다.. (주어진 데이터에서 해당 prameter가 얼마큼의 확률을 가지는지 나타내주는 값)
 
@@ -109,17 +109,17 @@ classifiaction에서는 다른 방법을 취합니다. 일반적으로 위와 �
 
 
 
-하지만, bayesian neural network는 수식적으로는 쉽게 해결할 수 있으나 *inference*과정에서 어려움이 있습니다. 이는 <span style="color:red">marginal probability $$p(X|Y)$$ </span>때문입니다. 이 probability는 아래와 같이 posterior $$p(W|X, Y)$$를 계산할 때 필요합니다.
+하지만, bayesian neural network는 수식적으로는 쉽게 해결할 수 있으나 *inference*과정에서 어려움이 있습니다. 이는 <span style="color:red">marginal probability $p(X \mid Y)$ </span>때문입니다. 이 probability는 아래와 같이 posterior $$p(W \mid X, Y)$$를 계산할 때 필요합니다.
 
 $$
 p(W|X, Y) =p(Y|X, W)P(W)/p(X|Y)
 $$
 
-marginal probability $p(X|Y)$가 가지는 의미를 한번 생각해보면, 이해하기 쉬울 것 같습니다. 	
+marginal probability $p(X \mid Y)$가 가지는 의미를 한번 생각해보면, 이해하기 쉬울 것 같습니다. 	
 
 먼저, MNIST dataset의 경우에는 label 1이 주어졌을 때 image1이 나올 확률을 구해야합니다.  이는 계산하기는 힘들지만 할 수는 있을 것 같습니다. 하지만, label = $[1, 3, 5, \cdots ]$가 주어졌을 때, $[image1, imga2, \cdots]$가 나올확률을 모두 계산하는 것은 비효율적이며 현실적으로 불가능합니다. (모든 data들의 경우의 수를 탐색해야합니다.)
 
-위에서 posterior $$p(W|X, Y)$$를 계산하기 힘든 이유를 언급하였습니다. 이러한 문제를 해결하기 위해서 **Variational inference**라는 방법론을 사용합니다. 간단하게 생각하면, posterior $$p(W|X, Y)$$ 대신에 Simple distribution $$q_{\theta}(W)$$을 가정하고 parameter $\theta$에 의해서 posterior $$p(W|X, Y)$$와 유사한 분포를 가지도록 조정합니다.
+위에서 posterior $$p(W \mid X, Y)$$를 계산하기 힘든 이유를 언급하였습니다. 이러한 문제를 해결하기 위해서 **Variational inference**라는 방법론을 사용합니다. 간단하게 생각하면, posterior $$p(W \mid X, Y)$$ 대신에 Simple distribution $$q_{\theta}(W)$$을 가정하고 parameter $\theta$에 의해서 posterior $$p(W \mid X, Y)$$와 유사한 분포를 가지도록 조정합니다.
 
 
 
@@ -172,7 +172,7 @@ $$
 
 참고로 aleatoric과 epistemic은 linear regression의 SSR, SSE의 개념과 유사합니다.
 
-![](https://www.saedsayad.com/images/MLR_r2.png)
+![]({{ site.baseurl }}/images/2019-06-29-What-Uncertainties-Do-We-Need-in-Bayesian-Deep/MLR_r2.png )
 
 
 ### 2. 2 Heteroscedastic Aleatoric Uncertainty
@@ -242,24 +242,28 @@ with $[\hat{y}_t, \hat{\sigma}_t]_{t=1}^{T}$  a set of T smapled outputs:  $[\ha
 ## Experiment
 
 ### Semantic Segmentation
+table1.png
 
-![Table1](https://user-images.githubusercontent.com/27891090/60392842-b5b40280-9b46-11e9-9b6b-1c253602dbcd.png)
+![]({{ site.baseurl }}/images/2019-06-29-What-Uncertainties-Do-We-Need-in-Bayesian-Deep/table1.png "Table1" )
 
 [Table 1 - a]Semantic segmentation task에서 실험한 결과 새로운 new state-of-the-art의 결과를 내었습니다. (IOU 67.5%) 
 
 [Table 1 - b] NYUv2는 위의 a의 dataset보다 더 어려운 task이다. (더 많은 class를 가지고 있다.)  결과는 아래의 이미지에서 확인할 수 있습니다.
 
-![figure4](https://user-images.githubusercontent.com/27891090/60392855-dda36600-9b46-11e9-882d-31c4302aad2f.png)
+![]({{ site.baseurl }}/images/2019-06-29-What-Uncertainties-Do-We-Need-in-Bayesian-Deep/figure4.png "figure4" )
+
 
 ### Pixel-wise Depth Regression
 
-![Table3](https://user-images.githubusercontent.com/27891090/60392843-bea4d400-9b46-11e9-9c8f-fe59772195dd.png)
+![]({{ site.baseurl }}/images/2019-06-29-What-Uncertainties-Do-We-Need-in-Bayesian-Deep/table2.png "Table2" )
+
+
 
 pixel의 depth regression task에서도 실험을 진행하였습니다. 실험결과 aleatoric uncertainty는 depth-regression task에서 많은 부분 기여할 수 있었습니다.  다음 이미지들을 보면 확인할 수 있습니다.
 
-![figure5](https://user-images.githubusercontent.com/27891090/60392865-09265080-9b47-11e9-9007-317aec266052.png)
+![]({{ site.baseurl }}/images/2019-06-29-What-Uncertainties-Do-We-Need-in-Bayesian-Deep/figure5.png "figure5" )
 
-![figure6](https://user-images.githubusercontent.com/27891090/60392868-0fb4c800-9b47-11e9-93e8-154155d94538.png)
+![]({{ site.baseurl }}/images/2019-06-29-What-Uncertainties-Do-We-Need-in-Bayesian-Deep/figure6.png "figure6" )
 
 위의 이미지를 보면, aleatoric uncertainty는 depth가 깊을수록, 반사되는 표면을 가질수록, occlusion boundary일수록 높아지는 것을 확인할 수 있습니다. 이는 monocular depth algorithm들이 겪는 어려움들입니다. 반면에 epistemic uncertainty는 data가 부족한 점을 이용하여 이런 어려움들을 잡아냅니다. 예를 들어서 [Figure 5]에서 맨밑의 예를 보면, 사람이 있습니다.  이는 train data에 거의 없는 data로 epistemic uncertainty가 높아짐을 확인할 수 있습니다.
 
@@ -267,7 +271,7 @@ pixel의 depth regression task에서도 실험을 진행하였습니다. 실험�
 
 ### 5.1 Quality of Uncertainty Metric 
 
-![Figure 2](https://user-images.githubusercontent.com/27891090/60392844-c6fd0f00-9b46-11e9-96bd-2910251e0b9d.png)
+![]({{ site.baseurl }}/images/2019-06-29-What-Uncertainties-Do-We-Need-in-Bayesian-Deep/Figure2.png "Figure 2" )
 
 위의 이미지는 precision-recall 그래프이다. 해당 그래프는 threshhold보다 높은 uncertainty를 가지는 pixel을 제거할 때마다 model의 performance가 증가하는 것을 보여주고 있다.  uncertainty가 높은 pixel을 제거하면 precision은 증가하지만, recall은 감소하게 된다.
 
@@ -278,12 +282,15 @@ pixel의 depth regression task에서도 실험을 진행하였습니다. 실험�
 
 두번째로 epistemic uncertainty와 aleatoric uncertainty 그래프는 상당히 유사한 모양을 가지고 있다. 이것은 각 uncertainty가 다른 uncertainty와 비슷한 역할을 할 수 있다는 것을 의미한다.(다른 uncertainty가 없어도) 이는 하나의 uncertainty만 modeling하더라도 다른 uncertainty의 부족함을 채울려고 한다고 생각하면 된다.
 
-![figure3](https://user-images.githubusercontent.com/27891090/60392848-cd8b8680-9b46-11e9-8c84-46ef5532fb77.png)
+![]({{ site.baseurl }}/images/2019-06-29-What-Uncertainties-Do-We-Need-in-Bayesian-Deep/figure3.png "figure3" )
+
+
 
 위의 이미지는 test set에 대한 calibration plot을 나타낸다. calibration plot이란 예측하는 확률값이 실제의 확률과 얼마나 유사한지 나타내는 역할을 한다. 예를 들어서, softmax value= 0.7이 실제로 70%의 확률로 나타나는지 확인하는 것이다. discret한 확률구간을 정의하고 각 확률구간에 대한 빈도를 측정한다. $y=x$ 그래프와 유사할수록 더 정확한 calibration이라고 할 수 있습니다.
 ### 5.2 Uncertainty with Distance from Training Data 
 
-![Table3](https://user-images.githubusercontent.com/27891090/60392851-d5e3c180-9b46-11e9-9e09-98d0eba87510.png)
+![]({{ site.baseurl }}/images/2019-06-29-What-Uncertainties-Do-We-Need-in-Bayesian-Deep/table3.png "Table3" )
+
 
 - **Aleatoric uncertainty는 더 많은 데이터가 있어도 설명할 수 없습니다.**
 - **Aleatoric uncertainty는 out-of-example(이상치)에 대해서 증가하지 않지만, epistemic은 증가합니다.**
