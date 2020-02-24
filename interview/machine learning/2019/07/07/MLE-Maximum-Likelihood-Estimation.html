@@ -9,13 +9,13 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="liklihood란, 이미 주어진 표본적 증거로 비추어보았을 때, 모집단에 관해 어떠한 통계적 추정이 그럴듯한 정도를 의미합니다. 수식으로 나타내면, $P(D W)$ 처럼 나타낼 수 있다. (D = observation, W = parameters) ." />
 <meta property="og:description" content="liklihood란, 이미 주어진 표본적 증거로 비추어보았을 때, 모집단에 관해 어떠한 통계적 추정이 그럴듯한 정도를 의미합니다. 수식으로 나타내면, $P(D W)$ 처럼 나타낼 수 있다. (D = observation, W = parameters) ." />
-<link rel="canonical" href="https://rroundtable.github.io/FastPages/2020/02/24/2019-07-07-MLE-Maximum-Likelihood-Estimation.html" />
-<meta property="og:url" content="https://rroundtable.github.io/FastPages/2020/02/24/2019-07-07-MLE-Maximum-Likelihood-Estimation.html" />
+<link rel="canonical" href="https://rroundtable.github.io/FastPages/interview/machine%20learning/2019/07/07/MLE-Maximum-Likelihood-Estimation.html" />
+<meta property="og:url" content="https://rroundtable.github.io/FastPages/interview/machine%20learning/2019/07/07/MLE-Maximum-Likelihood-Estimation.html" />
 <meta property="og:site_name" content="fastpages" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-02-24T05:24:35-06:00" />
+<meta property="article:published_time" content="2019-07-07T00:00:00-05:00" />
 <script type="application/ld+json">
-{"mainEntityOfPage":{"@type":"WebPage","@id":"https://rroundtable.github.io/FastPages/2020/02/24/2019-07-07-MLE-Maximum-Likelihood-Estimation.html"},"description":"liklihood란, 이미 주어진 표본적 증거로 비추어보았을 때, 모집단에 관해 어떠한 통계적 추정이 그럴듯한 정도를 의미합니다. 수식으로 나타내면, $P(D W)$ 처럼 나타낼 수 있다. (D = observation, W = parameters) .","@type":"BlogPosting","url":"https://rroundtable.github.io/FastPages/2020/02/24/2019-07-07-MLE-Maximum-Likelihood-Estimation.html","headline":"MLE: Maximum Likelihood Estimation","dateModified":"2020-02-24T05:24:35-06:00","datePublished":"2020-02-24T05:24:35-06:00","@context":"https://schema.org"}</script>
+{"datePublished":"2019-07-07T00:00:00-05:00","headline":"MLE: Maximum Likelihood Estimation","mainEntityOfPage":{"@type":"WebPage","@id":"https://rroundtable.github.io/FastPages/interview/machine%20learning/2019/07/07/MLE-Maximum-Likelihood-Estimation.html"},"description":"liklihood란, 이미 주어진 표본적 증거로 비추어보았을 때, 모집단에 관해 어떠한 통계적 추정이 그럴듯한 정도를 의미합니다. 수식으로 나타내면, $P(D W)$ 처럼 나타낼 수 있다. (D = observation, W = parameters) .","@type":"BlogPosting","url":"https://rroundtable.github.io/FastPages/interview/machine%20learning/2019/07/07/MLE-Maximum-Likelihood-Estimation.html","dateModified":"2019-07-07T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
   <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -74,8 +74,8 @@
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">MLE: Maximum Likelihood Estimation</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-02-24T05:24:35-06:00" itemprop="datePublished">
-        Feb 24, 2020
+    <h1 class="post-title p-name" itemprop="name headline">MLE: Maximum Likelihood Estimation</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2019-07-07T00:00:00-05:00" itemprop="datePublished">
+        Jul 7, 2019
       </time>
     •<span class="read-time" title="Estimated read time">
     
@@ -85,14 +85,33 @@
 </span></p>
 
     
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/FastPages/categories/#interview">interview</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/FastPages/categories/#machine learning">machine learning</a>
+        
+      
+      </p>
+    
 
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <table>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#classification-mle와-kl-divergence-cross-entropy">Classification: MLE와 KL-divergence, Cross Entropy</a></li>
+<li class="toc-entry toc-h2"><a href="#regression-mle와-method-of-least-squares">Regression: MLE와 Method of Least Squares</a></li>
+<li class="toc-entry toc-h1"><a href="#map-maximum-a-posterior-estimation">MAP: Maximum a Posterior Estimation</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#bayesian-interpretation-of-ridge-regularization">Bayesian interpretation of Ridge regularization</a></li>
+</ul>
+</li>
+</ul><table>
   <tbody>
     <tr>
-      <td><em>liklihood</em>란, 이미 주어진 표본적 증거로 비추어보았을 때, 모집단에 관해 어떠한 통계적 추정이 그럴듯한 정도를  의미합니다. 수식으로 나타내면, $P(D</td>
+      <td>
+<em>liklihood</em>란, 이미 주어진 표본적 증거로 비추어보았을 때, 모집단에 관해 어떠한 통계적 추정이 그럴듯한 정도를  의미합니다. 수식으로 나타내면, $P(D</td>
       <td>W)$ 처럼 나타낼 수 있다. (D = observation, W = parameters) .</td>
     </tr>
   </tbody>
@@ -110,7 +129,7 @@ likelihood는 다음과 같이 정의됩니다. ($X$는 앞면이 나온 횟수,
 <script type="math/tex">P(X|\theta)</script>
 아래는 likelihood의 그래프입니다.</p>
 
-<p><img src="https://i.imgur.com/qa6ikOG.png" /></p>
+<p><img src="https://i.imgur.com/qa6ikOG.png"></p>
 
 <p>앞면이 나올 확률이 0. 56인 지점에서 가장 높은 likelihood를 가지고 있음을 알 수 있습니다.</p>
 
@@ -119,7 +138,8 @@ likelihood는 다음과 같이 정의됩니다. ($X$는 앞면이 나온 횟수,
 $$</code>
 <script type="math/tex">\hat{\theta} = 0.56</script></p>
 
-<h2 id="classification-mle와-kl-divergence-cross-entropy">Classification: MLE와 KL-divergence, Cross Entropy</h2>
+<h2 id="classification-mle와-kl-divergence-cross-entropy">
+<a class="anchor" href="#classification-mle%EC%99%80-kl-divergence-cross-entropy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Classification: MLE와 KL-divergence, Cross Entropy</h2>
 
 <p>KL-divergence는 다음과 같이 정의됩니다.</p>
 
@@ -158,7 +178,8 @@ $$</code></p>
 
 <p>KLD를 최소화한다는 것은 결국 cross entropy를 최소화하는 것과 같습니다. 그리고 cross entropy를 최소화 하는 것은 결국 likelihood를 최대화하는 것과 같습니다. 따라서 MLE가 하는 것은 모델이 추정한 데이터의 분포와 실제 데이터의 분포를 가장 유사하게 만들어주는 parameter를 찾는 것이라고 해석할 수 있습니다.</p>
 
-<h2 id="regression-mle와-method-of-least-squares">Regression: MLE와 Method of Least Squares</h2>
+<h2 id="regression-mle와-method-of-least-squares">
+<a class="anchor" href="#regression-mle%EC%99%80-method-of-least-squares" aria-hidden="true"><span class="octicon octicon-link"></span></a>Regression: MLE와 Method of Least Squares</h2>
 
 <p>regression task에서는 MLE를 다음과 같이 정의할 수 있습니다.</p>
 
@@ -180,7 +201,8 @@ $$</code></p>
 MSE = \frac{1}{m}\sum_{i=1}^m\rVert\hat{y}_i - y_i\rVert ^ 2
 $$</code></p>
 
-<h1 id="map-maximum-a-posterior-estimation">MAP: Maximum a Posterior Estimation</h1>
+<h1 id="map-maximum-a-posterior-estimation">
+<a class="anchor" href="#map-maximum-a-posterior-estimation" aria-hidden="true"><span class="octicon octicon-link"></span></a>MAP: Maximum a Posterior Estimation</h1>
 
 <p>MAP는 MLE와 다르게, prior라는 assumption을 사용합니다.</p>
 
@@ -198,10 +220,11 @@ P(T=x|E=0.7)=\frac{P(E=0.7|T=x)P(T=x)}{P(E=0.7)}
 $$</code>
 결국은 가장 데이터에 어울리는 prior를 구하는 과정이 MAP라고 할 수 있습니다.</p>
 
-<h2 id="bayesian-interpretation-of-ridge-regularization">Bayesian interpretation of Ridge regularization</h2>
+<h2 id="bayesian-interpretation-of-ridge-regularization">
+<a class="anchor" href="#bayesian-interpretation-of-ridge-regularization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bayesian interpretation of Ridge regularization</h2>
 <center>
 <figure class="image">
-<img src="https://cdn-images-1.medium.com/max/1600/1*XC-8tHoMxrO3ogHKylRfRA.png" />
+<img src="https://cdn-images-1.medium.com/max/1600/1*XC-8tHoMxrO3ogHKylRfRA.png">
 <figcaption>left: lasso    right: ridge</figcaption>
 </figure>
 </center>
@@ -240,11 +263,19 @@ $$</code>
 
 <ul>
   <li>https://ratsgo.github.io/statistics/2017/09/23/MLE/</li>
-  <li><a href="http://databaser.net/moniwiki/pds/BayesianStatistic/베이즈_정리와_MLE.pdf">베이즈 정리와 MLE, MAP</a></li>
+  <li><a href="http://databaser.net/moniwiki/pds/BayesianStatistic/%EB%B2%A0%EC%9D%B4%EC%A6%88_%EC%A0%95%EB%A6%AC%EC%99%80_MLE.pdf">베이즈 정리와 MLE, MAP</a></li>
   <li>https://statisticaloddsandends.wordpress.com/2018/12/29/bayesian-interpretation-of-ridge-regression/</li>
 </ul>
 
-  </div><a class="u-url" href="/FastPages/2020/02/24/2019-07-07-MLE-Maximum-Likelihood-Estimation.html" hidden></a>
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="RRoundTable/FastPages"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/FastPages/interview/machine%20learning/2019/07/07/MLE-Maximum-Likelihood-Estimation.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
