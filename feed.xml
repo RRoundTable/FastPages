@@ -1,4 +1,157 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://rroundtable.github.io/FastPages/feed.xml" rel="self" type="application/atom+xml" /><link href="https://rroundtable.github.io/FastPages/" rel="alternate" type="text/html" /><updated>2020-02-24T04:55:47-06:00</updated><id>https://rroundtable.github.io/FastPages/feed.xml</id><title type="html">fastpages</title><subtitle>An easy to use blogging platform with support for Jupyter Notebooks.</subtitle><entry><title type="html">Fastpages Notebook Blog Post</title><link href="https://rroundtable.github.io/FastPages/fastpages/jupyter/2020/02/20/test.html" rel="alternate" type="text/html" title="Fastpages Notebook Blog Post" /><published>2020-02-20T00:00:00-06:00</published><updated>2020-02-20T00:00:00-06:00</updated><id>https://rroundtable.github.io/FastPages/fastpages/jupyter/2020/02/20/test</id><content type="html" xml:base="https://rroundtable.github.io/FastPages/fastpages/jupyter/2020/02/20/test.html">&lt;!--
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://rroundtable.github.io/FastPages/feed.xml" rel="self" type="application/atom+xml" /><link href="https://rroundtable.github.io/FastPages/" rel="alternate" type="text/html" /><updated>2020-02-24T05:24:35-06:00</updated><id>https://rroundtable.github.io/FastPages/feed.xml</id><title type="html">fastpages</title><subtitle>An easy to use blogging platform with support for Jupyter Notebooks.</subtitle><entry><title type="html">MLE: Maximum Likelihood Estimation</title><link href="https://rroundtable.github.io/FastPages/2020/02/24/2019-07-07-MLE-Maximum-Likelihood-Estimation.html" rel="alternate" type="text/html" title="MLE: Maximum Likelihood Estimation" /><published>2020-02-24T05:24:35-06:00</published><updated>2020-02-24T05:24:35-06:00</updated><id>https://rroundtable.github.io/FastPages/2020/02/24/2019-07-07-MLE%20Maximum%20Likelihood%20Estimation</id><content type="html" xml:base="https://rroundtable.github.io/FastPages/2020/02/24/2019-07-07-MLE-Maximum-Likelihood-Estimation.html">&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;em&gt;liklihood&lt;/em&gt;란, 이미 주어진 표본적 증거로 비추어보았을 때, 모집단에 관해 어떠한 통계적 추정이 그럴듯한 정도를  의미합니다. 수식으로 나타내면, $P(D&lt;/td&gt;
+      &lt;td&gt;W)$ 처럼 나타낼 수 있다. (D = observation, W = parameters) .&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;동전던지기 예시를 생각해보면, 쉽게 이해할 수 있다. 일반적으로 동전 던지기를 해서 앞면이 나올 확률은 0.5라고 생각합니다. 하지만, 이는 우리가 가정한 값이지 실제의 값은 아닙니다. 이런 이유로 몇 번의 수행결과로 동전의 앞면이 나올 확률 $P(H)$를 정의하고자 합니다.&lt;/p&gt;
+
+&lt;p&gt;만약 동전을 100번 던졌을 때, 동전의 앞면이 56번 나왔다면 ‘동전의 앞면이 나올 확률’은 몇이라고 얘기할 수 있을까?  이 문제의 해답이 &lt;strong&gt;Maximum Likelihood&lt;/strong&gt;를 구하는 것이다. 즉, observation이 주어졌을 때, 가장 그럴듯한 가설(혹은 parameter)를 찾는 문제가 &lt;strong&gt;Maximum Likelihood Estimation&lt;/strong&gt;이다.&lt;/p&gt;
+
+&lt;p&gt;동전 던지기는 이항분포를 따릅니다. x는 100번 던졌을 때 앞면이 나온 횟수를 의미하고 p는 앞면이 나올 확률을 의미합니다.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+p(x) = \begin{pmatrix} n \\ x \end{pmatrix} p^x(1-p)^{n-x}
+$$&lt;/code&gt;
+likelihood는 다음과 같이 정의됩니다. ($X$는 앞면이 나온 횟수, $\theta$는 앞면이 나올 확률)
+&lt;script type=&quot;math/tex&quot;&gt;P(X|\theta)&lt;/script&gt;
+아래는 likelihood의 그래프입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/qa6ikOG.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;앞면이 나올 확률이 0. 56인 지점에서 가장 높은 likelihood를 가지고 있음을 알 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\hat{\theta} = argmax_{\theta}P(X|\theta)
+$$&lt;/code&gt;
+&lt;script type=&quot;math/tex&quot;&gt;\hat{\theta} = 0.56&lt;/script&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;classification-mle와-kl-divergence-cross-entropy&quot;&gt;Classification: MLE와 KL-divergence, Cross Entropy&lt;/h2&gt;
+
+&lt;p&gt;KL-divergence는 다음과 같이 정의됩니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+D_{KL}(P \rVert Q) = -\sum_{x \in X}P(x)\log{\frac{Q(x)}{P(x)}}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+D_{KL}(P \rVert Q) = -\sum_{x \in X}P(x)(\log{Q(x)} - \log{P(x)})
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;즉, Q distribution과 P distribution간의 차이를 나타내주는 역할을 합니다. 만약 두 분포간의 차이를 나타내는데 필요한 정보량이 많다면, 두 분포는 차이가 크다고 할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;Cross entropy는 다음과 같이 정의 됩니다.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+H(p, q) = -\sum_{x \in X}p(x)\log{q(x)} = E_p[-\log{q}]
+$$&lt;/code&gt;
+실제 분포 $p$에 대해서 $-\log{q}$를 평균내는 것입니다. 만약, $q$가  p와 유사할 수록 cross entropy는 낮게 나올 것입니다.  사실 cross entropy는 kl-divergence에서 출발했다고 해석할 수도 있습니다. 아래 수식을 보면 $\log{P(x)}$는 실제 분포가 주어지면, constant term이 됩니다. 따라서 이를 제외하고 본 것이 cross entropy라고 해석할 수 있습니다.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+D_{KL}(P \rVert Q) = -\sum_{x \in X}P(x)(\log{Q(x)} - \log{P(x)})
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;그렇다면, MLE와 KLD, cross entropy는 어떤 관계를 가질까요? 결론부터 말씀드리면, 이들은 본질적으로 같은 일을 합니다. 아래는 수식입니다.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{align}
+\theta_{ML} =\arg\max_{\theta}P_{model}(X|\theta) = \arg\max_{\theta}E_{X \sim P_{data}}[\log{P_{model}(x|\theta)}]
+\end{align}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+D_{KL}(P \rVert Q) = E_{x \sim P_{data}}[\log{P_{data}(x)} - \log{P_{model}(x)}]
+$$&lt;/code&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+H(p, q) =  E_p[-\log{q}]
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;KLD를 최소화한다는 것은 결국 cross entropy를 최소화하는 것과 같습니다. 그리고 cross entropy를 최소화 하는 것은 결국 likelihood를 최대화하는 것과 같습니다. 따라서 MLE가 하는 것은 모델이 추정한 데이터의 분포와 실제 데이터의 분포를 가장 유사하게 만들어주는 parameter를 찾는 것이라고 해석할 수 있습니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;regression-mle와-method-of-least-squares&quot;&gt;Regression: MLE와 Method of Least Squares&lt;/h2&gt;
+
+&lt;p&gt;regression task에서는 MLE를 다음과 같이 정의할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{align}
+\theta_{ML} = \arg\max_{\theta} P_{model}(Y|X;\theta)=\arg\max_{\theta}\sum_{i=1}^{m}\log{P_{model}(y_i|x_i;\theta)}
+\end{align}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$P_{model}$&lt;/code&gt;이 Gaussian distribution이라고 가정하겠습니다. 위의 log term은 아래와 같이 전개됩니다.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\log{P_{model}(y_i|x_i;\theta)} = -m\log{\sigma} - \frac{m}{2}\log{2\pi}-\sum_{i=1}^m\frac{\rVert\hat{y}_i - y_i\rVert^2}{2\sigma^2}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;$\sigma^2$(분산)은 고정되어 있다고 가정하면, 결국  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\rVert\hat{y}_i - y_i\rVert^2$&lt;/code&gt;를 최소화하는 parameter $\theta$를 찾는 것이 MLE입니다. 이는 아래와 같이 결국 least square와 같은 일을 하게 됩니다.&lt;/p&gt;
+
+&lt;p&gt;Least squares는 모델에 input을 넣었을때 나오는 output이 실제 target y와 차이를 나타내는 수식이며 이를 가장 작게하는 파라미터 $\theta$를 찾는 것이 관건입니다.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+MSE = \frac{1}{m}\sum_{i=1}^m\rVert\hat{y}_i - y_i\rVert ^ 2
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;map-maximum-a-posterior-estimation&quot;&gt;MAP: Maximum a Posterior Estimation&lt;/h1&gt;
+
+&lt;p&gt;MAP는 MLE와 다르게, prior라는 assumption을 사용합니다.&lt;/p&gt;
+
+&lt;p&gt;posterior $P(w|D)$ 는 아래와 같이 정의됩니다. ($P(w)$는 prior $P(D|W)$는 likelihood)
+&lt;script type=&quot;math/tex&quot;&gt;P(w|D) = \frac{P(D|w) P(w)}{P(D)}&lt;/script&gt;
+위의 동전 던지기 예를 다시 살펴보겠습니다.&lt;/p&gt;
+
+&lt;p&gt;만약 동전을 던졌을 때, 앞면이 나올확률이 0.5이라는 가정을 했다고 생각해봅시다. 그리고 실제 100번을 던졌을 때, 앞면이 70번이 나온상황을 보면 posterior는 다음과 같습니다.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+P(T=0.5|E=0.7)=\frac{P(E=0.7|T=0.5)P(T=0.5)}{P(E=0.7)}
+$$&lt;/code&gt;
+만약 Maximum a posterior estimation을 한다고 하면, prior를 일종의 variable로 설정하고 구할 수 있습니다.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+P(T=x|E=0.7)=\frac{P(E=0.7|T=x)P(T=x)}{P(E=0.7)}
+$$&lt;/code&gt;
+결국은 가장 데이터에 어울리는 prior를 구하는 과정이 MAP라고 할 수 있습니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;bayesian-interpretation-of-ridge-regularization&quot;&gt;Bayesian interpretation of Ridge regularization&lt;/h2&gt;
+&lt;center&gt;
+&lt;figure class=&quot;image&quot;&gt;
+&lt;img src=&quot;https://cdn-images-1.medium.com/max/1600/1*XC-8tHoMxrO3ogHKylRfRA.png&quot; /&gt;
+&lt;figcaption&gt;left: lasso    right: ridge&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/center&gt;
+
+&lt;p&gt;regression task를 가정했을 때, residual sum of squares(RSS)가 최소화되는 parameter $\beta$를 찾아야합니다. 
+&lt;script type=&quot;math/tex&quot;&gt;\hat{\beta} =\arg\min_{\beta}(y-X\beta)^T(y-X\beta)&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;여기서 ridge regression은 다음과 같이 penalty term의 역할을 합니다. 위의 식과 다르게 RSS와 $\beta$의 크기도 함께 고려해야 하는 것을 의미합니다.&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt; ($\rVert\beta\rVert_2^2 = \beta_1^2 + \beta_2^2 + \cdots \beta_p^2$) &lt;/code&gt;결국 model의 complexity를 제한 하는 역할을 하는 것으로 해석할 수 있습니다.
+&lt;script type=&quot;math/tex&quot;&gt;\hat{\beta} =\arg \min_{\beta}(y-X\beta)^T(y-X\beta) + \lambda\rVert\beta\rVert_2^2&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;ridge regression은 bayesian 관점에서 해석할 수 있습니다.  다음은 regression task에 gaussian distribution을 가정한 것입니다.
+&lt;script type=&quot;math/tex&quot;&gt;y|X, \beta \sim \mathcal{N}(X\beta, \sigma^2I)&lt;/script&gt;
+frequentism에서는 $\beta$가 고정된 값이지만, bayesian에서 $\beta$는 prior distribution을 가진다.  $\beta$를 Normal distributioni으로 가정해보겠습니다.
+&lt;script type=&quot;math/tex&quot;&gt;\beta \sim \mathcal{N}(0, \tau^2 I)&lt;/script&gt;
+posterior는 다음과 같이 전개 됩니다.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{align}
+p(\beta|y, X)&amp;amp; \varpropto p(\beta)\cdotp(y|X, \beta) \\
+&amp;amp;\varpropto \exp[-\frac{1}{2}(\beta-0)^T\frac{1}{\tau^2}I(\beta - 0)]\cdot\exp[-\frac{1}{2}(y-X\beta)^T\frac{1}{\sigma^2}(y-X\beta) \\
+&amp;amp;=\exp[-\frac{1}{2\sigma^2}(y-X\beta)^T(y-X\beta) -\frac{1}{2\tau^2}\rVert\beta\rVert_2^2]
+\end{align}
+$$&lt;/code&gt;
+위의 식을 통해서 maximum a posterior를 구할 수 있습니다.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{align}
+\hat{\beta} &amp;amp;= \arg\max_{\beta}\exp[-\frac{1}{2\sigma^2}(y-X\beta)^T(y-X\beta) -\frac{1}{2\tau^2}\rVert\beta\rVert_2^2]\\
+&amp;amp;= \arg\min \frac{1}{\sigma^2}(y-X\beta)^T(y-X\beta) + \frac{1}{\tau^2}\rVert\beta\rVert_2^2\\
+&amp;amp;= \arg\min (y-X\beta)^T(y-X\beta) + \frac{\sigma^2}{\tau^2}\rVert\beta\rVert_2^2
+\end{align}
+$$&lt;/code&gt;
+위의 식을 통해서 $\lambda = \frac{\sigma^2}{\tau^2}$으로 구할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;참고로 lasso regularization은 prior distribution을 laplace distribution을 사용하면 위와 같이 유도할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://ratsgo.github.io/statistics/2017/09/23/MLE/&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://databaser.net/moniwiki/pds/BayesianStatistic/베이즈_정리와_MLE.pdf&quot;&gt;베이즈 정리와 MLE, MAP&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;https://statisticaloddsandends.wordpress.com/2018/12/29/bayesian-interpretation-of-ridge-regression/&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">liklihood란, 이미 주어진 표본적 증거로 비추어보았을 때, 모집단에 관해 어떠한 통계적 추정이 그럴듯한 정도를 의미합니다. 수식으로 나타내면, $P(D W)$ 처럼 나타낼 수 있다. (D = observation, W = parameters) .</summary></entry><entry><title type="html">Fastpages Notebook Blog Post</title><link href="https://rroundtable.github.io/FastPages/fastpages/jupyter/2020/02/20/test.html" rel="alternate" type="text/html" title="Fastpages Notebook Blog Post" /><published>2020-02-20T00:00:00-06:00</published><updated>2020-02-20T00:00:00-06:00</updated><id>https://rroundtable.github.io/FastPages/fastpages/jupyter/2020/02/20/test</id><content type="html" xml:base="https://rroundtable.github.io/FastPages/fastpages/jupyter/2020/02/20/test.html">&lt;!--
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
 #################################################
@@ -657,7 +810,466 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;</content><author><name></name></author><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://rroundtable.github.io/FastPages/images/chart-preview.png" /><media:content medium="image" url="https://rroundtable.github.io/FastPages/images/chart-preview.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Example Markdown Post</title><link href="https://rroundtable.github.io/FastPages/fastpages/markdown/2020/01/14/test-markdown-post.html" rel="alternate" type="text/html" title="Example Markdown Post" /><published>2020-01-14T00:00:00-06:00</published><updated>2020-01-14T00:00:00-06:00</updated><id>https://rroundtable.github.io/FastPages/fastpages/markdown/2020/01/14/test-markdown-post</id><content type="html" xml:base="https://rroundtable.github.io/FastPages/fastpages/markdown/2020/01/14/test-markdown-post.html">&lt;h2 id=&quot;basic-setup&quot;&gt;Basic setup&lt;/h2&gt;
+&lt;/div&gt;</content><author><name></name></author><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://rroundtable.github.io/FastPages/images/chart-preview.png" /><media:content medium="image" url="https://rroundtable.github.io/FastPages/images/chart-preview.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">2019년 계획했던 일</title><link href="https://rroundtable.github.io/FastPages/2020/01/22/%EB%8A%A6%EC%9D%80-2019-%ED%9A%8C%EA%B3%A0.html" rel="alternate" type="text/html" title="2019년 계획했던 일" /><published>2020-01-22T00:00:00-06:00</published><updated>2020-01-22T00:00:00-06:00</updated><id>https://rroundtable.github.io/FastPages/2020/01/22/%EB%8A%A6%EC%9D%80-2019-%ED%9A%8C%EA%B3%A0</id><content type="html" xml:base="https://rroundtable.github.io/FastPages/2020/01/22/%EB%8A%A6%EC%9D%80-2019-%ED%9A%8C%EA%B3%A0.html">&lt;p&gt;2019년은 학생에서 사회인으로 나아가는 경계였다. 2019년에는 특히 좋은 사람들을 많이 만났고, 개인적으로 많은 도움을 받은 해라고 생각한다.&lt;/p&gt;
+
+&lt;h4 id=&quot;1-딥러닝-논문-구현-목표-달성&quot;&gt;(1) 딥러닝 논문 구현: 목표 달성&lt;/h4&gt;
+
+&lt;p&gt;지금도 어렵지만, 처음에 딥러닝 논문을 구현하려고 시도했을때는 정말 큰 벽처럼 느껴졌다.  이전에는 딥러닝 구현체를 주로 가져다 쓰는 식으로 공부를 지속하였고, 돌이켜보면 전혀 성장하지 못했던 시기이다.&lt;/p&gt;
+
+&lt;p&gt;처음 딥러닝 논문을 구현하기로 마음먹은 것은 모두의 연구소 SafeAI랩에서 좋은 사람들을 만나서이다. 그 당시에는 구현하려는 주제가 명확했고, 누군가에게 피드백을 받을 환경이 조성되어 있어서 조금씩 성장했다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;처음에는 tensorflow code를 &lt;a href=&quot;https://github.com/RRoundTable&quot;&gt;keras code&lt;/a&gt;로 옮겨서 구현하는 연습을 하였다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;논문의 결과를 조금 더 명확하게 보여주기 위해서 &lt;a href=&quot;https://github.com/RRoundTable/EEN-with-Keras&quot;&gt;시각화&lt;/a&gt;에 힘을 쓰기도 하였다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;그리고, 논문의 처음부터 끝까지 오로지 &lt;a href=&quot;https://github.com/RRoundTable/hedged_instance_embedding&quot;&gt;나의 코드&lt;/a&gt;로 채우기도 하였다. 저자분이 한국분이셔서 커뮤니티에서 도움을 주기도 하였다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;2-코딩-테스트-합격하기&quot;&gt;(2) 코딩 테스트 합격하기&lt;/h4&gt;
+
+&lt;p&gt;처음에는 딥러닝 엔지니어 직군이 코딩테스트를 보는지 몰랐다. 그래서 괜찮은 기회들을 놓치기도 했다. 코딩 테스트에 합격하기 위해서 &lt;a href=&quot;https://www.codility.com/&quot;&gt;Codility&lt;/a&gt; 를 활용하였지만, 나의 실력은 제자리 걸음이였다. 지금 생각해보면, 잘못된 방식으로 알고리즘을 대하고 있었다.&lt;/p&gt;
+
+&lt;p&gt;결국은 2019년에 코딩 테스트에서는 모두 좋은 결과를 얻지 못했다.&lt;/p&gt;
+
+&lt;h4 id=&quot;3-딥러닝-엔지니어로-인턴-경험-쌓기&quot;&gt;(3) 딥러닝 엔지니어로 인턴 경험 쌓기&lt;/h4&gt;
+
+&lt;p&gt;수료 후에 인턴을 해야겠다는 계획을 가지고 있었다. 평소에 관심을 가지고 있던 의료기업들에 이메일 혹은 다른 매체로 지원서를 작성하였다. 한 기업에 면접을 보게 되었고,  긍정적인 인상을 가지고 회사에 입사하게 되었다.&lt;/p&gt;
+
+&lt;p&gt;처음하는 사회생활이였다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;이런 점이 인상깊었다.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;실제 인공지능 기술이 상업화되가는 과정을 지켜볼 수 있었다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;내가 이전에 놓치고 있던 개념들에 대해서 깨달음을 얻을 수 있었다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;능력있는 동료들&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;나에게 맡겨지는 책임과 권한&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;하지만,  나에게 버거웠던 것은&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;명확한 경쟁업체의 존재와 시장에 빠른 진입이 요구되었다.&lt;/li&gt;
+  &lt;li&gt;경험해보지 않은 도메인에 대한 빠른 적응이 요구되었다.&lt;/li&gt;
+  &lt;li&gt;문서체계 및 코드체계가 정해진 룰이 없었다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;처음하는 일이라서 잘하고 싶었던 마음이 더 컸다. 요구사항을 충족시키기 위해서 자신을 몰아세우고 있는 ‘나’를 발견하게 되었다.&lt;/p&gt;
+
+&lt;p&gt;하지만, 다행스럽게도 주변에 조언을 구할 사람이 있었다. (감사합니다.)  혼자 생각하기보다 조언을 구하고 심정을 공유했던 것이 악순환을 벗어나는데 큰 도움이 되었다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;돌이켜보니,&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;일하면서 고민하고 고뇌했던 과정이 나에게 많은 영감을 주었다. 특히,  모델의 성능을 끌어올리기 위해서 정말 많은 고민과 스트레스를 받았는데, 그 과정에서 얻은 교훈은 나에게 많은 시도를 할 수 있게 해준 환경도 한 몫 했다고 생각한다. 또한 스트레스에 대해서 더 진지하게 생각해보는 계기가 되었다.&lt;/p&gt;
+
+&lt;h2 id=&quot;2-2019년-계획하지-않았던-일&quot;&gt;2. 2019년 계획하지 않았던 일&lt;/h2&gt;
+
+&lt;h4 id=&quot;1-풀잎스쿨-cpps&quot;&gt;(1) 풀잎스쿨 CPPS&lt;/h4&gt;
+
+&lt;p&gt;기업에서 퇴사하기 약 1 ~ 2주전에 CPPS[competitive programming problem solving]을 시작하게 되었다.  &lt;a href=&quot;https://leetcode.com/&quot;&gt;leetcode&lt;/a&gt;에서 일주일에 다섯문제를 풀고 발표하는 형식으로 이루어졌다. 이 모임에 참여하기 전에는 다른 누군가에게 발표하는 과정의 필요성에 대해서 못느꼈다. 그리고 다른사람들의 중요성도 못 느꼈던 거 같다.&lt;/p&gt;
+
+&lt;p&gt;하지만, 다른 사람들의 생각을 듣게 되면서, 새로운 방향성에 대해서 접하게 되었다. 또한, 내가 처음에 발표를 하는데 내용이 정리가 안되니까, 당황스러울 정도로 매끄럽지 못하게 발표하게 된적도 있다. 이런 경험을  한 후에는 앞에 나가기전에 잠깐 생각을 정리하기도 하고, discuss에서 다른 사람들이 어떤 생각으로 문제를 풀이하는지 어떤 것을 더 배울 수 있는지에 대한 고찰을 많이 하였다.&lt;/p&gt;
+
+&lt;p&gt;혼자하는 것보다 여럿이 하니까, 더 깊은 생각과 생각을 정리할 수 있는 시간을 가질 수 있어서 좋았다.&lt;/p&gt;
+
+&lt;h4 id=&quot;2-성남시-이노베이션-해커톤&quot;&gt;(2) 성남시 이노베이션 해커톤&lt;/h4&gt;
+
+&lt;p&gt;퇴사 후에 해커톤에 참여하게 되었다. 좋은 분들과 함께 할 수 있어서 정말 재밌었다. 물론 그 당시에는 잠을 못자는게 힘들었다.&lt;/p&gt;
+
+&lt;h4 id=&quot;3-의료인공지능-기업-면접&quot;&gt;(3) 의료인공지능 기업 면접&lt;/h4&gt;
+
+&lt;p&gt;의료 도메인 인턴을 한 후, 헤드 헌터 업체를 통해서 Job description이 가끔 왔다. 그 중 하나의 기업에 면접을 보게 되었고, 나름 면접을 원할하게 볼 수 있었다. 하지만, 면접을 진행하면서 알게된 것은, 이전 기업과 너무나 유사한 사업분야였고, 가서 할 일도 비슷해보였다. 오퍼는 받았지만, 장기적으로는 기업과 나의 방향성이 일치하지 않을 것이 분명하여 죄송한 마음으로 거절하게 되었다.&lt;/p&gt;
+
+&lt;h2 id=&quot;3-2019년을-보내고-난-후&quot;&gt;3. 2019년을 보내고 난 후&lt;/h2&gt;
+
+&lt;p&gt;언제나처럼 시간이 너무나 빨랐다.  몇 가지 얻은 교훈이 있다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;성장을 하는데 중요한 자세는 어제보다 나은 오늘이다.&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;같은 실수를 반복하고 있지 않는지 돌이켜 볼 필요가 있다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;멀리가고 싶으면 함께 가는 것이 좋겠다.&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;아직도 여럿이 무엇을 하는데 익숙하지는 않으나, 노력중이다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;신체와 정신 모두 케어 받아야 한다.&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;내가 감당할 수 있는 스트레스 영역에 대한 이해가 필요하다. 불행하다고 느끼지 않는 선에서 노력하고 있다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;4-2020년을-맞이하며&quot;&gt;4. 2020년을 맞이하며&lt;/h2&gt;
+
+&lt;p&gt;아직은 어떤 기술 스텍을 쌓아야 할지 명확하게 모르겠다.&lt;/p&gt;
+
+&lt;p&gt;하지만, 점점 더 소프트웨어 개발자라는 직업이 매력적으로 느껴진다. 배움의 두려움을 이겨낼 수 있는 개발자가 되고 싶다.&lt;/p&gt;
+
+&lt;p&gt;이런 기술 스텍들은 기본적으로 가져가고 싶다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;자료구조/알고리즘, 문제해결능력&lt;/li&gt;
+  &lt;li&gt;운영체제&lt;/li&gt;
+  &lt;li&gt;컴퓨터 네트워크&lt;/li&gt;
+  &lt;li&gt;NLP, VISION의 중요한 개념들&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">2019년은 학생에서 사회인으로 나아가는 경계였다. 2019년에는 특히 좋은 사람들을 많이 만났고, 개인적으로 많은 도움을 받은 해라고 생각한다.</summary></entry><entry><title type="html">Word2vec: distributed representation</title><link href="https://rroundtable.github.io/FastPages/2020/01/14/word-representation.html" rel="alternate" type="text/html" title="Word2vec: distributed representation" /><published>2020-01-14T00:00:00-06:00</published><updated>2020-01-14T00:00:00-06:00</updated><id>https://rroundtable.github.io/FastPages/2020/01/14/word-representation</id><content type="html" xml:base="https://rroundtable.github.io/FastPages/2020/01/14/word-representation.html">&lt;blockquote&gt;
+  &lt;p&gt;분산 표현(distributed representation) 방법은 기본적으로 분포 가설(distributional hypothesis)이라는 가정 하에 만들어진 표현 방법입니다. 이 가정은 &lt;strong&gt;‘비슷한 위치에서 등장하는 단어들은 비슷한 의미를 가진다’&lt;/strong&gt;라는 가정입니다.&lt;/p&gt;
+
+  &lt;p&gt;reference: https://wikidocs.net/22660&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;1-cbowcontinuous-bag-of-words&quot;&gt;1. CBOW(Continuous Bag of Words)&lt;/h3&gt;
+
+&lt;p&gt;주변에 있는 단어로 중간에 있는 단어를 예측하는 방법입니다. 중심단어를 예측하기 위해서 주변단어를 보는 범위를 window라고 합니다. 예를 들어서, 아래 이미지의 첫 번째 글에서 파란색 부분이 ‘fat’, ‘cat’이므로 window는 2입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wikidocs.net/images/page/22660/%EB%8B%A8%EC%96%B4.PNG&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;보통 딥 러닝이라함은, 입력층과 출력층 사이의 은닉층의 개수가 충분히 쌓인 신경망을 학습할 때를 말하는데 Word2Vec는 입력층과 출력층 사이에 하나의 은닉층만이 존재합니다. 이렇게 은닉층(hidden Layer)이 1개인 경우에는 일반적으로 심층신경망(Deep Neural Network)이 아니라 얕은신경망(Shallow Neural Network)이라고 부릅니다. 또한 Word2Vec의 은닉층은 일반적인 은닉층과는 달리 활성화 함수가 존재하지 않으며 룩업 테이블이라는 연산을 담당하는 층으로 일반적인 은닉층과 구분하기 위해 투사층(projection layer)이라고 부르기도 합니다.&lt;/p&gt;
+
+  &lt;p&gt;reference: https://wikidocs.net/22660&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wikidocs.net/images/page/22660/word2vec_renew_2.PNG&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;아래의 이미지를 보면 연산과정을 알 수 있다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;$x_{cat}$: word one-hot vector&lt;/li&gt;
+  &lt;li&gt;$W_{V * M}$:  input layer와 prejection layer사이의 matrix&lt;/li&gt;
+  &lt;li&gt;$W’_{M* V}$: projection layer와 output layer간의 matrix&lt;/li&gt;
+  &lt;li&gt;$V, M$: 단어의 개수, embedding 차원&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wikidocs.net/images/page/22660/word2vec_renew_3.PNG&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wikidocs.net/images/page/22660/word2vec_renew_5.PNG&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;loss function으로는 cross-entropy 함수를 사용하게 됩니다.&lt;/p&gt;
+
+&lt;p&gt;이제 역전파(Back Propagation)를 수행하면 W와 W’가 학습이 되는데, 학습이 다 되었다면 M차원의 크기를 갖는 W의 행이나 W’의 열로부터 어떤 것을 임베딩 벡터로 사용할지를 결정하면 됩니다. 때로는 W와 W’의 평균치를 가지고 임베딩 벡터를 선택하기도 합니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;2-skip-gram&quot;&gt;2. Skip-Gram&lt;/h3&gt;
+
+&lt;p&gt;중간에 있는 단어로 주변의 단어들을 예측하는 방법입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wikidocs.net/images/page/22660/word2vec_renew_6.PNG&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;3-negative-sampling&quot;&gt;3. Negative Sampling&lt;/h3&gt;
+
+&lt;p&gt;대부분 word2vec은 negative sampling을 함께 사용합니다. word2vec의 학습과정을 잘 살펴보면, 출력층에 있는 softmax 함수는 단어집합 크기의 vector내의 모든 값을 0과 1사이의 값이면서 모두 더하면 1이 되도록 바꾸는 작업을 수행합니다. 이는 그 단어가 주변단어와 전혀 상관이 없는 단어라도 똑같이 적용되는 부분입니다.&lt;/p&gt;
+
+&lt;p&gt;만약 마지막 단계에서 ‘강아지’와 ‘고양이’와 같은 단어에 집중하고 있다면, Word2Vec은 사실 ‘돈가스’나 ‘컴퓨터’와 같은 연관 관계가 없는 수많은 단어의 임베딩을 조정할 필요가 없습니다. 전체 단어집합이 아니라 일부 단어집합에 대해서만 고려해도 되지 않을까요?&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;‘강아지’, ‘고양이’, ‘애교’와 같은 주변 단어들을 가져옵니다. 그리고 여기에 ‘돈가스’, ‘컴퓨터’, ‘회의실’과 같은 랜덤으로 선택된 주변 단어가 아닌 상관없는 단어들을 일부만 갖고옵니다. 이렇게 전체 단어 집합보다 훨씬 작은 단어 집합을 만들어놓고 마지막 단계를 이진 분류 문제로 바꿔버리는 겁니다. 즉, Word2Vec은 주변 단어들을 긍정(positive)으로 두고 랜덤으로 샘플링 된 단어들을 부정(negative)으로 둔 다음에 이진 분류 문제를 수행합니다.&lt;/p&gt;
+
+  &lt;p&gt;reference: https://wikidocs.net/22660&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;이는 기존의 다중 클래스 분류 문제를 이진 분류 문제로 바꾸면서도 연산량에 있어서 훨씬 효율적입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;negative sampling은 word2vec을 만들때 현재 문장에 없는 단어를 전체 데이터셋에서 추출하는 방법이다. 목적 단어와 연관성이 없을 것이라고 추정되는 단어를 추출한다.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;자주 뽑히는 단어일 수록 연관성이 낮다고 본다. 흔한 단어일수록 목적 단어와의 관계는 강하지 않기 때문&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;아래는 한 단어 $w_i$가  negative sample로 뽑힐 확률이다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;$f(w_i)$ : $w_i$의 등장빈도&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(w_i) =\frac{f(w_i)^{0.75}}{\sum_{j=0}^n (f(w_j)^{0.75})}&lt;/script&gt;
+
+&lt;h4 id=&quot;word2vec의-한계점&quot;&gt;word2vec의 한계점&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;out of vocalbulary에 대해서는 word representation을 얻을 수 없다.&lt;/li&gt;
+  &lt;li&gt;infrequent words는 학습이 불안정하다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;glove&quot;&gt;Glove&lt;/h2&gt;
+
+&lt;p&gt;카운트 기반과 예측기반을 모두 사용하는 방법론입니다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;
+      &lt;p&gt;LSA: 카운트 기반, 단어의미 유추 성능이 떨어짐.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;p&gt;Word2Vec: 예측기반, 전체적인 통계정보를 반영하지 못함.&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;단어의 동시 등장 행렬은 행과 열을 전체 단어 집합의 단어들로 구성하고, window size내에서 k단어가 등장한 횟수를 기록하는 행렬을 말합니다. 이 행렬은 transpose를 해도 동일합니다. (대칭행렬)&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;예시&lt;/p&gt;
+
+  &lt;p&gt;I like deep learning&lt;/p&gt;
+
+  &lt;p&gt;I like NLP&lt;/p&gt;
+
+  &lt;p&gt;I enjoy flying&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;카운트&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;I&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;like&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;enjoy&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;deep&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;learning&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;NLP&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;flying&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;I&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;like&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;enjoy&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;deep&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;learning&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;NLP&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;flying&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;co-occurrence-probability&quot;&gt;Co-occurrence probability&lt;/h3&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;동시 등장 확률 $P(k&lt;/td&gt;
+      &lt;td&gt;i), P(k&lt;/td&gt;
+      &lt;td&gt;i)$는 동시 등장 행렬로부터 특정 단어 i의 전체 등장 횟수를 카운트하고, 특정 단어 i가 등장했을 때 어떤 단어 k가 등장한 횟수를 카운트하여 계산한 조건부 확률입니다.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;예를 들어서, 위의 동시등장행렬을 바탕으로 P(‘I’|’like’)를 구해보자. ‘I’ 는 총 3번 등장하였다. ‘I’와 ‘like’가 동시에 등장한 횟수는 2번이다. 따라서 P(‘I’|’like’) 는 2/3이다.
+&lt;script type=&quot;math/tex&quot;&gt;P(A|B) = \frac{P(A) \cap P(B)}{P(B)}&lt;/script&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th style=&quot;text-align: left&quot;&gt;동시 등장 확률과 크기 관계 비(ratio)&lt;/th&gt;
+        &lt;th style=&quot;text-align: left&quot;&gt;k=solid&lt;/th&gt;
+        &lt;th style=&quot;text-align: left&quot;&gt;k=gas&lt;/th&gt;
+        &lt;th style=&quot;text-align: left&quot;&gt;k=water&lt;/th&gt;
+        &lt;th style=&quot;text-align: left&quot;&gt;k=fasion&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td style=&quot;text-align: left&quot;&gt;P(k l ice)&lt;/td&gt;
+        &lt;td style=&quot;text-align: left&quot;&gt;0.00019&lt;/td&gt;
+        &lt;td style=&quot;text-align: left&quot;&gt;0.000066&lt;/td&gt;
+        &lt;td style=&quot;text-align: left&quot;&gt;0.003&lt;/td&gt;
+        &lt;td style=&quot;text-align: left&quot;&gt;0.000017&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td style=&quot;text-align: left&quot;&gt;P(k l steam)&lt;/td&gt;
+        &lt;td style=&quot;text-align: left&quot;&gt;0.000022&lt;/td&gt;
+        &lt;td style=&quot;text-align: left&quot;&gt;0.00078&lt;/td&gt;
+        &lt;td style=&quot;text-align: left&quot;&gt;0.0022&lt;/td&gt;
+        &lt;td style=&quot;text-align: left&quot;&gt;0.000018&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td style=&quot;text-align: left&quot;&gt;P(k l ice) / P(k l steam)&lt;/td&gt;
+        &lt;td style=&quot;text-align: left&quot;&gt;8.9&lt;/td&gt;
+        &lt;td style=&quot;text-align: left&quot;&gt;0.085&lt;/td&gt;
+        &lt;td style=&quot;text-align: left&quot;&gt;1.36&lt;/td&gt;
+        &lt;td style=&quot;text-align: left&quot;&gt;0.96&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+
+  &lt;p&gt;위의 표를 통해 알 수 있는 사실은 solid가 등장했을 때 ice가 등장할 확률 0.00019은 solid가 등장했을 때 steam이 등장할 확률인 0.000022보다 약 8.9배 크다는 겁니다. 그도 그럴 것이 solid는 ‘단단한’이라는 의미를 가졌으니까 ‘증기’라는 의미를 가지는 steam보다는 당연히 ‘얼음’이라는 의미를 가지는 ice라는 단어와 더 자주 등장할 겁니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;loss-function&quot;&gt;Loss function&lt;/h3&gt;
+
+&lt;p&gt;Embedding 된 중심단어와 주변 단어 벡터의 내적이 전체 코퍼스에서 동시 등장 확률이 되도록 모델을 학습시킨다.
+&lt;script type=&quot;math/tex&quot;&gt;\mbox{doc product}(W_i, W_k) \approx P(k|i) = P_{ik}&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;실제 학습에서는 아래의 식을 활용한다.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mbox{doc product}(W_i, W_k) \approx \log P(k|i) = \log P_{ik}&lt;/script&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;$X$ : 동시 등장 행렬(Co-occurrence Matrix)&lt;/li&gt;
+  &lt;li&gt;$X_{ij}$ : 중심 단어 i가 등장했을 때 윈도우 내 주변 단어 j가 등장하는 횟수&lt;/li&gt;
+  &lt;li&gt;$X_i$:$\sum_{j}X_{ij}$: 동시 등장 행렬에서 i행의 값을 모두 더한 값&lt;/li&gt;
+  &lt;li&gt;$P_{ik}$ :$P(k|i)$ = $\frac{X_{ik}}{X_i}$ : 중심 단어 i가 등장했을 때 윈도우 내 주변 단어 k가 등장할 확률
+Ex) P(solid l ice) = 단어 ice가 등장했을 때 단어 solid가 등장할 확률&lt;/li&gt;
+  &lt;li&gt;$\frac{P_{ik}}{P_{jk}}$ : $P_{ik}$를  $P_{jk}$로 나눠준 값
+Ex) P(solid l ice) / P(solid l steam) = 8.9&lt;/li&gt;
+  &lt;li&gt;$W_i$ : 중심 단어 i의 임베딩 벡터&lt;/li&gt;
+  &lt;li&gt;$W_k$ : 주변 단어 k의 임베딩 벡터&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;embedding vector의 목적은 단어간의 관계를 잘 표현하는데 있습니다. 위에서 살펴본 $\frac{P_{ik}}{P_{jk}}$ 를 목적함수에 사용합니다. 먼저 함수의 input과 output을 정의해봅니다.
+&lt;script type=&quot;math/tex&quot;&gt;F(W_i, W_j, W_k) =\frac{P_{ik}}{P_{jk}}&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;input에서 output을 도출하는 방법은 많겠지만, 해당 연구에서는 두 단어간의 차이를 input으로 넣는 것을 제안합니다.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;F(W_i - W_j, W_k) =\frac{P_{ik}}{P_{jk}}&lt;/script&gt;
+
+&lt;p&gt;그리고  선형 공간에서 두 vector간의 유사도를 보기 위해서 dot product를 선택했습니다. 
+&lt;script type=&quot;math/tex&quot;&gt;F((W_i -W_j) ^ T W_k) =\frac{P_{ik}}{P_{jk}}&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;정리하자면 선형공간에서 단어의 의미 관계를 표현하기 위해 뺄셈과 내적(dot procut)를 활용했습니다.&lt;/p&gt;
+
+&lt;p&gt;여기서 함수 F는 중심단어와 주변단어의 선택기준이 무작위이기 때문에, 이 둘의 관계는 함수 F안에서 자유롭게 교환가능해야 합니다. 이 조건을 만족하기 위해서는 Homomorphism이라는 조건을 만족해야합니다.
+&lt;script type=&quot;math/tex&quot;&gt;F(a+b) = F(a)F(b) \ \forall a, b \in R&lt;/script&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;In &lt;a href=&quot;https://en.wikipedia.org/wiki/Algebra&quot;&gt;algebra&lt;/a&gt;, a &lt;strong&gt;homomorphism&lt;/strong&gt; is a &lt;a href=&quot;https://en.wikipedia.org/wiki/Morphism&quot;&gt;structure-preserving&lt;/a&gt; &lt;a href=&quot;https://en.wikipedia.org/wiki/Map_(mathematics)&quot;&gt;map&lt;/a&gt; between two &lt;a href=&quot;https://en.wikipedia.org/wiki/Algebraic_structure&quot;&gt;algebraic structures&lt;/a&gt; of the same type (such as two &lt;a href=&quot;https://en.wikipedia.org/wiki/Group_(mathematics)&quot;&gt;groups&lt;/a&gt;, two &lt;a href=&quot;https://en.wikipedia.org/wiki/Ring_(mathematics)&quot;&gt;rings&lt;/a&gt;, or two &lt;a href=&quot;https://en.wikipedia.org/wiki/Vector_space&quot;&gt;vector spaces&lt;/a&gt;).&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Homomorphism의 조건하에서 a와 b가 각각 vector라면 scalar값이 나올 수 없지만 내적값이라고 하면 scalar값이 나올 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;v1, v2, v3, v4 모두 vector입니다.
+&lt;script type=&quot;math/tex&quot;&gt;F(v1^T v2 + v3^Tv4) = F(v1^T v2) F(v3^Tv4) \ \ \forall v1, v2, v3, v4 \in V&lt;/script&gt;
+F는 두 vector의 차이를  받았기 때문에, 뺄셈에 대한 homomorphism으로 변경했습니다.&lt;/p&gt;
+
+&lt;p&gt;(간단하게 덧셈 ~ 곱셈 관계를 뺄셈 ~ 나누기 관계로 치환하였습니다.)
+&lt;script type=&quot;math/tex&quot;&gt;F(v1^T v2 - v3^Tv4) = \frac{F(v1^T v2)}{F(v3^Tv4)} \ \ \forall v1, v2, v3, v4 \in V&lt;/script&gt;
+이제 glove식에 적용해보겠습니다.
+&lt;script type=&quot;math/tex&quot;&gt;F((w_i - w_j)^Tw_k) = \frac{F(w_i^T w_k)}{F(w_j^T w_k)}= \frac{P_{ik}}{P_{jk}}&lt;/script&gt;
+위의 식에서 조금 더 자세히 살펴보면,
+&lt;script type=&quot;math/tex&quot;&gt;F(w_i^Tw_k) = P_{ik} = \frac{X_{ik}}{X_i}&lt;/script&gt;
+또한 좌변을 풀어쓰면,
+&lt;script type=&quot;math/tex&quot;&gt;F((w_i - w_j)^Tw_k) = F(w_i^T w_k - w_j^T w_k) = \frac{F(w_i^T w_k)}{F(w_j^T w_k)}&lt;/script&gt;
+따라서 homomorphism을 형태와 일치하게 됩니다.&lt;/p&gt;
+
+&lt;p&gt;그리고 이러한 조건을 만족시키는 함수는 지수 함수(Exponential function)입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Exp.svg/200px-Exp.svg.png&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;$x^{a + b} = x ^ a * x ^ b$&lt;/li&gt;
+  &lt;li&gt;$x^{a - b} = x ^ a / x ^ b$&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;이제 F를 $\exp$라고 해봅시다.
+&lt;script type=&quot;math/tex&quot;&gt;\exp(w_i^T w_k - w_j^T w_k) = \frac{\exp(w_i^T w_k)}{\exp(w_j^T w_k)}&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;학습의 안정성을 위해서, log를 사용합니다.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;w_i^T w_k  = \log P_{ik}=\log (\frac{X_{ik}}{X_i})=\log X_{ik} - \log X_i&lt;/script&gt;
+
+&lt;p&gt;위의 식은 homomorphism이 성립해야하지만, $\log X_i$ 때문에 성립하지 않게 됩니다. ($a - b \ne b-  a$)그래서 glove 연구팀은 $\log X_i$항을 bias $b_i$라는 상수항으로 대체합니다. 같은 이유로 $w_k$에 대한 bias $b_k$를 추가합니다.
+&lt;script type=&quot;math/tex&quot;&gt;w_i^T w_k + b_i + b_k = \log X_{ik}&lt;/script&gt;&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mbox{loss function} = \sum_{m,n = 1}^V (w_m ^ T w_n + b_m + b_n - \log X_{mn})^2&lt;/script&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;$V$ : 단어집합의 크기&lt;/li&gt;
+  &lt;li&gt;$X_{ik}$ 이 0이 될수도 있으므로 $\log(1+X_{ik})$로 바꾼다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;또한 동시등장행렬이 희소행렬일 가능성이 높다. glove 연구진은 동시 등장 행렬에서 등장 빈도의 값 $X_{ik}$가 매우 낮은 경우에는 정보가 거의 도움이 되지 않는다고 판단합니다. 따라서 동시등장행렬을 바탕으로 가중치함수를 구상하게 됩니다.&lt;/p&gt;
+
+&lt;p&gt;가중치 함수의 그래프는 아래와 같습니다. 특정 값보다 크다면 모두 같은 가중치를 주게 됩니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wikidocs.net/images/page/22885/%EA%B0%80%EC%A4%91%EC%B9%98.PNG&quot; /&gt;
+&lt;script type=&quot;math/tex&quot;&gt;f(x) = \min(1, (\frac{x}{x_{\max}})^{0.75})&lt;/script&gt;
+최종적으로 목적함수는 아래의 식과 같습니다.
+&lt;script type=&quot;math/tex&quot;&gt;\mbox{loss function} = \sum_{m,n = 1}^V f(X_{\min})(w_m ^ T w_n + b_m + b_n - \log X_{mn})^2&lt;/script&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;fasttext&quot;&gt;FastText&lt;/h2&gt;
+
+&lt;p&gt;FastText는 단어를 구성하는 Subwords(substrings)의 vector 합으로 단어 vector를 표현합니다. 이 방법은 typo(오식)가 있는 단어라 할지라도 비슷한 representation을 얻을 수 있으며, 새로운 단어에 대해서도 형태적 유사성을 고려한 적당한 word representation을 얻도록 도와줍니다.&lt;/p&gt;
+
+&lt;p&gt;자연어 처리에서 자주 등장하는 문제는 (1) out of vocabulary, (2) infrequent words(모호성) 입니다. word2vec에서는 앞/뒤에 등장하는 단어로 가운데 단어를 예측하게 학습함으로서 문맥이 비슷한 단어를 유사한 vector로 표현합니다.&lt;/p&gt;</content><author><name></name></author><summary type="html">분산 표현(distributed representation) 방법은 기본적으로 분포 가설(distributional hypothesis)이라는 가정 하에 만들어진 표현 방법입니다. 이 가정은 ‘비슷한 위치에서 등장하는 단어들은 비슷한 의미를 가진다’라는 가정입니다. reference: https://wikidocs.net/22660</summary></entry><entry><title type="html">Example Markdown Post</title><link href="https://rroundtable.github.io/FastPages/fastpages/markdown/2020/01/14/test-markdown-post.html" rel="alternate" type="text/html" title="Example Markdown Post" /><published>2020-01-14T00:00:00-06:00</published><updated>2020-01-14T00:00:00-06:00</updated><id>https://rroundtable.github.io/FastPages/fastpages/markdown/2020/01/14/test-markdown-post</id><content type="html" xml:base="https://rroundtable.github.io/FastPages/fastpages/markdown/2020/01/14/test-markdown-post.html">&lt;h2 id=&quot;basic-setup&quot;&gt;Basic setup&lt;/h2&gt;
 
 &lt;p&gt;Jekyll requires blog post files to be named according to the following format:&lt;/p&gt;
 
@@ -759,4 +1371,831 @@ do_thing()
       &lt;p&gt;This is the footnote. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name></name></author><summary type="html">Basic setup</summary></entry></feed>
+&lt;/div&gt;</content><author><name></name></author><summary type="html">Basic setup</summary></entry><entry><title type="html">BERT 정리글</title><link href="https://rroundtable.github.io/FastPages/2019/12/30/BERT-%EC%A0%95%EB%A6%AC%EA%B8%80.html" rel="alternate" type="text/html" title="BERT 정리글" /><published>2019-12-30T00:00:00-06:00</published><updated>2019-12-30T00:00:00-06:00</updated><id>https://rroundtable.github.io/FastPages/2019/12/30/BERT-%EC%A0%95%EB%A6%AC%EA%B8%80</id><content type="html" xml:base="https://rroundtable.github.io/FastPages/2019/12/30/BERT-%EC%A0%95%EB%A6%AC%EA%B8%80.html">&lt;p&gt;&lt;strong&gt;BERT, Bidirectional Encoder Representations from Transformers&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;abstract&quot;&gt;Abstract&lt;/h2&gt;
+
+&lt;p&gt;BERT는  unlabeled text를 기반으로 deep bidirectional representation을 pretrain하기 위해서 만들어졌다. 이는 모든 layer에서 왼쪽과 오른쪽 모두의 context정보를 바탕으로 만들어진다.&lt;/p&gt;
+
+&lt;p&gt;결과적으로 pretrained된 BERT 모델은 output layer을 추가하고 fine-tuning을 함으로써 question answering 그리고 language inference분야에서 state-of-the-art 성능을 낼 수 있다. 이는 task-specific한 구조의 변화없이 가능하다.&lt;/p&gt;
+
+&lt;h2 id=&quot;1-introduction&quot;&gt;1. Introduction&lt;/h2&gt;
+
+&lt;p&gt;pretrained language representation을 활용하는데는 두 가지 전략이 있다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Feature-based: ELMO&lt;/p&gt;
+
+    &lt;p&gt;task-specific한 architecture를 사용한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;fine-tuning: OpenAI GPT&lt;/p&gt;
+
+    &lt;p&gt;task-specific한 parameter를 적게 사용한다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;위의 두 가지 전략은 pretraining을 하는동안 동일한 objective를 사용하게 된다. 또한 모두 unidirectional representation을 사용하고 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://mino-park7.github.io/images/2018/12/%EA%B7%B8%EB%A6%BC1-bert-openai-gpt-elmo-%EC%B6%9C%EC%B2%98-bert%EB%85%BC%EB%AC%B8.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;하지만, 본 논문에서는 unidirectional representation이 pretrained representation 능력을 제한한다고 주장하며,  이는 특히 fine-tuning 방법론에 영향을 많이 끼친다고 말한다. 가장 큰 한계는 standard language models가 unidirectional하며 이는 architecture를 선택할 때 많은 제한을 두게 된다. 예를 들어서, openAI GPT의 경우 left-to-right architecture를 사용한다. 모든 토큰은 self-attention layer에서 자기 자신보다 이전의 있는 토큰에만 영향을 끼친다. 이런 제한은 sentence-level task에서 sub-optimal하다.&lt;/p&gt;
+
+&lt;p&gt;이 논문에서는 세 가지 contribution을 제공한다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Bidirectional pre-training for language representation&lt;/li&gt;
+  &lt;li&gt;pre-trained representation은  task-specific architecture의 필요성을 감소시킨다.&lt;/li&gt;
+  &lt;li&gt;11가지 NLP task에 대해서 SOTA의 성능을 보인다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;2-related-work&quot;&gt;2. Related Work&lt;/h2&gt;
+
+&lt;p&gt;pre-training general language representations에 관련된 연구들이다.&lt;/p&gt;
+
+&lt;h3 id=&quot;21-unsupervised-feature-based-approaches&quot;&gt;2.1 Unsupervised Feature-based Approaches&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;word embedding vectors&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;ELMO&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;22--unsupervised-fine-tuning-approaches&quot;&gt;2.2  Unsupervised Fine-tuning Approaches&lt;/h3&gt;
+
+&lt;p&gt;word embedding parameter를 unlabeled text로 pre-trained 하는 것으로 연구가 시작되었다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;OpenAI GPT&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;fine-tuning approach는 학습과정에서 적은 parameter를 학습시키면 된다는 장점을 가지고 있다.&lt;/p&gt;
+
+&lt;h3 id=&quot;23-transfer-learning-from-supervised-data&quot;&gt;2.3 Transfer Learning from Supervised Data&lt;/h3&gt;
+
+&lt;p&gt;NLP, vision task에서 모두 tranfer learning은 효과적임을 보여주고 있다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Imagenet pretrained&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;3-bert-unified-architecture-across-different-tasks&quot;&gt;3. BERT: unified architecture across different tasks.&lt;/h2&gt;
+
+&lt;p&gt;BERT는 두 가지 단계를 가지고 있다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;pre-training: unlabeled data를 이용해서 학습을 진행한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;fine-tuning: weight값을 pre-trained된 값으로 초기화해준다. 그 후 labeled data를 이용해서 지도학습을 진행하게 된다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Model Architecture&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;Transformer 기반으로 만들어졌다. Transformer 논문은 encoder decoder구조로 이루어져 있지만, BERT에서는 encoder 위주로 사용한다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1250095/49935094-73f99c80-ff13-11e8-8ba5-50a008ed4d20.png&quot; style=&quot;width: 50%&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;**Input/Output Representations **&lt;/p&gt;
+
+    &lt;p&gt;down-stream task에서 잘 작동하려면, input representation이 single sentence 혹은 a pair of sentence에 모두 유연하게 반응할 수 있어야 한다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1250095/50039788-8e4e8a00-007b-11e9-9747-8e29fbbea0b3.png&quot; /&gt;&lt;/p&gt;
+
+    &lt;p&gt;해당 논문은 WordPiece embeddings을 사용하였다. 첫번째 token은 항상 [CLS]이다.(special classification token의 역할을 수행) 그리고 [CLS]에 반응하는 hidden state는 classification task를 위한 representation을 모으는 역할을 수행한다.&lt;/p&gt;
+
+    &lt;p&gt;또한 두 가지 방법으로 sentence를 구분한다.&lt;/p&gt;
+
+    &lt;ol&gt;
+      &lt;li&gt;special token [SEP]를 이용하여 sentence를 구분한다.&lt;/li&gt;
+      &lt;li&gt;각 sentence에 sentence embedding을 더하여 어떤 sentence정보를 가지고 있는지 알려준다.&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;31-pre-training-bert&quot;&gt;3.1 Pre-training BERT&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Task #1: Masked LM&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;직관적으로, bidirectional representation이 unidirectional representation보다 좋다는 것은 쉽게 알 수 있다. 하지만,  기존의 연구에서 사용하지 않은 이유는 바로 bidirectional representation을 하게 되면, 간접적으로 각 word가 자신에 대한 정보를 쉽게 얻을 수 있게 되며, 모델이 multi layerd contex에서 target word를 참조하기 힘들게 한다.&lt;/p&gt;
+
+    &lt;p&gt;위의 한계점을 극복하고 deep bidirectional representation한 train을 하기 위해서 해당 연구에서는 input token중 일부를 랜덤하게 마스크하고 이렇게 mask된 단어들을 학습하도록 유도하였다. 이를 masked LM(MLM)이라고 한다. 실험적으로 약 15%의 token을 마스크하는것이 효과적이였다.&lt;/p&gt;
+
+    &lt;p&gt;하지만, fine-tuning을 할 때, 문제가 발생한다. 바로 [Mask] 했던 token들은 fine-tuning과정에서는 발생하지 않기 때문이다. 이러한 문제점을 해결하기 위해서, 다음과 같은 조치를 취하였다.&lt;/p&gt;
+
+    &lt;ol&gt;
+      &lt;li&gt;
+        &lt;p&gt;i-token이 mask되었다면, 80% 확률로 [Mask]로 대체한다.&lt;/p&gt;
+
+        &lt;p&gt;나는 학생이다. -&amp;gt; 나는 [Mask]이다.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;i-token이 mask되었다면, 10% 확률로 random하게 다른 단어로 대체한다.&lt;/p&gt;
+
+        &lt;p&gt;나는 학생이다 -&amp;gt; 나는 아파트이다.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;i-token이 mask되었다면,  10% 확률로 변화시키지 않는다.&lt;/p&gt;
+
+        &lt;p&gt;나는 학생이다. -&amp;gt; 나는 학생이다.&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+
+    &lt;p&gt;이런 조치를 취하게 되면, Transformer layer가  cross entropy loss로 학습을 진행하게 된다. 참고로 random하게 단어를 변화시키는 확률은 $0.15 * 0.1 = 0.015$ 로 모델의 표현력을 저하시키지 않는다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Task #2: Next Sentence Prediction(NSP)&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;Question Answering, Natural Language Inference와 같은 task에서 두 문장 사이의 관계를 파악하는 것은 중요하다. 이는 language modeling에서 직접적으로 관계를 파악하기 힘들다. 두 문장 사이의 관계를 파악하기 위해서 해당 논문은 next sentence prediction task로 pre-train을 하였다.&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;특히 A문장과 B문장을 고를때, 50%확률로 B가 실제로 뒤에 있는 문장이다.&lt;/li&gt;
+      &lt;li&gt;나머지 50% 확률로 random하게 배치한다.&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;하지만, 이전 연구에서는 sentence embedding만 down-task에 전이가 한다. (BERT는 모든 parameter를 전이한다.)&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;32-fine-tunning-bert&quot;&gt;3.2 Fine-tunning BERT&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;self-attention layer의 영향으로 fine-tuning은 매우 순조롭다.&lt;/li&gt;
+  &lt;li&gt;input sequence에 대해서 일정한 차원수의 representation 결과를 얻고 싶기 때문에, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[CLS]&lt;/code&gt; token의 &lt;strong&gt;Transformer output&lt;/strong&gt;값을 사용합니다.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[CLS]&lt;/code&gt; token의 벡터는 H차원을 가집니다. $C∈R^H$&lt;/li&gt;
+  &lt;li&gt;여기서 &lt;strong&gt;classify하고 싶은 갯수(K)에 따라 classification layer&lt;/strong&gt;를 붙여 줍니다. classification layer : $W∈R^{K×H} W∈R^{K×H}$&lt;/li&gt;
+  &lt;li&gt;label probabilities는 &lt;strong&gt;standard softmax&lt;/strong&gt;로 계산 됩니다.$P=softmax(CWT)P=softmax(CWT)$&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;W matrix와 BERT의 모든 파라미터가 같이 fine-tuning 됩니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;hyperparmeter&lt;/p&gt;
+
+    &lt;p&gt;&lt;strong&gt;Batch size&lt;/strong&gt;: 16, 32 &lt;strong&gt;Learning rage (Adam)&lt;/strong&gt;: 5e-5, 3e-5, 2e-5 Number of epochs : 3, 4&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;pretraining과 비교했을때, 상대적으로 fine-tuning은 적은 비용으로 학습시킬수 있다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;fine-tuning시 dataset의 크기가 클수록 hyperparameter의 영향을 덜 받고 잘 training됨을 관측할 수 있었다고 합니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;33-comparision-of-bert-elmo-and-openai-gpt&quot;&gt;3.3 Comparision of BERT, ELMO and OpenAI GPT&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://mino-park7.github.io/images/2018/12/%EA%B7%B8%EB%A6%BC1-bert-openai-gpt-elmo-%EC%B6%9C%EC%B2%98-bert%EB%85%BC%EB%AC%B8.png&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;BERT와 OpenAI GPT는 fine-tuning approach인 반면에, ELMo는 feature-based approach이다.&lt;/li&gt;
+  &lt;li&gt;BERT와 OpenAI GPT는 유사한 pre-training방법론을 사용하였다.&lt;/li&gt;
+  &lt;li&gt;BERT와 ELMo는 bidirectional representation을 얻는다. OpenAI GPT는 unidirectional representation을 사용한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;4experiments&quot;&gt;4.Experiments&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Fine-tunning on Different Tasks&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://mino-park7.github.io/images/2019/02/%EA%B7%B8%EB%A6%BC4-bert-experiment-result.png&quot; style=&quot;width: 80%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;위의 그림은 각 task에 대한 fine-tuning 방법론을 시각화한 것이다. (a), (b)는 sentence level, (c)와 (d)는 token-level task이다. 참고로 [CLS]는 classification을 위한 단어이고, [SEP]는 연속적이지 않은 token을 나누기 위한 단어이다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;GLUE&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;SQuAD v1.1&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;SQuAD v2.0&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;SWAG&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;5-ablation-studies&quot;&gt;5. Ablation Studies&lt;/h2&gt;
+
+&lt;h3 id=&quot;51-effect-of-pre-training-tasks&quot;&gt;5.1 Effect of Pre-training Tasks&lt;/h3&gt;
+
+&lt;h3 id=&quot;51-effect-of-model-size&quot;&gt;5.1 Effect of Model Size&lt;/h3&gt;
+
+&lt;h3 id=&quot;53-feature-based-approach-with-bert&quot;&gt;5.3 Feature-based Approach with BERT&lt;/h3&gt;
+
+&lt;h2 id=&quot;6-conclusion&quot;&gt;6. Conclusion&lt;/h2&gt;</content><author><name></name></author><summary type="html">BERT, Bidirectional Encoder Representations from Transformers</summary></entry><entry><title type="html">Content</title><link href="https://rroundtable.github.io/FastPages/2019/12/28/Sorting-Algorithm.html" rel="alternate" type="text/html" title="Content" /><published>2019-12-28T00:00:00-06:00</published><updated>2019-12-28T00:00:00-06:00</updated><id>https://rroundtable.github.io/FastPages/2019/12/28/Sorting-Algorithm</id><content type="html" xml:base="https://rroundtable.github.io/FastPages/2019/12/28/Sorting-Algorithm.html">&lt;ul&gt;
+  &lt;li&gt;Insert sort&lt;/li&gt;
+  &lt;li&gt;Merge sort&lt;/li&gt;
+  &lt;li&gt;Quick sort&lt;/li&gt;
+  &lt;li&gt;Heap sort&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;insert-sort&quot;&gt;Insert Sort&lt;/h2&gt;
+
+&lt;p&gt;insert sort는 일반적으로 적은 수의 요소들을 정렬할 때 유리하다.&lt;/p&gt;
+
+&lt;p&gt;insert sort는 배열이 주어졌을 때, 순차적으로 순회하면서 각 요소의 올바른 위치로 정렬한다.  만약, i 번째까지 순회하였다면, 0 ~ i번째의 배열은 0 ~ i번째 배열의 성분 기준으로 모두 알맞은 위치에 정렬된 상태이다.  i + 1번째 요소는 알맞게 정렬된 0 ~ i번째 배열기준으로 알맞은 위치로 삽입된다.&lt;/p&gt;
+
+&lt;p&gt;이를 의사코드로 나타내면 다음과 같다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 알맞은 위치로 가야하는 성분
+&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;# Insert into the sorted sequence A[:i]
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;
+        
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이해를 돕기 위해서 아래의 이미지를 첨부하였다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&amp;amp;fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F2774593451C1629402&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;loop-invariants-and-the-correctness-of-insertion-sort&quot;&gt;Loop invariants and the correctness of insertion sort&lt;/h3&gt;
+
+&lt;p&gt;위의 의사코드에서 i index는 현재 정렬해야 되는 성분을 의미하며, A[:i]는 0 ~ i - 1의 성분들을 의미한다. 이 때 A[:i ]는 정렬되기전의 A[:i]와 구성요소는 모두 같으면서 정렬된 배열을 의미한다. 이러한 성질을 CS에서는 loop invariants라고 한다. 그리고 이런 성질은 correcteness를 증명하는데 사용된다.&lt;/p&gt;
+
+&lt;p&gt;loop invariants는 3가지 조건을 충족해야한다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Initialization: 첫 번째 순회에서 참이어야 한다.&lt;/li&gt;
+  &lt;li&gt;Maintenance: 순회를 돌기전에 참이라면, 다음순회를 시작하기 전까지 참이어야 한다.&lt;/li&gt;
+  &lt;li&gt;Termination: 전체 순회가 끝날때, loop invariant가 해당 알고리즘이 정확하다는 것을 알려줘야 한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;예시를 들어보겠다.&lt;/p&gt;
+
+&lt;p&gt;A = [0, 3, 8, 2, 1, 4]&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Initialization&lt;/p&gt;
+
+    &lt;p&gt;index번호가 1부터 시작한다.(A[i] = 3) 따라서 A[:i] = [0]이다. 그리고 이는 항상 참이다.\&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Maintenance&lt;/p&gt;
+
+    &lt;p&gt;순회를 하는 동안 i는 1, 2, 3, 4 …의 값을 가질 것이다. 정렬된 subarray A[:i]는 기존의 정렬되지 않은 A[:i]와 구성요소는 같다. (Loop invariant)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Termination&lt;/p&gt;
+
+    &lt;p&gt;전체 순회가 종료되었을 때를 생각해보자. (i = len(A) - 1)&lt;/p&gt;
+
+    &lt;p&gt;순회를 할때마다, i는 1씩 증가하게 되므로, 알고리즘이 종료될 때는 i=len(A) - 1이 된다. 이때 subarray는 A[:i] 이므로 0 ~ len(A) - 2의 범위를 가지게 된다. (정렬된 상태이다.) 그러므로 마지막 성분 A[i]만 올바른 위치에 정렬하면 된다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;analyzing-algorithms&quot;&gt;Analyzing algorithms&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;input size: array size&lt;/li&gt;
+  &lt;li&gt;running time: 주어진 input에 대해서 주된 연산의 call 수&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.stack.imgur.com/AxoMa.png&quot; /&gt;&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;T(n) = c_1n + c_2(n-1) + c_4(n-1) + c_5 \sum_{j=2}^n t_j + c_6 \sum_{j=2}^n (t_j - 1) + c_7 \sum_{j=2}^n (t_j - 1) + c_8 (n-1)&lt;/script&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;best case: O(N)/O(1)
+    &lt;ul&gt;
+      &lt;li&gt;모두 정렬되어 있을 경우 $c_5 \sum_{j=2}^n t_j + c_6 \sum_{j=2}^n (t_j - 1) + c_7 \sum_{j=2}^n (t_j - 1)$ 은 무시해도 좋다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;worst case: O(N^2)/O(1)
+    &lt;ul&gt;
+      &lt;li&gt;모두 거꾸로 정렬되어 있을 경우&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;order of growth: O(N^2)/O(1)
+    &lt;ul&gt;
+      &lt;li&gt;해당 알고리즘의 upper bound&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;merge-sort-devide-and-conquer&quot;&gt;Merge sort: devide-and-conquer&lt;/h2&gt;
+
+&lt;p&gt;devide-and-conquer 방법론은 문제를 본래의 문제와 유사한 작은 문제로 나누어 해결한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn.kastatic.org/ka-perseus-images/98c02634ee7f970a6bfb0812cc1495bacb462282.png&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;devide:  problem -&amp;gt; subproblem, subproblem의 성질은 기존의 problem과 동일하다.&lt;/li&gt;
+  &lt;li&gt;conquer:  subproblem의 크기가 충분히 작다면, 해를 도출한다.&lt;/li&gt;
+  &lt;li&gt;combine: subproblem을 해를 고려하여 상위의 problem의 문제를 해결한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;merge sort는 전형적인 devide-and-conquer 방법론이다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;devide:  array를 2개의 작은 array로 나눈다.&lt;/li&gt;
+  &lt;li&gt;conquer: 두개의 작은 array를 재귀적으로 정렬한다.&lt;/li&gt;
+  &lt;li&gt;combine: 두개의 정렬된 작은 array를 합치면서, 정렬된 array를 도출한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Merge_sort_algorithm_diagram.svg/220px-Merge_sort_algorithm_diagram.svg.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;merge sort는 두 가지 방법으로 구현할 수 있다.  아래는 python으로 제작한 의사코드이다.&lt;/p&gt;
+
+&lt;h3 id=&quot;top-down-approach-recursive&quot;&gt;Top-Down approach: recursive&lt;/h3&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;merge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
+    A[p:q+1]와 A[q+1:r+1]을 합친다. 
+    A: 합쳐지기 전 array, A[p:q+1], A[q+1:r+1]은 각각 정렬된 상태
+    &quot;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+       	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;
+
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;merge_sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'''
+    A: 정렬되지 않은 array
+    p: left index
+    r: right index
+    '''&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;merge_sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;merge_sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;merge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;bottom-up-approach-iterative&quot;&gt;Bottom-up approach: iterative&lt;/h3&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;merge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
+    A[p:q+1]와 A[q+1:r+1]을 합친다. 
+    A: 정렬되지 않은 array
+    &quot;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+       	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;group_size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;group_size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+   	&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;merge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;group_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;group_size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;group_size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;group_size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+        
+    
+    
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;loop-invariant&quot;&gt;Loop invariant&lt;/h3&gt;
+
+&lt;p&gt;insert sort와 마찬가지로 loop invariant 성질을 이용하여 corrteness를 증명할 수 있다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Initialization: 초기에는 subarray가 비워진 상태로 시작한다.&lt;/li&gt;
+  &lt;li&gt;Maintainance: 위의 의사코드에서 알 수 있듯이 subarray의 성분의 index는 바뀌지만 전체 성분은 변하지 않는다.&lt;/li&gt;
+  &lt;li&gt;Termination: 마지막 두 개의 subarray를 합칠 때를 고려해보자. 각각의 subarray는 정렬되어 있는 상태이다. 따라서 merge 알고리즘을 그대로 적용한다면, 결과는 모두 정렬되어 나올 것이다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;analyzing-divide-and-conquer-algorithms&quot;&gt;Analyzing divide-and-conquer algorithms&lt;/h3&gt;
+
+&lt;p&gt;recursive한 알고리즘을 사용했다면, running time을 recurrence equation을 활용해서 표현할 수 있다. 아래는 예시이다.
+&lt;script type=&quot;math/tex&quot;&gt;% &lt;![CDATA[
+T(n) = \begin{cases} O(1)  &amp; \mbox{if } n \le c, \\
+aT(n/b) + D(n) + C(n) &amp; \mbox{otherwise}\end{cases} %]]&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;subarray가 충분히 작다면: $\mbox{if } n &amp;gt; c$&lt;/li&gt;
+  &lt;li&gt;$T(n/b)$:  $n/b$  subarray의 크기, $a$ 는 subarray의 개수&lt;/li&gt;
+  &lt;li&gt;$D(n)$: array를 subarray로 나누는데 걸리는 시간&lt;/li&gt;
+  &lt;li&gt;$C(n)$: combine&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;이제 merge sort를 분석해보자.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;divide: $D(n) = O(1)$, subarray의 중간까지만 나눈다.&lt;/li&gt;
+  &lt;li&gt;conquer: $2T(N/2)$&lt;/li&gt;
+  &lt;li&gt;combine: $C(n) = O(n)$&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+T(n) = \begin{cases} O(1)  &amp; \mbox{if } n \le c, \\
+2T(n/2) + O(n) &amp; \mbox{otherwise}\end{cases} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.researchgate.net/profile/Wolfgang_Schreiner2/publication/267856474/figure/fig9/AS:669218265636872@1536565476357/Recursion-Tree-for-MERGESORT.png&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;time complexity: O(nlogn)&lt;/li&gt;
+  &lt;li&gt;space complexity: O(nlogn)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;quick-sort&quot;&gt;Quick Sort&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;worst case: O(n ^ 2)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;expected: O(nlogn) constant factor가 다른 기법에 비해서 작은 편이다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;quick sort 역시 divide-and-conquer의 한 방법이다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Divide: Array를 두개의 subarray로 나눈다. $A[p…r]$을 $A[p..q-1]$,$A[q + 1.. r]$&lt;/p&gt;
+
+    &lt;p&gt;로 나누는 것이다. $A[p..q-1]$은 $A[q]$보다 작거나 같다. 또한 $A[q + 1.. r]$은 $A[q]$ 보다 크거나 같다. 나중에 언급하지만 $A[q]$는 pivot이다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Conquer: $A[p..q-1]$,$A[q + 1.. r]$를 재귀적으로 정렬한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Combine: subarray가 모두 정렬되어 있기 때문에, 따로 결합할 필요가 없다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;quick sort의 의사코드는 아래와 같다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;quick_sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;partition&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;quick_sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;quick_sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;partition&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# pivot value
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# pivot보다 왼쪽에 위치해야한다.
+&lt;/span&gt;            &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+   	&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;partition이 이해가 안되다면 아래의 그림을 참고해보면 좋다. 참고로 i index는 pivot보다 작거나 같은 값을 가졌다는 것을 알려주며, j index는 탐색하는 의도로 구성되었다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.codingeek.com/wp-content/uploads/2016/06/word-image-2.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;loop-invariant-1&quot;&gt;Loop invariant&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Initialization&lt;/p&gt;
+
+    &lt;p&gt;i = p - 1 이고 j = p 이다. p와 i 사이에는 value가 없다. 그리고  i + 1과 j- 1사이에도  아무것도 없다. 따라서 loop invariant 조건을 충족한다. (swap이 일어나지 않는다.)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Maintainance&lt;/p&gt;
+
+    &lt;p&gt;위의 그림에서 볼 수 있듯이,  pivot value에 따라서 성분의 배치가 달라질 수 있다. 하지만, 배치만 달라질뿐 전체 성분은 변하지 않는다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Termination&lt;/p&gt;
+
+    &lt;p&gt;알고리즘이 종료될 때는 3가지 set이 주어진다. pivot보다 작은 set, pivot, pivot보다 큰 set 이렇게 주어지게 되는데, 이는 내부적으로 모두 정렬된 상태이다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;performance-of-quicksort&quot;&gt;Performance of quicksort&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;worst-case&lt;/p&gt;
+
+    &lt;p&gt;partitioning이 1: n-1식으로 계속해서 나눠지면 최악의 성능 O(N^2)이다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;http://staff.ustc.edu.cn/~csli/graduate/algorithms/book6/157_a.gif&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;balanced partioning&lt;/p&gt;
+
+    &lt;p&gt;partitioning이 모두 고루게 나눠지면 성능은 O(NlogN)이다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://staff.ustc.edu.cn/~csli/graduate/algorithms/book6/158_b.gif&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">Insert sort Merge sort Quick sort Heap sort</summary></entry><entry><title type="html">Big-O notation 정리하기</title><link href="https://rroundtable.github.io/FastPages/2019/12/28/Big-O-notation-%EC%A0%95%EB%A6%AC%ED%95%98%EA%B8%B0.html" rel="alternate" type="text/html" title="Big-O notation 정리하기" /><published>2019-12-28T00:00:00-06:00</published><updated>2019-12-28T00:00:00-06:00</updated><id>https://rroundtable.github.io/FastPages/2019/12/28/Big-O-notation-%EC%A0%95%EB%A6%AC%ED%95%98%EA%B8%B0</id><content type="html" xml:base="https://rroundtable.github.io/FastPages/2019/12/28/Big-O-notation-%EC%A0%95%EB%A6%AC%ED%95%98%EA%B8%B0.html">&lt;blockquote&gt;
+  &lt;p&gt;In &lt;a href=&quot;https://en.wikipedia.org/wiki/Computer_science&quot;&gt;computer science&lt;/a&gt;, big O notation is used to &lt;a href=&quot;https://en.wikipedia.org/wiki/Computational_complexity_theory&quot;&gt;classify algorithms&lt;/a&gt; according to how their running time or space requirements grow as the input size grows.[&lt;a href=&quot;https://en.wikipedia.org/wiki/Big_O_notation#cite_note-quantumcomplexity-3&quot;&gt;3]&lt;/a&gt; In &lt;a href=&quot;https://en.wikipedia.org/wiki/Analytic_number_theory&quot;&gt;analytic number theory&lt;/a&gt;, big O notation is often used to express a bound on the difference between an &lt;a href=&quot;https://en.wikipedia.org/wiki/Arithmetic_function&quot;&gt;arithmetical function&lt;/a&gt; and a better understood approximation; a famous example of such a difference is the remainder term in the &lt;a href=&quot;https://en.wikipedia.org/wiki/Prime_number_theorem&quot;&gt;prime number theorem&lt;/a&gt;.&lt;/p&gt;
+
+  &lt;p&gt;reference: https://en.wikipedia.org/wiki/Big_O_notation&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;formal-definition&quot;&gt;Formal definition&lt;/h2&gt;
+
+&lt;p&gt;$F$ 는 real or complex valued function이며 , $g$는 real valued function이다. 두 함수는 무한한 양의 실수의 subset으로 정의된다. 따라서 $g(x)$는 x가 충분히 큰 값일때 항상 양수이다.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;F(x) = O(g(x)) \ \text{as} \ x \rightarrow \infty&lt;/script&gt;
+
+&lt;p&gt;충분히 큰 x값을 가질 수 있을때만, $F(x)$의 절대값의 최대값이 $g(x)$에 양의 상수를 곱한 것을 넘지 못할 때, $F(x) = O(g(x))$라고 표현한다. (Upper Bound)이를 아래 식으로 표현한다.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\rvert F(x) \rvert \le Mg(x) \text{for all } x \ge x_0&lt;/script&gt;
+
+&lt;p&gt;이를 간단하게 아래의 이미지로 확인할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Big-O-notation.png/300px-Big-O-notation.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;파란색 선은 $Mg(x)$ 를 빨간색 선은 $F(x)$를 의미한다. $x_0$보다 큰 x값을 가지면, $F(x)$는 항상 $Mg(x)$보다 작으며, 이는 $F(x)$의 upper bound가 $Mg(x)$라는 것을 의미한다.&lt;/p&gt;</content><author><name></name></author><summary type="html">In computer science, big O notation is used to classify algorithms according to how their running time or space requirements grow as the input size grows.[3] In analytic number theory, big O notation is often used to express a bound on the difference between an arithmetical function and a better understood approximation; a famous example of such a difference is the remainder term in the prime number theorem. reference: https://en.wikipedia.org/wiki/Big_O_notation</summary></entry><entry><title type="html">Transformer 구조</title><link href="https://rroundtable.github.io/FastPages/2019/11/18/attention-is-all-you-need-%EC%A0%95%EB%A6%AC%EA%B8%80.html" rel="alternate" type="text/html" title="Transformer 구조" /><published>2019-11-18T00:00:00-06:00</published><updated>2019-11-18T00:00:00-06:00</updated><id>https://rroundtable.github.io/FastPages/2019/11/18/attention-is-all-you-need-%EC%A0%95%EB%A6%AC%EA%B8%80</id><content type="html" xml:base="https://rroundtable.github.io/FastPages/2019/11/18/attention-is-all-you-need-%EC%A0%95%EB%A6%AC%EA%B8%80.html">&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/27891090/69061756-2196f900-0a5d-11ea-9249-2401a60830d6.png&quot; style=&quot;width:50%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;위의 이미지는 Transformer의 구조이다. encoder와 decoder 구조로 이루어져 있다. 마지막 encoder layer의 output이 각 decoder stack에 input으로 들어가게 된다. (&lt;strong&gt;residual connection&lt;/strong&gt;) 각 encoder layer와 decoder layer는 모두 동일한 구조를 가지나 서로 parameter를 공유하지 않는다.  아래의 그림처럼 논문에서는 각 6개의 layer를 가지고 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/27891090/69062040-aaae3000-0a5d-11ea-9d43-e5162aa70eb6.png&quot; style=&quot;width:50%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;아래의 이미지는 encoder와  decoder의 세부 구조이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jalammar.github.io/images/t/Transformer_decoder.png&quot; style=&quot;width: 80%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;각 세부 layer사이에는  Normalization 및  bias를 더하는 과정이 추가된다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;h2 id=&quot;matrix-calculation-of-self-attention&quot;&gt;Matrix Calculation of Self-Attention&lt;/h2&gt;
+
+  &lt;p&gt;이제  복수의 embeddinb vector를 matrix 연산으로 대체하는 과정을 살펴보자. 위의 그림과는 다르게 embedding vector가 matrix형태로 제공되어서 병렬 연산이 가능해졌다. 아래의 이미지 참고.&lt;/p&gt;
+
+  &lt;p&gt;&lt;img src=&quot;http://jalammar.github.io/images/t/self-attention-matrix-calculation.png&quot; style=&quot;width: 50%&quot; /&gt;&lt;/p&gt;
+
+  &lt;p&gt;&lt;img src=&quot;http://jalammar.github.io/images/t/self-attention-matrix-calculation-2.png&quot; style=&quot;width: 50%&quot; /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;attention&quot;&gt;Attention&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/27891090/69063207-72a7ec80-0a5f-11ea-8e62-d4acc8bb5044.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;1-scaled-dot-product-attention&quot;&gt;1. Scaled Dot-Product Attention&lt;/h3&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;Attention(Q, K, V) = softmax(\frac{QK^T}{\sqrt{d_k}}) V&lt;/script&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Query, Key -  Value의 역할&lt;/p&gt;
+
+  &lt;ul&gt;
+    &lt;li&gt;Query: , matrix&lt;/li&gt;
+    &lt;li&gt;Key: 각 embedding vector의 key, matrix&lt;/li&gt;
+    &lt;li&gt;Value: 각 key가 가지고 있는 value, matrix&lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;p&gt;&lt;strong&gt;추가적인 설명&lt;/strong&gt; 우선 query와 key, value에 대해서 설명하면 query가 어떤 단어와 관련되어 있는지 찾기 위해서 모든 key들과 연산한다. 여기서 실제 연산을 보면 query와 key를 dot-product한뒤 softmax를 취하는데, 의미하는 것은 하나의 query가 모든 key들과 연관성을 계산한뒤 그 값들을 확률 값으로 만들어 주는 것이다. 따라서 query가 어떤 key와 높은 확률로 연관성을 가지는지 알게 되는 것이다. 이제 구한 확률값을 value에 곱해서 value에 대해 scaling한다고 생각하면된다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;추가적인 설명&lt;/strong&gt; key와 value는 사실상 같은 단어를 의미한다. 하지만 두개로 나눈 이유는 key값을 위한 vector와 value를 위한 vector를 따로 만들어서 사용한다. key를 통해서는 각 단어와 연관성의 확률을 계산하고 value는 그 확률을 사용해서 attention 값을 계산하는 용도이다.&lt;/p&gt;
+
+  &lt;p&gt;reference:  https://reniew.github.io/43/&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;아래의 이미지는 scaled dot product attention과정의 일부이다. query, key 그리고 value는 각 $W^Q, W^K, W^V$matrix와 dot product를 진행한 결과이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jalammar.github.io/images/t/transformer_self_attention_vectors.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;그리고  query와 key의 dot product의 결과를 $\sqrt{d_k}$만큼 scaling 해준다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jalammar.github.io/images/t/self-attention-output.png&quot; /&gt;\&lt;/p&gt;
+
+&lt;h3 id=&quot;2-multi-head-attention&quot;&gt;2. Multi-Head Attention&lt;/h3&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;MultiHead(Q, K, V) = Concat(head_1, \cdots, head_h) W^O \ \\\ where \ head_i = Attention(QW_i^Q, KW_i^K, VW_i^V)&lt;/script&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;$W_i^Q \in R_{d_{model} \times d_k}$&lt;/li&gt;
+  &lt;li&gt;$W_i^K \in R_{d_{model} \times d_k}$&lt;/li&gt;
+  &lt;li&gt;$W_i^V \in R_{d_{model} \times d_k}$&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;해당 연구에서는 multi head attention을 적용하였다. 이는 두 가지 방식으로 성능향상에 기여하였다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;model이 다른 위치에 집중할 수 있는 능력을 향상시켰다.  “The animal didn’t cross the street because it was too tired” 과 같은 문장을 번역하는데 효과적인데 그 이유는 it이 가르키는 것이 무엇인지 중요하기 때문이다.&lt;/li&gt;
+  &lt;li&gt;layer multiple representation subspace를 제공한다. 복수의 Q, K, V matrix를 가지게 되고 이는 random하게 초기화된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;아래의 그림은 두 개의 embedding vector(Thinking, Machines)의 복수의 head를 가지게 되는 과정을 시각화 한 것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jalammar.github.io/images/t/transformer_self-attention_visualization_3.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;representing-the-order-of-the-sequence-using-positional-encoding&quot;&gt;Representing The Order of The Sequence Using Positional Encoding&lt;/h2&gt;
+
+&lt;p&gt;위에서의 attention 과정에서 word의 위치정보를 잃어버리게 된다. 이를 어떻게 복구할 것인가?&lt;/p&gt;
+
+&lt;p&gt;이런 문제를 극복하기 위해서 Transformer에서는 input embedding vector에 특별한 vector를 더한다.  이는 각 word의 위치를 파악하는데 도움을 주거나 각 word의 distance를 구하는데 도움을 줄 것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jalammar.github.io/images/t/transformer_positional_encoding_vectors.png&quot; style=&quot;width: 80%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jalammar.github.io/images/t/transformer_positional_encoding_example.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;아래의 이미지는 실제 20개의 word의 positional encoding의 시각화 결과이다. (512 dimension)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jalammar.github.io/images/t/transformer_positional_encoding_large_example.png&quot; /&gt;&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;PE_{(pos, 2i)}=sin(pos/10000^{2i/d_{model}})&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;PE_{(pos, 2i+1)}=cos(pos/10000^{2i/d_{model}})&lt;/script&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;pos는 word의 위치를 나타낸다.&lt;/li&gt;
+  &lt;li&gt;i 는 dimension의 index를 나타낸다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;reference&quot;&gt;Reference&lt;/h4&gt;
+
+&lt;p&gt;http://jalammar.github.io/illustrated-transformer/&lt;/p&gt;</content><author><name></name></author><summary type="html"></summary></entry><entry><title type="html">Abstract</title><link href="https://rroundtable.github.io/FastPages/2019/11/04/Unsupervised-Monocular-Depth-Estimation-with-Left-Right-Consistency-%EC%A0%95%EB%A6%AC%EA%B8%80.html" rel="alternate" type="text/html" title="Abstract" /><published>2019-11-04T00:00:00-06:00</published><updated>2019-11-04T00:00:00-06:00</updated><id>https://rroundtable.github.io/FastPages/2019/11/04/Unsupervised-Monocular-Depth-Estimation-with-Left-Right-Consistency-%EC%A0%95%EB%A6%AC%EA%B8%80</id><content type="html" xml:base="https://rroundtable.github.io/FastPages/2019/11/04/Unsupervised-Monocular-Depth-Estimation-with-Left-Right-Consistency-%EC%A0%95%EB%A6%AC%EA%B8%80.html">&lt;p&gt;많은 방법론들이 depth estimation부분에서 성과를 보여주었다. 하지만,  대부분 지도학습이라는 한계를 가지고 있으며, 이는 결국 많은 수의 ground-truth data가 필요하다는 것을 의미한다. 하지만, depth를 기록하는 것은 매우 어려운 문제이다. 따라서 이 연구에서는 얻기 쉬운 binocular stereo footage를 이용하여 문제를 해결한다.&lt;/p&gt;
+
+&lt;p&gt;epipolar geometry constraints를 활용해서 reconstruction loss로 학습을 시킬 수 있다. 하지만 이 결과물은 depth image의 질이 낮아진다. 이러한 문제를 해결하기 위해서,  consistency를 유지할 수 있게하는 loss를 제안한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Epipolar geometry&lt;/strong&gt;&lt;/p&gt;
+
+  &lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Aufnahme_mit_zwei_Kameras.svg/250px-Aufnahme_mit_zwei_Kameras.svg.png&quot; /&gt;&lt;/p&gt;
+
+  &lt;p&gt;stereo vision의 geometry,&lt;/p&gt;
+
+  &lt;p&gt;2개의 각기 다른 위치에서 3D 이미지의 정보를 얻을 때. 3D points와 2D points간의 많은 기하학적 관계가 있다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;이전의 많은 연구들이 multiple observation이 가능하다는 가정아래에서 진행되었다. multiple viewpoint와 다른 조명조건에서의 data도 필요하다. 이러한 한계를 극복하기 위해서, supervised learning방식으로 mono depth estimation 방법론들이 연구되었다. 이러한 방법론들은 많은 수의 data를 기반으로 depth를 직접적으로 추정하고자 하였다. 많은 성과를 이루었지만, 데이터의 수가 많아야된다는 한계를 가지고 있다.(depth 관련 데이터를 수집하기는 힘들다)&lt;/p&gt;
+
+&lt;p&gt;image의 외관과 관계없이 장면의 모양을 이해할 수 있는 것은 machine perception분야에서 매우 중요한 이슈이다.&lt;/p&gt;
+
+&lt;p&gt;사람은 monocular depth estimation을 잘하는데 이를 위해서 다음과 같은 힌트를 사용한다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;원근법&lt;/li&gt;
+  &lt;li&gt;이미 알려진 물체크기로 상대적인 추정&lt;/li&gt;
+  &lt;li&gt;조명 혹은 그림자 가려진 상태에서의 모양&lt;/li&gt;
+  &lt;li&gt;etc&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;위와 같은 top-down, bottom-up 힌트들을 조합해서 정확하게 depth를 추정할 수 있다. 이 연구에서는 depth data가 필요하지 않다. 학습과정에서는 synthesize depth를 이용한다.  두 이미지(left view, right view) 사이에서 해당 모델은 pixel level의 예측을 한다. (regression) 다른 연구에서도 이와 같은 방법론을 사용했지만 아래와 같은 한계가 존재한다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;memory issue&lt;/li&gt;
+  &lt;li&gt;not fully diferentiable&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;related-work&quot;&gt;Related Work&lt;/h2&gt;
+
+&lt;h3 id=&quot;learning-based-stereo-between-two-images&quot;&gt;Learning-Based Stereo: between two images&lt;/h3&gt;
+
+&lt;p&gt;대게 stereo estimation은 첫번째 이미지의 특정 픽셀과 두번째 이미지의 모든 pixel간의 similarity를 계산하는 알고리즘이다. 대부분의 stereo pairs는 정제되어 있으며, disparity estimation은 각 pixel의 1D search 문제이다.&lt;/p&gt;
+
+&lt;p&gt;하지만, 최근 연구에 따르면,  head defined similarity measure방법론보다 matching function을 일종의 supervised learning problem으로 두고 문제를 해결하는 것이 더 좋은 성능을 보였다. 특히 Mayer et al.fully convolutional deep network를 활용하여 DispNet을 고안하였다.  이 방법론은 매우 많은 수의 ground-truth data가 필요했다.&lt;/p&gt;
+
+&lt;h3 id=&quot;supervised-single-image-depth-estimation&quot;&gt;Supervised Single Image Depth Estimation&lt;/h3&gt;
+
+&lt;p&gt;Saxena et al. patch based model(&lt;a href=&quot;http://make3d.cs.cornell.edu/&quot;&gt;Make3D&lt;/a&gt;)을 제안하였다. 이는 laser scan data를 이용하여 학습되었으며 prediction은 MRF를 활용하여 결합하였다. 이 방법론의 단점은 얇은 구조물을 modeling하는데 적절하지 않았다. 이는 현실적인 이미지를 만드는데 적절치 않다는 것을 의미한다.&lt;/p&gt;
+
+&lt;p&gt;위의 방법론은 hand tuning이 필요하다. 이런 방법론과 다르게, Liu et al은 CNN을 이용하여 이를 학습하고자 했다.&lt;/p&gt;
+
+&lt;p&gt;Karsch et al. consistent한 image output을 가질려고 노력했다. 이는 training set으로부터 depth image를 복사하여 이루어졌다. 따라서 이 방법론은 test할 때, 모든 training set이 필요하다는 한계를 가진다.&lt;/p&gt;
+
+&lt;p&gt;Eigen et al.은 두개의 scale deep network를 활용해서 depth estimation이 가능하다는 것을 보였다. 이들은 hand craft feature를 사용하지 않았고, initial over segmentation을 이용하지 않았다. 대신에 raw pixel value를 활용하여, representation을 하였다.&lt;/p&gt;
+
+&lt;p&gt;많은 연구들이 CRF기반으로 accuracy향상을 이루었다.&lt;/p&gt;
+
+&lt;h3 id=&quot;unsupervised-depth-estimation&quot;&gt;Unsupervised Depth Estimation&lt;/h3&gt;
+
+&lt;p&gt;Flynne et al.의 DeepStereo는 새로운 view의 이미지를 만들어낸다. 학습하는동안,  다양한 카메라의 상대적인 pose가 근처 이미지의 모습을 만들어내는데 사용된다. test할 때, image synthesis는 겹치는 작은 patch에서 작동한다. 이 모델은 근처의 다른 posed image의 view가 필요하므로,  monocular depth estimation에 부적절하다.&lt;/p&gt;
+
+&lt;p&gt;Xie et al의 Deep3D의 목표는 left image 기반으로 right view이미지를 만들어내는 것이다. reconstruction loss를 활용하며,  각 픽셀에 대해서 가능한 disparities에 대해서 분포를 만들어낸다. 이 방법론의 단점은 scalable하지 않다는 것이다. 가능한 disparities가 많아질수록 많은 memory가 필요하다.&lt;/p&gt;
+
+&lt;p&gt;해당연구와 비슷한 연구는 Garg et al이 제안하였다. 이 nework는 monocular depth estimation방법론이긴 하지만, fully differentiable하지 않다는 한계를 가진다. 이런 점을 극복하기 위해서 taylor approximation을 사용하였다.&lt;/p&gt;
+
+&lt;h2 id=&quot;method&quot;&gt;Method&lt;/h2&gt;
+
+&lt;h3 id=&quot;1-depth-estimation-as-image-reconstruction&quot;&gt;1. Depth Estimation as Image Reconstruction&lt;/h3&gt;
+
+&lt;p&gt;해당 연구에서는 직접 depth를 추정하는 것이 아니라 image reconstruction을 이용하여 추정한다. 기존의 연구에서는 depth estimation문제를 supervised task로 인식해서 해결했지만, 앞서 설명했듯이 depth ground truth data를 구하는 것은 매우 힘든 일이다. 비싼 하드웨어를 사용하더라고 실제환경에서는 정확하지 않을 수 있다.&lt;/p&gt;
+
+&lt;p&gt;이 연구에서는 training과정에서 image reconstruction을 활용하여 해결한다. 메인 아이디어는 left-view image에서 right-view image를 만들 수 있는function을 구할 수 있다면, 3D shape에 대한 지식을 알고 있는 것이라고 볼 수 있다.(right view -&amp;gt; left-view도 마찬가지)&lt;/p&gt;
+
+&lt;p&gt;left-view image로부터 right-view image를 만든다음에 각 픽셀이 가지는 depth value를 추정한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Image disparity&lt;/p&gt;
+
+  &lt;p&gt;https://www.quora.com/What-are-disparity-maps-and-How-are-they-created&lt;/p&gt;
+
+  &lt;ul&gt;
+    &lt;li&gt;baseline distance between the camera and the camera focal length $f$: $b$&lt;/li&gt;
+    &lt;li&gt;image disparity: $d$&lt;/li&gt;
+    &lt;li&gt;depth $\hat{d} = bf/d$&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;2--depth-estimation-network&quot;&gt;2.  Depth Estimation Network&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Disparity map&lt;/p&gt;
+
+  &lt;p&gt;&lt;img src=&quot;https://i.stack.imgur.com/tECoA.png&quot; /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;이 연구에서는 left-to-right , right-to-left disparities를 모두 구할 수 있으며, 서로 consistency를 유지하게 함으로써 더 좋은 성능을 가져온다.  아래는 기존의 연구의 architecture와 해당 연구의 architecture를 보여주고 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/27891090/68211370-c6a3e180-001a-11ea-944e-c70cf85c7cad.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;오른쪽 이미지를 보면, left image를 가지고 right image를 생성해낸다. 하지만, 우리는 right-view image에서 sampling된 left-view image가 필요하다.  No LR을 보면 right-view image에서 left view image를 생성한다. 하지만 이는 texture-copy artifact라는 현상을 보이며, detph가 연속적이지 않은 부분에서 error가 많이 발생한다. 아래의 이미지를 보면 알 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/27891090/68212304-9bba8d00-001c-11ea-8cb0-9753fca7f09a.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 연구에서는 이 문제를 model이 두가지 disparity map를 생성해내도록 만들어서 해결하였다. (sampling from the opposite input images) 이 방법은 여전히 left-view image하나만 필요하며, right image는 training과정에서만 사용된다. left-right consistency loss를 이용하여, 더 정확한 정확도를 가질 수 있다.&lt;/p&gt;
+
+&lt;h3 id=&quot;3-training-loss&quot;&gt;3. Training Loss&lt;/h3&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;C = \Sigma_{s=1}^4C_s&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;C_{s} = \alpha_{ap}(C_{ap}^l + C_{ap}^r) + \alpha_{ds}(C_{ds}^l + C_{ds}^r) + \alpha_{lr}(C_{lr}^l + C_{lr}^r)&lt;/script&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Apperance Matching Loss: $C_{ap}$&lt;/li&gt;
+  &lt;li&gt;Disparity Smoothness Loss: $C_{ds}$&lt;/li&gt;
+  &lt;li&gt;Left-Right Disparity Consistency: $C_{lr}$&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/27891090/68212839-b6413600-001d-11ea-89cf-2e89ac8071a2.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Apperance Matching Loss&lt;/strong&gt;는 oposite setero이미지로부터 image를 생성하도록 학습시킨다. 여기서는 spatial transformer network를 사용하여 disparity map을 만든다. 여기서 bilinear sampler를 사용하는데 locally fully differentiable하며 fully convolutional architecture를 가진다.&lt;/p&gt;
+
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;C_{ap}^l = \frac{1}{N}\Sigma_{i, j}\alpha\frac{1 -SSIM(I_{ij}^l, \hat{I}_{i,j}^l)}{2} + (1 - \alpha)\rVert I_{ij}^l - \hat{I}_{i,j}^l \rVert&lt;/script&gt;
+이 연구에서는 $\alpha$ 는 0.85 SSIMd에서는 3 x 3 block filter를 사용했다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;SSIM: structural similarity&lt;/p&gt;
+
+  &lt;p&gt;사람의 시각 시스템은 이미지에서 구조 정보를 도출하는데 특화되어 있기 때문에 구조 정보의 왜곡정도가 지각 품질에 가장 큰 영향을 미친다. 이것이 SSIM의 기본이 되는 핵심가설이다. 구체적으로는 원본 이미지 x와 왜곡 이미지 y의 brightness, contrast, structure를 비교한다.&lt;/p&gt;
+
+  &lt;ul&gt;
+    &lt;li&gt;
+      &lt;p&gt;brightness&lt;/p&gt;
+
+      &lt;p&gt;$u_x$: x 이미지의 평균밝기&lt;/p&gt;
+
+      &lt;p&gt;$u_y$: y 이미지의 평균 밝기&lt;/p&gt;
+
+      &lt;p&gt;$I(x, y) = \frac{2u_xu_y + C_1}{u_x^2 + u_y^2 + C_2}$&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;p&gt;contrast&lt;/p&gt;
+
+      &lt;p&gt;$C(x, y) = \frac{2\sigma_x\sigma_y+C_2}{\sigma_x^2 + \sigma_y^2 + C_2}$&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;p&gt;structure&lt;/p&gt;
+
+      &lt;p&gt;structure = $\frac{x-u_x}{\sigma_x}$&lt;/p&gt;
+
+      &lt;p&gt;$S(x, y) = \frac{\sigma_{xy} + C_3}{\sigma_x\sigma_y + C_3}$&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;p&gt;SSIM&lt;/p&gt;
+
+      &lt;p&gt;$SSIM(x,y) = I(x,y)C(c,y)S(x,y)$&lt;/p&gt;
+
+      &lt;p&gt;$SSIM(x, y)= \frac{(2u_xu_y + C_1) (2\sigma_{xy} +C_2)}{(u_x^2 + u_y^2 + C_1)(\sigma_x^2 + \sigma_y^2 +C_2)}$&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Disparity Smoothness Loss&lt;/strong&gt;의 경우에는 아래와 같이 수식으로 표현된다. 이는 disparities가 locally smooth하게 하는 효과를 가져온다.
+&lt;script type=&quot;math/tex&quot;&gt;D_{ds}^l = \frac{1}{N}\Sigma_{i,j}\rvert \partial_{x}d_{i,j}^l\rvert e ^{\rVert \partial_{x}I_{i,j}\rVert} + \rvert \partial_y d_{i,j}^l \rvert e ^{\rVert\partial_y I_{i,j}\rVert}&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Left-Right Disparity Consistency Loss&lt;/strong&gt; 는 더 정확한 disparity map을 만들기 위한 term이다.  이 term은 left-view disparity map을 projected right-view disparity map과 동일하게 만들어주는 역할을 한다.
+&lt;script type=&quot;math/tex&quot;&gt;C_{lr} ^l = \frac{1}{N}\Sigma_{i,j}\rvert d_{ij}^l - d_{ij+d_{ij}^l} ^r \rvert&lt;/script&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">많은 방법론들이 depth estimation부분에서 성과를 보여주었다. 하지만, 대부분 지도학습이라는 한계를 가지고 있으며, 이는 결국 많은 수의 ground-truth data가 필요하다는 것을 의미한다. 하지만, depth를 기록하는 것은 매우 어려운 문제이다. 따라서 이 연구에서는 얻기 쉬운 binocular stereo footage를 이용하여 문제를 해결한다.</summary></entry></feed>

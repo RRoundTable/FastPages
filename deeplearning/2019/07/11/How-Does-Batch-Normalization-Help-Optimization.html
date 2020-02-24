@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="shortcut icon" type="image/x-icon" href="/FastPages/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Main Contribution | fastpages</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Main Contribution" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Batch normalization에 대하여에서 BN이 결국 internal covariate shift현상을 해결하여, 모델의 수렴속도를 높인다고 주장하였다. 하지만, 해당 논문에서는 internal covariate shift현상을 감소하여 그러는 것이 아니며, BN이 실제로 감소시키지 않는다고 주장한다." />
+<meta property="og:description" content="Batch normalization에 대하여에서 BN이 결국 internal covariate shift현상을 해결하여, 모델의 수렴속도를 높인다고 주장하였다. 하지만, 해당 논문에서는 internal covariate shift현상을 감소하여 그러는 것이 아니며, BN이 실제로 감소시키지 않는다고 주장한다." />
+<link rel="canonical" href="https://rroundtable.github.io/FastPages/deeplearning/2019/07/11/How-Does-Batch-Normalization-Help-Optimization.html" />
+<meta property="og:url" content="https://rroundtable.github.io/FastPages/deeplearning/2019/07/11/How-Does-Batch-Normalization-Help-Optimization.html" />
+<meta property="og:site_name" content="fastpages" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-07-11T00:00:00-05:00" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://rroundtable.github.io/FastPages/deeplearning/2019/07/11/How-Does-Batch-Normalization-Help-Optimization.html"},"description":"Batch normalization에 대하여에서 BN이 결국 internal covariate shift현상을 해결하여, 모델의 수렴속도를 높인다고 주장하였다. 하지만, 해당 논문에서는 internal covariate shift현상을 감소하여 그러는 것이 아니며, BN이 실제로 감소시키지 않는다고 주장한다.","@type":"BlogPosting","url":"https://rroundtable.github.io/FastPages/deeplearning/2019/07/11/How-Does-Batch-Normalization-Help-Optimization.html","headline":"Main Contribution","dateModified":"2019-07-11T00:00:00-05:00","datePublished":"2019-07-11T00:00:00-05:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/FastPages/assets/main.css">
+  <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://rroundtable.github.io/FastPages/feed.xml" title="fastpages" />
+
+  <script>
+  function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+  }
+  window.onload = wrap_img;
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function(){
+      // add link icon to anchor tags
+      var elem = document.querySelectorAll(".anchor-link")
+      elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+      // remove paragraph tags in rendered toc (happens from notebooks)
+      var toctags = document.querySelectorAll(".toc-entry")
+      toctags.forEach(e => (e.firstElementChild.innerText = e.firstElementChild.innerText.replace('¶', '')))
+    });
+  </script>
+</head><body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/FastPages/">fastpages</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/FastPages/about/">About Me</a><a class="page-link" href="/FastPages/search/">Search</a><a class="page-link" href="/FastPages/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Main Contribution</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2019-07-11T00:00:00-05:00" itemprop="datePublished">
+        Jul 11, 2019
+      </time>
+    •<span class="read-time" title="Estimated read time">
+    
+    
+      8 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/FastPages/categories/#deeplearning">deeplearning</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p><a href="[https://rroundtable.github.io/post/2019-07-08-batch-normalization%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC/](https://rroundtable.github.io/post/2019-07-08-batch-normalization에-대하여/)">Batch normalization에 대하여</a>에서 BN이 결국 internal covariate shift현상을 해결하여, 모델의 수렴속도를 높인다고 주장하였다. 하지만,  해당 논문에서는 internal covariate shift현상을 감소하여 그러는 것이 아니며, BN이 실제로 감소시키지 않는다고 주장한다.</p>
+
+<p>이 논문에서는 BN이 optimization problem을 smoother하게 만들어서 성공적이라고 주장한다.  이로 인해서 gradient는 predictive해지고 더 큰 learning rate를 사용할 수 있다.</p>
+
+<blockquote>
+  <p>optimization problem이 smoother 해진다는 것은…</p>
+
+  <p>https://ifm.mathematik.uni-wuerzburg.de/~schmidt/publications.php</p>
+</blockquote>
+
+<h2 id="batch-normalization-and-internal-covariate-shift">Batch normalization and internal covariate shift</h2>
+
+<p><img src="https://user-images.githubusercontent.com/27891090/61052860-3ddbb700-a427-11e9-82ad-7d169afb3300.png" style="width:90%;" /></p>
+
+<p>train, test 그래프에서는 batch normalization의 역할을 잘 보여주고 있다. 높은 learning rate를 사용할 수 있는 것을 보여주고 있는데, 오른쪽의 그래프를 보면 BN을 적용한 모델의 activation과 그렇지 않은 모델의 activation의 분포가 그리 큰 차이를 가지고 있지 않는 것을 확인 할 수 있다. 이런 결과를 가지고 다음과 같은 질문을 할 수 있다.</p>
+
+<ul>
+  <li><strong>Batch Normalization의 효과가 internal covariate shift와 연관이 있는 것인가?</strong></li>
+  <li><strong>Batch Normalization이 internal covariate shift를 감소시키는 역할을 하는가?</strong></li>
+</ul>
+
+<h3 id="does-batchnorms-performance-stem-from-controlling-internal-covariate-shift">Does BatchNorm’s performance stem from controlling internal covariate shift?</h3>
+
+<p>layer input의 distribution의 mean, variance를 조정하는 것이 training performance를 향상시킬 수 있는것 인가? 이를 어떻게 입증할 것인가?</p>
+
+<p>다음과 같은 실험환경을 구성하였다.</p>
+
+<ul>
+  <li>BN을 적용한 후, $random$ noise를 추가하였다. 이 noise는 non-zero mean을 가지며 non-unit variance distribution이다. 또한 training step마다 noise distribution은 바뀐다.</li>
+  <li>noise가 추가되면 결국 covariate shift현상이 생기는 것이다.</li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/27891090/61054362-41247200-a42a-11e9-9c27-2ed1d4f25e3d.png" style="width:90%;" /></p>
+
+<p>위의 그림을 보면, Standard + BatchNorm과 Standard + ‘noisy’BatchNorm과의 성능 차이가 거의 없음을 알 수 있다. 즉, internal covariate shift를 해결하는 것과 batch normalization의 효과를 무관하다고 볼 수 있다. 또한 오른쪽 이미지를 보면, Standard + ‘noisy’BatchNormdl Standard보다 덜 안정적인 distribution을 가지고 있는 것을 확인할 수 있다. 하지만, 실험결과는 Standard + ‘noisy’BatchNorm이 우수한 걸로 보아 stable distribution이 training performance에 주는 영향은 미비한 것으로 보인다. 또한 Standard에 noise를 섞을 때, 전혀 학습이 안되는 것을 확인할 수 있었다.</p>
+
+<p>결국 internal covariate shift를 감소시키는 것과 batch normalization효과는 관련이 있다고 보기 힘들다.</p>
+
+<h3 id="is-batchnorm-reducing-internal-covariate-shift">Is BatchNorm reducing internal covariate shift?</h3>
+
+<p>위에서 internal covariate shift와 training performance와 직접적인 관계가 없다는 것을 증명했다. 하지만,  보다 넓은 관점에서의 training performance와 연관된 internal covariate shift(ICS)이 있을까라는 궁금증이 들 수 있으며, 만약 그렇다면 BatchNorm은 ICS를 감소시킬까?</p>
+
+<p>각 layer는 empirical risk minimization을 수행하고 있다. 만약 layer가 학습도중에 update된다면, 이전 layer가 변하기 때문에 input도 변한다.</p>
+
+<blockquote>
+  <p>empirical risk minimization</p>
+
+  <ul>
+    <li>risk란 loss function의 expectation을 의미한다.</li>
+  </ul>
+
+  <script type="math/tex; mode=display">R(h) = \int L(f(x), y) dP(x, y)</script>
+
+</blockquote>
+
+<p>Is BatchNorm reducing internal covariate shift?  이 질문에 답하기 위해서는 더 넓은 개념의 internal covariate shift를 다뤄야 한다. 이는 optimization problem과 연관이 깊다. 일반적으로 training은 first-order method를 사용하기 때문의 loss의 gradient는 친숙한 편이다. layer내의 parameters가 이전 layer의 update영향으로 얼마큼 조정해야하는지 측정하기 위해서는 이전 layer가 update되기 전과 후의 gradient간의 차이를 구해야한다.</p>
+
+<p>Notation</p>
+
+<ul>
+  <li>
+    <p>loss: $\mathcal{L}$</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">$k$ layers의 parameters(time = t): $W_1^{(t)}, W_2^{(t)}, \cdots W_k{(t)} $</code></p>
+  </li>
+  <li>
+    <p>batch of input-label pairs(time = t):<code class="language-plaintext highlighter-rouge">$(x^{(t)}, y^{(t)})$</code></p>
+  </li>
+  <li>
+    <p>internal covariate shift =<code class="language-plaintext highlighter-rouge">$\rVert G_{t, i} - \acute{G_{t, i}}\rVert_2 $</code>
+<code class="language-plaintext highlighter-rouge">$$
+G_{t, i} = \nabla_{W_i^{(t)}}\mathcal{L(W_1^{(t)}, W_2^{(t)}, \cdots W_k^{(t)} ;x^{(t), y^{(t)}} )}
+$$</code></p>
+
+    <p><code class="language-plaintext highlighter-rouge">$$
+\acute{G_{t, i}} = \nabla_{W_i^{(t+1)}}\mathcal{L(W_1^{(t+1)},  \cdots W_
+{i-1}^{(t+1)},W_
+{i}^{(t)}, W_
+{i+1}^{(t)} \cdots W_k^{(t)} ;x^{(t), y^{(t)}} )}
+$$</code></p>
+  </li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/27891090/61057776-f0644780-a430-11e9-817e-068adbfca35b.png" style="width:90%;" /></p>
+
+<p>위의 internal covariate shift 산출방법으로 bath norm을 적용한 경우와 그렇지 않은 경우를 비교하였다. 이전의 주장은 BN이 ICS를 감소시킨다고 주장하였으나, 실험결과 BN이 ICS를 증가시키기도 하였다. 위의 그림을 보면 확인 할 수 있다. 이런 현상은 DLN에서 더 도드라 진다. DLN을 보면 오히려 Standard한 것이 ICS가 적게 나타나는데 비해서 BN을 적용할 때는 $G, \acute{G}$는 서로 상관관계가 없어보인다. (하지만 training 결과는 loss, acc 측면에서 더 좋게 나온다.)</p>
+
+<p>결국 batch normalization은 internal covariate shift를 감소시키지 않는다는 것을 증명하였다.</p>
+
+<h2 id="why-dose-batchnorm-work">Why dose BatchNorm Work?</h2>
+
+<p>위에서 밝혔듯이 BatchNorm과 ICS는 관련이 없다. 하지만, BatchNorm은 exploding gradient 혹은 vanishing gradient 문제에 있어서 효과적이다. 하지만 이는 BatchNorm이 training performance를 향상 시키는 본질적인 이유라고 할 수 없다.</p>
+
+<h3 id="the-smoothing-effect-of-batchnorm">The smoothing effect of BatchNorm</h3>
+
+<blockquote>
+  <p>it reparametrizes the underlying optimization problem to make its landscape significantly more smooth.</p>
+</blockquote>
+
+<p>결론부터 말하면, BatchNorm은 optimization 문제를 smooth하게 바꾸어 training performance를 개선시키고 있다.</p>
+
+<p>그 이유는 loss function의 Lipschitzness 를 개선시키기 때문이다.</p>
+
+<blockquote>
+  <p>gradient의 변화가 loss의 변화보다 적은 상태, 따라서 loss가 작은 learning rate로 변하게 되면 gradient도 작게 변하게 된다.</p>
+
+  <p>$f$ is L-Lipschitz if $\rvert f(x_1) - f(x_2) \rvert \le L\rVert x_1-x_2\rVert $ for all $x_1, x_2$</p>
+</blockquote>
+
+<p>이 특성은 BatchNorm의 reparameterization을 만나게 되면 더 커지는데, loss는 effective한 $\beta$-smoothness 효과를 가지게 된다.  아래의 그래프에서 확인 할 수 있다.</p>
+
+<blockquote>
+  <p>$\beta$-smoothness란?</p>
+
+  <p>Recall that f is β-smooth if its gradient is β-Lipschitz 
+<script type="math/tex">\rvert f(x) -f(y) - \nabla f(y)^T(x- y)\rvert \le \frac{\beta}{2}\rVert x-y\rVert^2</script></p>
+
+  <p>https://arxiv.org/pdf/1405.4980.pdf</p>
+</blockquote>
+
+<p><img src="https://user-images.githubusercontent.com/27891090/61135559-d42ddc80-a4fc-11e9-8034-e11ac91dc264.png" style="width:90%;" /></p>
+
+<p>이 smooth 효과는 training algorithm에 매우 효과적이다. non-BatchNorm의 loss function은 non-convex할 뿐만 아니라 kinks, flat regions , sharp minima의 문제를 가지고 있다. 이 문제는 gradient 방법론이 수렴하기 불안정하도록 만든다. 하지만 BatchNorm을 적용하게 되면, gradient가 reliable하고 predictive한 방향으로 나오게 된다. 무엇보다도 개선된 Lipschitzness는 learning step을 크게 잡을 수 있게 해준다. 아래의 그래프를 보면 그 효과를 확인할 수 있다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/27891090/61135376-6d102800-a4fc-11e9-81e9-697787bce1b2.png" style="width:90%;" /></p>
+
+<h3 id="exploration-of-the-optimization-landscap">Exploration of the optimization landscap</h3>
+
+<p><img src="https://user-images.githubusercontent.com/27891090/61167097-4ab9f100-a574-11e9-80e5-7eb2aaf18e6f.png" style="width:90%;" /></p>
+
+<p>위의 그래프의 Figure 4(a)를 보면 step마다의 loss변화를 알 수 있다. 이를 통해서 non-BatchNorm의 방식은 loss의 변화량이 BatchNorm보다 크다는 것을 알 수 있다. 이런 현상은 초기 학습과정에서 특히 심하다.</p>
+
+<p>또한 gradient의 predictiveness도 살펴볼수 있다. Figure 4(b)를 보면, 이를 확인할 수 있는데, predictiveness는 주어진 시점에서의 loss gradient와 다른 시점에서의 loss gradient간의 $l_2$ distance로 정의하였다.</p>
+
+<p>Figure 4(c)에서는 BatchNorm의 loss gradient stability/Lipschitzness의 향상을 확인할 수 있다. 이는 gradient direction 뿐만 아니라, random direction에 대해서도 결과가 유사하게 나왔다.</p>
+
+<h3 id="is-batchnorm-the-best-only-way-to-smoothen-the-landscape">Is BatchNorm the best (only?) way to smoothen the landscape?</h3>
+
+<p>실험결과 $l_1$ normalization의 결과가 BatchNorm보다 좋게 나왔다. 기억할 것은 $l_p$ normalization은 distribution shift를 일으킨다는 것이다. 하지만, 여전히 성능을 향상 시킨다. (결국, ICS와 성능향상은 무관하다는 것이다.)</p>
+
+<p>아래의 실험결과를 보면, 꼭 BatchNorm을 고집할 이유는 없어 보인다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/27891090/61167302-d1240200-a577-11e9-9586-2f3a16adca3a.png" style="width:90%;" /></p>
+
+<h2 id="theoretical-analysis">Theoretical Analysis</h2>
+
+<h3 id="setup">Setup</h3>
+
+<p>fully-connected layer W에 single BatchNorm을 추가한 효과를 분석하고자 한다. Figure 5(b)와 같은 상황을 가정한다. 주목할 점은 input에 BatchNorm을 적용한 것이 아니라, layer W의 output에 BatchNorm을 적용한다. 이는 해당 논문의 분석이 단지 input에 대한 normalization 효과에 대한 것이 아니라 reparameterization에 대한 것임을 알려준다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/27891090/61167402-97ec9180-a579-11e9-9e45-a7b80ac9177c.png" style="width:90%;" /></p>
+
+<p>Notation</p>
+
+<ul>
+  <li>layer weights: $W_{ij}$</li>
+  <li>Figure 5(a) network와 Figure 5(b) network는 모두 동일한 loss function을 가지고 있다. (loss function내부에는 non-linear layer들이 추가적으로 있을 수 있다.)</li>
+  <li>BatchNorm loss: $\hat{\mathcal{L}}$</li>
+  <li>위의 두 network모두 input $x$과 activation $y = Wx$를 가진다. BatchNorm의 경우에는 $\hat{y}$를 추가적으로 가지게 되는데 이는 normalized된 activation이다.(mean=0, var=1)</li>
+  <li>$\gamma, \beta$는 모두 constant라고 가정한다.</li>
+  <li>$\sigma_j$는 batch의 output $y_i \in R^m$의 stadard deviation이다.</li>
+</ul>
+
+<h3 id="theoretical-results">Theoretical Results</h3>
+
+<p>activation $y_i$에 대한 optimization landscape를 생각해보자. 앞서 BatchNorm이 결국 landscape가 더 잘 작동하도록 만든다는 것을 실험을 통해 증명하였다. (Lipschitz-continuity, and predictability of the gradients ) 이 논문에서는 activation-space상에서 landscape가 weight -space landscape에서의 <strong>worst-case bounds</strong>가 된다는 것을 증명할 것이다.</p>
+
+<p>gradient magnitude $\rVert\nabla_{y_i}\mathcal{L}\rVert$에 대해서 먼저 생각해보자. 이는 Lipschitzness를 나타내주는 지표이다.  loss의Lipschitzness는  optimization문제에서 큰 역할을 한다고 알려져 있다. (이 지표는 결국 loss가 training step에 따라서 얼마나 변할지 알려주기 때문)</p>
+
+<h4 id="theorem-41-the-effect-of-batchnorm-on-the-lipschitzness-of-the-loss-for-a-batchnorm-network-with-loss-hatmathcall-and-an-identical-non-bn-network-with-identical-loss-mathcall">Theorem 4.1 (The effect of BatchNorm on the Lipschitzness of the loss). For a BatchNorm network with loss $\hat{\mathcal{L}}$ and an identical non-BN network with (identical) loss $\mathcal{L}$,</h4>
+
+<p><code class="language-plaintext highlighter-rouge">$$
+\rVert\nabla_{y_i}\mathcal{L}\rVert^2 \le \frac{\gamma^2}{\sigma_j^2}\left( \rVert\nabla_{y_i}\mathcal{L}\rVert^2 - \frac{1}{m} 	\left\langle 1, \nabla_{y_i}\mathcal{L}\right\rangle ^ 2 - \frac{1}{m}\left\langle  \nabla_{y_i}\mathcal{L}, \hat{y}_j\right\rangle ^ 2 \right)
+$$</code></p>
+
+<p>해당 논문에서는 어떤 가정도 없이 BatchNorm이 더 개선된 Lipschitzness를 가진다고 증명하였다. 게다가 Lipschitz constant는  normalized activation $\hat{y}$가 gradient $\nabla_{y_i}\mathcal{L}$ 혹은 0에서의 gradient deviates값의 mean값과 상관관계가 있을 때 감소되는 것을 확인할 수 있었다. 이 효과는 BN의 scaling이 기존 layer의 scaling과 일치할 때도 나타났다.  아래는 appendix에서 가져온 것이다.</p>
+
+<p><strong>Fact C.1 Gradient throgh BatchNorm</strong></p>
+
+<p>notation</p>
+
+<ul>
+  <li>gradient through BN: $\frac{\partial f}{\partial A^{(b)}}$</li>
+  <li>another function: <code class="language-plaintext highlighter-rouge">$f := f(C) $ </code>where $C = \gamma \cdot B + \beta$ and $B = BN_{0, 1}(A) := \frac{A-u}{\sigma}$</li>
+  <li>scalar elements of a batch size of size m and variance $\sigma^2$: $A^{(b)}$</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">$$
+\frac{\partial f}{\partial A^{(b)}} =\frac{\gamma}{m\sigma}\left( m\frac{\partial f}{\partial C^{(b)}} - \sum_{k=1}^{m}\frac{\partial f}{\partial C_{(k)}} - B^{(b)}\sum_{k=1}^{m}\frac{\partial f}{\partial C_{(k)}}B^{(k)}\right)
+$$</code></p>
+
+<p><strong>Fact C.2 Gradient of normalized outputs</strong></p>
+
+<p>convenient gradient of BN
+<script type="math/tex">\frac{\partial \hat{y}^{(b)}}{\partial y^{(k)}} = \frac{1}{\sigma}\left(1[b=k] =\frac{1}{m} - \frac{1}{m}\hat{y}^{(b)}\hat{y}^{(k)}\ \right)</script>
+그러므로,
+<script type="math/tex">\frac}{\partial y^{(k)}} = \frac{\gamma}{\sigma}\left(1[b=k] =\frac{1}{m} - \frac{1}{m}\hat{y}^{(b)}\hat{y}^{(k)}\ \right)</script></p>
+
+<p><code class="language-plaintext highlighter-rouge">$\left\langle 1, \nabla_{y_i}\mathcal{L}\right\rangle ^ 2$ </code>은  해당 차원에서 quadratically하게 증가한다. 그러므로 중요한 term이다. 게다가 <code class="language-plaintext highlighter-rouge">$\left\langle  \nabla_{y_i}\mathcal{L}, \hat{y}_j\right\rangle ^ 2$</code>은 zero 값으로 부터 조금 떨어진 값이라고 기대되는데 이는 variable과 variable의 gradient term이 일반적으로 uncorrelated하기 때문이다. $\sigma_j$는 커지는 경향이 있는데$\gamma $-scaling을 해줌으로써 flatness가 되도록 해주는 효과를 기대할 수 있다.</p>
+
+<p><strong>proof</strong></p>
+
+<p>Fact C.1을 이용하여 다음과 같이 전개한다.</p>
+
+<p>자세한 증명은 해당 논문의 appendix를 참고하길 바란다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/27891090/61185787-28b98f00-a698-11e9-9c23-ac2a3df5688e.png" style="width:80%;" /></p>
+
+<p><img src="https://user-images.githubusercontent.com/27891090/61185796-3838d800-a698-11e9-968d-a620e72d2b15.png" style="width:80%;" /></p>
+
+<h4 id="theorem-42-the-effect-of-bn-to-smoothness-let-hatg_i--nabla_y_imathcall-and-h_j-j--fracpartialmathcallpartialy_ipartialy_ibe-the-gradient-and-hessian-of-the-loss-with-respect-to-the-layer-outputs-respectively-then">Theorem 4.2 (The effect of BN to smoothness). Let<code class="language-plaintext highlighter-rouge"> $\hat{g}_i = \nabla_{y_i}\mathcal{L}$ and $H_{j j} = \frac{\partial\mathcal{L}}{\partial{y_i}\partial{y_i}}$</code>be the gradient and Hessian of the loss with respect to the layer outputs respectively. Then</h4>
+
+<p><code class="language-plaintext highlighter-rouge">$$
+\left( \nabla_{y_i}\hat{\mathcal{L}} \right)^T\frac{\partial\hat{\mathcal{L}}}{\partial{y_i}\partial{y_i}} \left( \nabla_{y_i}\hat{\mathcal{L}}\right) \le \frac{\gamma^2}{\sigma_j^2} \left(\frac{\partial\hat{\mathcal{L}}}{\partial{y_i}} \right) H_{jj} \left(\frac{\partial\mathcal{L}}{\partial{y_i}} \right) - \frac{\gamma}{m\sigma^2} \left\langle \hat{g_j}, \hat{y_j} \right\rangle \rVert\frac{\partial\mathcal{L}}{\partial{y_i}} \rVert^2
+$$</code>
+만약,<code class="language-plaintext highlighter-rouge"> $\hat{g_j}, \nabla_{y_i}\hat{\mathcal{L}}$</code>의 relative norm을 보존하는 $H_{jj}$를 가지고 있다면?
+<code class="language-plaintext highlighter-rouge">$$
+\left( \nabla_{y_i}\hat{\mathcal{L}} \right)^T\frac{\partial\hat{\mathcal{L}}}{\partial{y_i}\partial{y_i}} \left( \nabla_{y_i}\hat{\mathcal{L}}\right) \le \frac{\gamma^2}{\sigma_j^2} \left( \hat{g_i}^TH_{jj}\hat{g}_i - \frac{1}{m\gamma} \left\langle\hat{g_j}, \hat{y_j} \right\rangle\right)\rVert\frac{\partial\mathcal{L}}{\partial{y_i}} \rVert^2
+$$</code></p>
+
+<p>이제 landscape의 second-order 특성을 살펴보자. BatchNorm이 더해지면, loss Hessian(gradient direction에 대한 activation에 대한 hessian)은 input variance에 의해서 rescaled되고 increasing smoothness에 의해서 감소하게 된다. 이는 Taylor expansion에 의해서 도출할 수 있으며, 이 term을 감소시키는 것은 gradient가 더 predictive한 성격을 가지게 한다.</p>
+
+<p>$\left\langle \hat{y_j},\hat{g_j}\right\rangle$이 non-negative 한 성격을 가지고 Hessian을 가진다면, 위의 theorem은 더 예측가능한 gradient값을 가진다.(predictive gradient) Hessian은 loss가 locally convex하게 되면, positive semi-definite한 성격을 가지게 된다.</p>
+
+<h4 id="theorem-44-minimax-bound-on-weight-space-lipschitzness-for-a-batchnorm-network-with-loss-hatmathcall-and-an-identical-non-bn-network-with-identical-loss--mathcall-if">Theorem 4.4 (Minimax bound on weight-space Lipschitzness). For a BatchNorm network with loss $\hat{\mathcal{L}}$ and an identical non-BN network (with identical loss  $\mathcal{L}$), if</h4>
+
+<p>여기서는 BatchNorm이 layer weights에 대한 worst-case bound역할을 하는 것을 보일 것이다.
+<code class="language-plaintext highlighter-rouge">$$
+g_j = \max_{\rVert X \rVert \le \lambda}\rVert \nabla_W\mathcal{L}\rVert^2
+$$</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">$$
+\hat{g_j} = \max_{\rVert X \rVert \le \lambda}\rVert \nabla_W\hat{\mathcal{L}}\rVert^2 \Rightarrow \hat{g}_j \le \frac{\gamma}{\sigma_j^2}\left( g_j^2 - mu^2_{g_j} -\lambda^2\left\langle \nabla_{y_j}\mathcal{L}, \hat{y}_j\right\rangle^2 \right)
+$$</code></p>
+
+<p>아래는 이에 대한 증명이다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/27891090/61218325-beaef180-a74c-11e9-92e5-6ff9b91ebbbe.png" style="width: 80%;" /></p>
+
+<p><img src="https://user-images.githubusercontent.com/27891090/61218364-d6867580-a74c-11e9-841d-7d9bff90a3a4.png" style="width: 80%;" /></p>
+
+<h4 id="lemma-45-batchnorm-leads-to-a-favourable-initialization-let-w-and-hatw-be-the-set-of-local-optima-for-the-weights-in-the-normal-and-bn-networks-respectively-for-any-initialization-w_0">Lemma 4.5 (BatchNorm leads to a favourable initialization). Let <code class="language-plaintext highlighter-rouge">$W^*$ </code>and <code class="language-plaintext highlighter-rouge">$\hat{W}^*$</code> be the set of local optima for the weights in the normal and BN networks, respectively. For any initialization $W_0$</h4>
+
+<p>initialization에서도 성능 향상이 있었다.</p>
+
+<p><strong>Reference</strong></p>
+
+<ul>
+  <li>https://arxiv.org/abs/1805.11604</li>
+</ul>
+
+  </div><a class="u-url" href="/FastPages/deeplearning/2019/07/11/How-Does-Batch-Normalization-Help-Optimization.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/FastPages/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">fastpages</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">fastpages</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list">
+  <li><a href="https://github.com/RRoundTable"><svg class="social svg-icon"><use xlink:href="/FastPages/assets/minima-social-icons.svg#github"></use></svg> <span class="username">RRoundTable</span></a></li><li><a href="https://www.twitter.com/fastdotai"><svg class="social svg-icon"><use xlink:href="/FastPages/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">fastdotai</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

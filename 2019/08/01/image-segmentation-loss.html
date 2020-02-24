@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="shortcut icon" type="image/x-icon" href="/FastPages/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Basic: Cross Entropy | fastpages</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Basic: Cross Entropy" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="일반적으로 classification문제에서 사용되는 term이다." />
+<meta property="og:description" content="일반적으로 classification문제에서 사용되는 term이다." />
+<link rel="canonical" href="https://rroundtable.github.io/FastPages/2019/08/01/image-segmentation-loss.html" />
+<meta property="og:url" content="https://rroundtable.github.io/FastPages/2019/08/01/image-segmentation-loss.html" />
+<meta property="og:site_name" content="fastpages" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-08-01T00:00:00-05:00" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://rroundtable.github.io/FastPages/2019/08/01/image-segmentation-loss.html"},"description":"일반적으로 classification문제에서 사용되는 term이다.","@type":"BlogPosting","url":"https://rroundtable.github.io/FastPages/2019/08/01/image-segmentation-loss.html","headline":"Basic: Cross Entropy","dateModified":"2019-08-01T00:00:00-05:00","datePublished":"2019-08-01T00:00:00-05:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/FastPages/assets/main.css">
+  <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://rroundtable.github.io/FastPages/feed.xml" title="fastpages" />
+
+  <script>
+  function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+  }
+  window.onload = wrap_img;
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function(){
+      // add link icon to anchor tags
+      var elem = document.querySelectorAll(".anchor-link")
+      elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+      // remove paragraph tags in rendered toc (happens from notebooks)
+      var toctags = document.querySelectorAll(".toc-entry")
+      toctags.forEach(e => (e.firstElementChild.innerText = e.firstElementChild.innerText.replace('¶', '')))
+    });
+  </script>
+</head><body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/FastPages/">fastpages</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/FastPages/about/">About Me</a><a class="page-link" href="/FastPages/search/">Search</a><a class="page-link" href="/FastPages/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Basic: Cross Entropy</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2019-08-01T00:00:00-05:00" itemprop="datePublished">
+        Aug 1, 2019
+      </time>
+    •<span class="read-time" title="Estimated read time">
+    
+    
+      2 min read
+    
+</span></p>
+
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>일반적으로 classification문제에서 사용되는 term이다.
+<script type="math/tex">CE(p, \hat{p}) = -(p \log(\hat{p}) + (1- p)\log(1-\hat{p}))</script></p>
+
+<h2 id="weighted-cross-entropy">Weighted cross entropy</h2>
+
+<script type="math/tex; mode=display">WCE(p, \hat{p}) = -(\beta p \log(\hat{p}) + (1- p)\log(1-\hat{p}))</script>
+
+<p>위의 cross entropy의 변형으로 모든 positive samples는 가중치를 부여 받는다. 이는 class imbalace문제를 다루기 위해서 사용한다. 만약 positive sample이 is 90%고 negative sample이 10%라면 cross entropy는 잘 작동하기 힘들다. 위와 같은 상황에서는  positive sample에 $\beta$ 를 1보다 작은 값을 부여하여 해결하고 만약 negative sample이 더 많다면 반대로 $\beta$ 에 1보다 큰 값을 부여하여 해결한다.</p>
+
+<h2 id="balanced-cross-entropy">Balanced cross entropy</h2>
+
+<p>위의 WCE와 유사한 방법론이다. 차이점은 negative sample에도 특정 가중치를 곱하는데에 있다.
+<script type="math/tex">BCE(p, \hat{p}) = -(\beta p \log(\hat{p}) + (1-\beta)(1- p)\log(1-\hat{p}))</script>
+주의할 점은 만약 $\beta$가 1의 값을 가진다면 negative sample을 전혀 고려하지 못하게 된다. 이는 $\beta$ 가 fixed value가 아닐때 발생하는데, 예시는 다음과 같다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">beta</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y_true</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">BATCH_SIZE</span> <span class="o">*</span> <span class="n">HEIGHT</span> <span class="o">*</span> <span class="n">WIDTH</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>이러한 문제는 small value $\epsilon$ 을 임의로 더해주거나 tf.clip_by_value를 이용하여 해결한다.</p>
+
+<h2 id="focal-loss">Focal loss</h2>
+
+<p>주된 목적은 쉬운 example에 대해서는 down-weight를 부여하여 모델이 조금 더 어려운 example에 집중하는 것이다.
+<script type="math/tex">FL(p, \hat{p}) = -(\alpha(1-\hat{p}) ^ \gamma p \log(\hat{p}) + (1-\alpha)\hat{p}^\gamma(1- p)\log(1-\hat{p}))</script></p>
+
+<ul>
+  <li>
+    <p>만약 $\gamma$ 가 0이라면, BCE를 얻게 된다.</p>
+
+    <p>여기서 어려운 exapmle이란, 모델이 예측하기 어려운 class를 의미한다.</p>
+  </li>
+</ul>
+
+<수식 전개="" 및="" 코드="" 구현="" 작성할까="">
+
+
+
+## Distance to the nearest cell
+
+cross entropy 개념에 거리 개념을 더하여 모델이 붙어있는 object에 대해서 더 잘 구별하도록 하는 것이 목적이다.
+$$
+BCE(p, \hat{p}) + w_0 \cdot \exp(- \frac{(d_1(x) + d_2(x))^2}{2 \sigma^2})
+$$
+
+- $d_1(x), d_2(x)$ 는 가장 가까운 cell과의 거리, 두 번째로 가까운 cell과의 거리를 나타낸다. 거리가 멀어질 수록 total loss는 줄어들고, 거리가 가까울 수록 total loss가 증가하게 된다.
+
+- 여기서 cell은 다른 class를 의미한다.
+
+  
+
+# Overlap measures
+
+## Dice Loss /F1 score
+
+dice coefficient는 IOU와 유사한 term이다. 
+$$
+DC = \frac{2TP}{2TP + FP + FN} = \frac{2 \rvert X \cap Y \rvert}{|X| + |Y|}
+$$
+
+$$
+IOU = \frac{TP}{TP + FP +FN} = \frac{\rvert X \cap Y \rvert}{|X| + |Y| - \rvert X \cap Y \rvert}
+$$
+
+​	여기서 $DC \ge IOU$ 라는 것을 알 수 있다.
+
+Dice coefficient는 loss function으로 정의될 수 있다.
+$$
+DL(p, \hat{p}) = \frac{2&lt;p, \hat{p}&gt;}{\rVert p \rVert_2^2 + \rVert \hat{p} \rVert_2^2}
+$$
+
+~~~python
+def dice_loss(y_true, y_pred):
+  numerator = 2 * tf.reduce_sum(y_true * y_pred)
+  # some implementations don't square y_pred
+  denominator = tf.reduce_sum(y_true + tf.square(y_pred))
+
+  return numerator / (denominator + tf.keras.backend.epsilon()
+~~~
+
+
+
+## Tversky loss
+
+dice loss의 generalization이다. FP와 FN에 weight를 곱하는 것이다.
+
+$$
+DL(p, \hat{p}) = \frac{2 &lt;p, \hat{p}&gt;}{2&lt;p, \hat{p}&gt; + &lt;1-p, \hat{p}&gt; + &lt;p, 1 - \hat{p}&gt;}
+$$
+
+$$
+TL(p, \hat{p}) = \frac{2 &lt;p, \hat{p}&gt;}{2&lt;p, \hat{p}&gt; + \beta&lt;1-p, \hat{p}&gt; + (1-\beta)&lt;p, 1 - \hat{p}&gt;}
+$$
+
+## Lovasz-softmax
+
+DL과 TL은 $\hat{p} \in \{ 0, 1\} ^n$ 이라는 강한 제한을 둔다. 하지만 Lovasz-softmax에서는 surrogate loss function을 사용한다.
+
+&gt; https://github.com/bermanmaxim/LovaszSoftmax/blob/master/tensorflow/lovasz_losses_tf.py
+
+
+
+#### Reference
+
+- https://lars76.github.io/neural-networks/object-detection/losses-for-segmentation/#references
+</수식>
+
+  </div><a class="u-url" href="/FastPages/2019/08/01/image-segmentation-loss.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/FastPages/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">fastpages</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">fastpages</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list">
+  <li><a href="https://github.com/RRoundTable"><svg class="social svg-icon"><use xlink:href="/FastPages/assets/minima-social-icons.svg#github"></use></svg> <span class="username">RRoundTable</span></a></li><li><a href="https://www.twitter.com/fastdotai"><svg class="social svg-icon"><use xlink:href="/FastPages/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">fastdotai</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
