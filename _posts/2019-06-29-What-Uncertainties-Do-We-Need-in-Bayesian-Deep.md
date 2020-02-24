@@ -21,12 +21,7 @@ regression task에서 각각의 uncertainty에 대해서 알아보도록 하겠�
 
 ## Epistemic uncertainty
 
-<center>
-<figure class="image">
-	<img src="https://i1.wp.com/www.aimechanic.com/wp-content/uploads/2017/03/Deep-Learning-Uncertainty.png?w=693" width=350 height=400>
-	<figcaption>Fig.1 - Gaussian Process</figcaption>
-</figure>
-</center>
+![]({{ site.baseurl }}/images/2019-06-29-What-Uncertainties-Do-We-Need-in-Bayesian-Deep/Deep-Learning-Uncertainty.png "Fig.1 - Gaussian Process")
 
 [Fig. 1]을 보면, 파란색 영역은 variance를 나타내며, observation(흑색 점)이 있는 data point에서는 낮은 unceratinty를 보이고 그렇지 않은 곳에서는 높은 uncertainty를 보인다.  만약 높은 variance를 보이는 영역에 data point가 더 있다면 uncertainty는 줄어들 것이다. 
 
@@ -40,23 +35,18 @@ epistemic uncertainty는 다음과 같은 모델에서 중요합니다.
 만약, Gaussian Process에 대해서 더 자세히 알고 싶다면 [A Visual Exploration of Gaussian Process](https://distill.pub/2019/visual-exploration-gaussian-processes/)를 참고하길 바랍니다.
 
 ## Aleatoric uncertainty
-<center>
-<figure class="image">
-	<img src="https://sci2s.ugr.es/sites/default/files/files/TematicWebSites/noisydata/borderline.png" width=300 height=400>
-	<figcaption>Fig.2 - Data Noise</figcaption>
-</figure>
-</center>
+
+![]({{ site.baseurl }}/images/2019-06-29-What-Uncertainties-Do-We-Need-in-Bayesian-Deep/borderline.png "Fig.2 - Data Noise")
+
+
 
 Aleatoric uncertainty는 data point 자체의 noisy를 의미한다. 이는 epistemic uncertainty와 다르게 더 많은 data point가 추가되어도 줄어들 수 없는 특성을 가지고 있다.
 
 ### Heteroscedastic Aleatoric uncertainty
 
-<center>
-<figure class="image">
-	<img src="https://raw.github.com/jmetzen/gp_extras/master/images/gpr_heteroscedastic_noise.png" width=600 height=400>
-	<figcaption>Fig.2 - Model comparision</figcaption>
-</figure>
-</center>
+
+
+![]({{ site.baseurl }}/images/2019-06-29-What-Uncertainties-Do-We-Need-in-Bayesian-Deep/gpr_heteroscedastic_noise.png "Fig.3 - Model comparision")
 
 heteroscedastic noise model은 homescedastic noise model과 다르게 data point마다 다른 uncertainty를 가지고 있습니다. 이를 바탕으로 Aleatoric heteroscedastic uncetainty를 생각해보면, input data에 따라서 달라지는 uncertainty를 가진다고 생각하면 될 것 같습니다. 이 논문에서는 'Heteroscedastic Aleatoric uncertainty'를 가정하고 문제를 풀고 있습니다.
 
@@ -72,33 +62,31 @@ aleatoric uncertainty는 다음과 같은 모델에서 중요합니다.
 ### 2.1 Epistemic Uncertainty in Bayesian Deep Learning
 
 우선, epistemic uncertainty는 model의 weight에 prior distribution을 가정합니다. 그리고 data에 따라서 weight가 변하는 양상을 측정합니다.
-<center>
-<figure class="image">
-	<img src="https://taeoh-kim.github.io/img/bayes_fig11.PNG" width=400 height=300>
-	<figcaption>Fig.4 - bayesian neural network(right)</figcaption>
-</figure>
-</center>
+
+![]({{ site.baseurl }}/images/2019-06-29-What-Uncertainties-Do-We-Need-in-Bayesian-Deep/bayes_fig11.png "Fig.4 - Bayesian Neural Network")
+
 
 nueral network의 weight에 prior distribution을 설정하기 위해서 일반적으로 Gaussian prior distribution 을 사용합니다 ($W  \sim  \mathbf{N}(0, I) $) 그리고 이를 **Bayesian neural network(BNN)**라고 합니다.
 
-Bayesian neural network는 deterministic한  weight paramters를 distribution으로 바꾸고 network의 weight를 직접적으로 바꾸는 것이 아니라, 모든 가능한 weight의 marginalization을 구하여 평균값을 구합니다.
+Bayesian neural network는 deterministic한  weight paramters를 distribution으로 바꾸고 network의 weight를 직접적으로 바꾸는 것이 아니라, 모든 가능한 weight의 marginalization을 구하여 평균값을 구합니다
 
-<center>
-<figure class="image">
-	<img src="https://cdn-images-1.medium.com/max/1600/1*j2R1fc9IvneSwsqnzjw8Lg.png" width=300 height=80>
-	<figcaption>Fig.5 - marginalization example </figcaption>
-</figure>
-</center>
+
+
+$$
+P(X) = \sum_y P(X, Y =y) = \sum_y P(X|Y=y) \times P(Y=y)
+$$
+
+
 
 *Notation*
 
-- $f^{W}(x)$: BNN의 random output
+- $$$f^{W}(x)$$$: BNN의 random output
 
-- $X=[{x\_1, x\_2, \cdots, x\_{n}}]$, $Y=[y\_1, y\_2, \cdots, y\_{n}]$ : datasets
+- $$$X=[{x\_1, x\_2, \cdots, x\_{n}}]$$$, $$$Y=[y\_1, y\_2, \cdots, y\_{n}]$$$ : datasets
 
-- $p(y|f^{W}(x))$: likelihood
+- $$$p(y|f^{W}(x))$$$: likelihood
 
-- $p(W|X, Y)$: posterior distribution
+- $$$p(W|X, Y)$$$: posterior distribution
 
 BNN에서 posterior distribution의 역할은 주어진 data에서 가장 적절한 parameter를 찾아주는 것입니다.. (주어진 데이터에서 해당 prameter가 얼마큼의 확률을 가지는지 나타내주는 값)
 
@@ -132,12 +120,9 @@ marginal probability $p(X|Y)$가 가지는 의미를 한번 생각해보면, 이
 위에서 posterior $p(W|X, Y)$를 계산하기 힘든 이유를 언급하였습니다. 이러한 문제를 해결하기 위해서 **Variational inference**라는 방법론을 사용합니다. 간단하게 생각하면, posterior $p(W|X, Y)$ 대신에 Simple distribution $q_{\theta}(W)$을 가정하고 parameter $\theta$에 의해서 posterior $p(W|X, Y)$와 유사한 분포를 가지도록 조정합니다.
 
 
-<center>
-<figure class="image">
-	<img src="https://cdn-images-1.medium.com/max/880/1*iWQzxhVlvadk6VAJjsgXgg.png" width=500 height=300>
-	<figcaption>Fig.6 - Dropout </figcaption>
-</figure>
-</center>
+
+![]({{ site.baseurl }}/images/2019-06-29-What-Uncertainties-Do-We-Need-in-Bayesian-Deep/dropout.png "Fig.6 - Dropout")
+
 
 일반적으로 dropout은 overfitting을 막는 방법론으로 사용되고 있습니다. 하지만, dropout은 BNN과 유사한 inference를 할 수 있습니다. 이는  [Dropout as a Bayesian Approximation: Representing Model Uncertainty in Deep Learning](https://arxiv.org/abs/1506.02142) 에서 확인할 수 있습니다. 간단하게 설명하면, 일반적으로 dropout은 train과정에서 적용하고 test과정에서는 제외하는데 반해서, bayesian inference를 하기 위해서 dropout을 train과 test과정에서 둘다 적용하여 사용합니다. 특히 test과정에서는 sampling을 하는데 dropout을 사용하고 있습니다. 이렇게 나온 sample을 바탕으로 inference를 진행합니다.
 
@@ -190,9 +175,11 @@ $$
 Aleatoric uncertainty는 model의 output에 distribution을 가정합니다. 그리고 이를 위해서 'observation noise parameter $\theta$'를 학습시킵니다.
 
 위에서 언급했듯이, Homoscedastic regression은 모든 data point마다 동일한 observation constant noise $\sigma$를 가집니다. 반면에, Heteroscedastic model에서는 각 data point마다 서로 다른 observation noise를 가지고 있습니다. Non-Bayesian neural network에서는 대게 constance noise $\sigma$를 가정하거나, 무시하곤 합니다. 하지만, 아래 수식과 같이 data-dependent하게 학습시킨다면, data에 대한 **fucntion**의 형태로 학습될 수 있습니다. 
+
 $$
 \mathbf{L}_{NN}(\theta) = \frac{1}{N}\sum_{i=1}^{N}\frac{1}{2\sigma(x_i)^2}\rVert y_i - f(x_i) \rVert ^ 2 + \frac{1}{2}\log{\sigma(x_i)^2}
 $$
+
 function의 형태로 학습시킨다는 것은 각 data point마다 변하는 uncertainty를 측정할 수 있다는 것을 의미합니다. 또한 epistemic uncertainty를 구하는 것과 다르게 variational inference 대신에 *MAP inference*를 사용합니다. - finding single value for the model parameters $\theta$
 
 참고로 이런 방법은 epistemic uncertainty를 측정하지 못하는데, 위의 접근방법은 data자체의 uncertainty를 구하는 방법이기 때문입니다.
