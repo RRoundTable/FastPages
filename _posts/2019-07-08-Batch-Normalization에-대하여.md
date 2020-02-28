@@ -1,13 +1,11 @@
-
 ---
 title: "Batch Normalization에 대하여"
 toc: true
 branch: master
 badges: true
 comments: true
-image: https://alexgkendall.com/assets/images/blog_uncertainty/uncertainty_types.jpg
-categories: ['interview', 'deep learning']
-metadata_key1: uncertainty in computer vision
+categories: ['interview', 'deeplearning']
+metadata_key1: batch normalization
 ---
 
 
@@ -24,12 +22,13 @@ metadata_key1: uncertainty in computer vision
 > ex) Relu
 
 sigmoid activation에 대해서 생각해보면, 위의 문제가 왜 심각한지 알 수 있다. sigmoid function은 saturating function중 하나로 $\rvert x\rvert $가 증가할 수록 gradient값이 0에 수렴한다.
+
 $$
 g(x) = \frac{1}{1 + \exp(-x)}
 $$
-<center>
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Logistic-curve.svg/320px-Logistic-curve.svg.png" style="width:50%;">
-</center>
+
+![]({{ site.baseurl }}/images/2019-07-08-Batch-Normalization에-대하여/sigmoid.png "sigmoid")
+
 layer의 depth가 깊어질수록 이 문제는 더 커지게 되는데, 이런 문제를 해결하기 위해서 Relu를 많이 사용한다. 하지만,  Batch normalizing을 사용하게 되면 stable한 distribution을 가지게 되어서 이런 문제를 해결할 수 있다.
 
 
@@ -66,6 +65,7 @@ Notation
 - $E[x] = \frac{1}{N}\sum_{i=1}^Nx_i$
 
 만약 $E[x]$가 $b$에 미치는 영향을 무시하고 학습한다면, 아래와 같이 update된다. 
+
 $$
 b \leftarrow b + \nabla b
 $$
@@ -162,15 +162,16 @@ $$
    일반적으로 Stochastic Gradient Training을 하기 때문에 각 mini-batch activation에 해당하는 variance mean를 사용하게 된다. 이는 normalization이 backpropagation과정에 적절히 관여하게 만든다.
 
 중요한 점은 per-dimension variance를 구하는 것이 computation cost를 낮춘다는 것이다. (Singluar covariance matrices) 아래는 batch normalization algorithm에 대한 설명이다. 주목할 점은 learned parameter $\gamma, \beta$가 training example 뿐 아니라 mini-batch 안에 있는 다른 training example에 영향을 받는다는 것이다. ($\epsilon$은 stability를 위한 constant term이다.)
-<center>
-<img src="https://user-images.githubusercontent.com/27891090/60887317-fe7a6280-a28e-11e9-9c60-9b750b678124.png" style="width:80%;">
-</center>
+
+
+![]({{ site.baseurl }}/images/2019-07-08-Batch-Normalization에-대하여/Algorithm1.png "Algorithm1")
+
+
 
 
 [Backpropagation 전개]
-<center>
-<img src="https://user-images.githubusercontent.com/27891090/60888587-17d0de00-a292-11e9-946a-1319c42833a8.png" style="width:80%;">
-</center>
+
+![]({{ site.baseurl }}/images/2019-07-08-Batch-Normalization에-대하여/backpropagation.png "Backpropagation")
 
 
 ### Training and Inference with BatchNormalized Networks 
@@ -184,9 +185,10 @@ $$
 Var[x] = \frac{m}{m-1}\cdot E_B[\sigma_B^2]
 $$
 training과정에서 moving average를 사용하는 것과 다르게 inference과정에서는 고정된 mean과 variance를 통해서 deterministic한 output을 도출한다. 이는 각 layer마다 linear transformation을 한 것으로 해석할 수 있다. 알고리즘은 아래와 같다.
-<center>
-<img src="https://user-images.githubusercontent.com/27891090/60887345-1225c900-a28f-11e9-996f-337201960b26.png" style="width:80%;">
-</center>
+
+
+![]({{ site.baseurl }}/images/2019-07-08-Batch-Normalization에-대하여/Algorithm2.png "Algorithm2")
+
 
 ### Batch-Normalized Convolutional Networks 
 
@@ -216,10 +218,8 @@ $$
 
 그렇다면, Convolution layer에서는 어떻게 적용될 지 살펴보자. 아래는 Convolution filter의 작동방법이다.
 
-<center>
-<img src="https://cdn-media-1.freecodecamp.org/images/gb08-2i83P5wPzs3SL-vosNb6Iur5kb5ZH43
-" style="width:80%;">
-</center>
+![]({{ site.baseurl }}/images/2019-07-08-Batch-Normalization에-대하여/convolution.gif "Convolution")
+
 
 CNN의 특징중 하나는 'local connected'라는 것이다.
 
@@ -235,9 +235,9 @@ Convolution layer에서는 BN transformation이 다음과 같이 적용된다.
 
 - 아래의 Alg.1에서 $B$를 한 feature map에서의 각 location에 대한 activation value로 설정한다.(in mini-batch). mini-batch $B$의 크기는 feature map크기가 $p \times q$라고 가정하고 $m\cdot pq$가 된다. 따라서 $\gamma^{(k)}, \beta^{(k)}$는 activation마다가 아니라 feature map마다 구하게 된다. 
 
-- <center>
-  <img src="https://user-images.githubusercontent.com/27891090/60887317-fe7a6280-a28e-11e9-9c60-9b750b678124.png" style="width:50%;">
-  </center>
+- 
+![]({{ site.baseurl }}/images/2019-07-08-Batch-Normalization에-대하여/Algorithm1 "Algorithm1")
+
 
 
 
