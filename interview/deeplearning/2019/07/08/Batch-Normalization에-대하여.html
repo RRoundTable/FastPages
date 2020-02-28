@@ -3,19 +3,19 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="shortcut icon" type="image/x-icon" href="/FastPages/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>fastpages | An easy to use blogging platform with support for Jupyter Notebooks.</title>
+<title>Problem Define | fastpages</title>
 <meta name="generator" content="Jekyll v3.8.5" />
-<meta property="og:title" content="fastpages" />
+<meta property="og:title" content="Problem Define" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="title: “Batch Normalization에 대하여” toc: true branch: master badges: true comments: true image: https://alexgkendall.com/assets/images/blog_uncertainty/uncertainty_types.jpg categories: [‘interview’, ‘deep learning’] metadata_key1: uncertainty in computer vision —" />
-<meta property="og:description" content="title: “Batch Normalization에 대하여” toc: true branch: master badges: true comments: true image: https://alexgkendall.com/assets/images/blog_uncertainty/uncertainty_types.jpg categories: [‘interview’, ‘deep learning’] metadata_key1: uncertainty in computer vision —" />
-<link rel="canonical" href="https://rroundtable.github.io/FastPages/2019/07/08/Batch-Normalization%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC.html" />
-<meta property="og:url" content="https://rroundtable.github.io/FastPages/2019/07/08/Batch-Normalization%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC.html" />
+<meta name="description" content="학습하는 과정에서 이전 layer의 parameter가 변하면서, 각 layer의 input들의 distribution이 training과정마다 변하게 된다. 이런 문제는 학습이 불안정하게 하며, 낮은 learning rate를 사용해야 학습이 진행된다. 결론적으로는 saturating non-linearity의 모델을 학습하기 어려워진다. 이런 현상을 internal covariate shift 라고 부른다." />
+<meta property="og:description" content="학습하는 과정에서 이전 layer의 parameter가 변하면서, 각 layer의 input들의 distribution이 training과정마다 변하게 된다. 이런 문제는 학습이 불안정하게 하며, 낮은 learning rate를 사용해야 학습이 진행된다. 결론적으로는 saturating non-linearity의 모델을 학습하기 어려워진다. 이런 현상을 internal covariate shift 라고 부른다." />
+<link rel="canonical" href="https://rroundtable.github.io/FastPages/interview/deeplearning/2019/07/08/Batch-Normalization%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC.html" />
+<meta property="og:url" content="https://rroundtable.github.io/FastPages/interview/deeplearning/2019/07/08/Batch-Normalization%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC.html" />
 <meta property="og:site_name" content="fastpages" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2019-07-08T00:00:00-05:00" />
 <script type="application/ld+json">
-{"mainEntityOfPage":{"@type":"WebPage","@id":"https://rroundtable.github.io/FastPages/2019/07/08/Batch-Normalization%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC.html"},"description":"title: “Batch Normalization에 대하여” toc: true branch: master badges: true comments: true image: https://alexgkendall.com/assets/images/blog_uncertainty/uncertainty_types.jpg categories: [‘interview’, ‘deep learning’] metadata_key1: uncertainty in computer vision —","@type":"BlogPosting","url":"https://rroundtable.github.io/FastPages/2019/07/08/Batch-Normalization%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC.html","headline":"fastpages","dateModified":"2019-07-08T00:00:00-05:00","datePublished":"2019-07-08T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://rroundtable.github.io/FastPages/interview/deeplearning/2019/07/08/Batch-Normalization%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC.html"},"description":"학습하는 과정에서 이전 layer의 parameter가 변하면서, 각 layer의 input들의 distribution이 training과정마다 변하게 된다. 이런 문제는 학습이 불안정하게 하며, 낮은 learning rate를 사용해야 학습이 진행된다. 결론적으로는 saturating non-linearity의 모델을 학습하기 어려워진다. 이런 현상을 internal covariate shift 라고 부른다.","@type":"BlogPosting","url":"https://rroundtable.github.io/FastPages/interview/deeplearning/2019/07/08/Batch-Normalization%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC.html","headline":"Problem Define","dateModified":"2019-07-08T00:00:00-05:00","datePublished":"2019-07-08T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
   <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -94,7 +94,7 @@
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline"></h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2019-07-08T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Problem Define</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2019-07-08T00:00:00-05:00" itemprop="datePublished">
         Jul 8, 2019
       </time>
     •<span class="read-time" title="Estimated read time">
@@ -105,23 +105,35 @@
 </span></p>
 
     
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/FastPages/categories/#interview">interview</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/FastPages/categories/#deeplearning">deeplearning</a>
+        
+      
+      </p>
+    
 
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>title: “Batch Normalization에 대하여”
-toc: true
-branch: master
-badges: true
-comments: true
-image: https://alexgkendall.com/assets/images/blog_uncertainty/uncertainty_types.jpg
-categories: [‘interview’, ‘deep learning’]
-metadata_key1: uncertainty in computer vision
-—</p>
-
-<h2 id="problem-define">Problem Define</h2>
-
-<p>학습하는 과정에서 이전 layer의 parameter가 변하면서, 각 layer의 input들의 distribution이 training과정마다 변하게 된다. 이런 문제는 학습이 불안정하게 하며, 낮은 learning rate를 사용해야 학습이 진행된다. 결론적으로는 <strong>saturating non-linearity</strong>의 모델을 학습하기 어려워진다. 이런 현상을 <strong>internal covariate shift</strong> 라고 부른다.</p>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#towards-reducing-internal-covariate-shift">Towards Reducing Internal Covariate Shift</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#fixed-distribution">Fixed Distribution</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#normalization-via-mini-batch-statistics">Normalization via Mini-Batch Statistics</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#training-and-inference-with-batchnormalized-networks">Training and Inference with BatchNormalized Networks</a></li>
+<li class="toc-entry toc-h3"><a href="#batch-normalized-convolutional-networks">Batch-Normalized Convolutional Networks</a></li>
+<li class="toc-entry toc-h3"><a href="#batch-normalization-enables-higher">Batch Normalization enables higher</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#batch-normalization-regularizes-the-model">Batch Normalization regularizes the model</a></li>
+</ul><p>학습하는 과정에서 이전 layer의 parameter가 변하면서, 각 layer의 input들의 distribution이 training과정마다 변하게 된다. 이런 문제는 학습이 불안정하게 하며, 낮은 learning rate를 사용해야 학습이 진행된다. 결론적으로는 <strong>saturating non-linearity</strong>의 모델을 학습하기 어려워진다. 이런 현상을 <strong>internal covariate shift</strong> 라고 부른다.</p>
 
 <blockquote>
   <p>saturating non-linearity: 어떤 입력이 무한대로 갈 때 함수값이 어떤 범위내에서만 움직이는 것</p>
@@ -133,14 +145,16 @@ metadata_key1: uncertainty in computer vision
   <p>ex) Relu</p>
 </blockquote>
 
-<p>sigmoid activation에 대해서 생각해보면, 위의 문제가 왜 심각한지 알 수 있다. sigmoid function은 saturating function중 하나로 $\rvert x\rvert $가 증가할 수록 gradient값이 0에 수렴한다.
-<script type="math/tex">g(x) = \frac{1}{1 + \exp(-x)}</script></p>
-<center>
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Logistic-curve.svg/320px-Logistic-curve.svg.png" style="width:50%;" />
-</center>
+<p>sigmoid activation에 대해서 생각해보면, 위의 문제가 왜 심각한지 알 수 있다. sigmoid function은 saturating function중 하나로 $\rvert x\rvert $가 증가할 수록 gradient값이 0에 수렴한다.</p>
+
+<script type="math/tex; mode=display">g(x) = \frac{1}{1 + \exp(-x)}</script>
+
+<p><img src="/FastPages/images/2019-07-08-Batch-Normalization%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC/sigmoid.png" alt="" title="sigmoid"></p>
+
 <p>layer의 depth가 깊어질수록 이 문제는 더 커지게 되는데, 이런 문제를 해결하기 위해서 Relu를 많이 사용한다. 하지만,  Batch normalizing을 사용하게 되면 stable한 distribution을 가지게 되어서 이런 문제를 해결할 수 있다.</p>
 
-<h2 id="towards-reducing-internal-covariate-shift">Towards Reducing Internal Covariate Shift</h2>
+<h2 id="towards-reducing-internal-covariate-shift">
+<a class="anchor" href="#towards-reducing-internal-covariate-shift" aria-hidden="true"><span class="octicon octicon-link"></span></a>Towards Reducing Internal Covariate Shift</h2>
 
 <p>deep learning model은 많은 layer가 연결되어 있는 구조이다.  layer가 2인 모델을 가정해보면,  다음과 같이 수식으로 나타낼 수 있다.
 <script type="math/tex">h_1 = F_1(x)</script></p>
@@ -171,8 +185,9 @@ metadata_key1: uncertainty in computer vision
   <li>$E[x] = \frac{1}{N}\sum_{i=1}^Nx_i$</li>
 </ul>
 
-<p>만약 $E[x]$가 $b$에 미치는 영향을 무시하고 학습한다면, 아래와 같이 update된다. 
-<script type="math/tex">b \leftarrow b + \nabla b</script></p>
+<p>만약 $E[x]$가 $b$에 미치는 영향을 무시하고 학습한다면, 아래와 같이 update된다.</p>
+
+<script type="math/tex; mode=display">b \leftarrow b + \nabla b</script>
 
 <script type="math/tex; mode=display">\nabla b \varpropto \frac{-\partial l}{\partial\hat{x}}</script>
 
@@ -180,7 +195,8 @@ metadata_key1: uncertainty in computer vision
 <script type="math/tex">u + (b + \nabla b) - E[u + \nabla b] = u + b - E[u + b]</script>
 위의 식에서 볼 수 있듯이 $\nabla b$가 사라짐으로써 학습효과가 없게 된다.</p>
 
-<h3 id="fixed-distribution">Fixed Distribution</h3>
+<h3 id="fixed-distribution">
+<a class="anchor" href="#fixed-distribution" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fixed Distribution</h3>
 
 <p>이런 문제를 해결하기 위해서, 어떤 parameter 값들을 가지든 의도한 distribution이 나오도록 만들어야 한다.  distribution이 고정되면, gradient가 normalization에 dependent하게  만들어진다.</p>
 
@@ -212,7 +228,8 @@ metadata_key1: uncertainty in computer vision
 
 <p>어떻게 하면 합리적인 computation cost로 모델의 representation ability를 보존할 수 있을까?</p>
 
-<h2 id="normalization-via-mini-batch-statistics">Normalization via Mini-Batch Statistics</h2>
+<h2 id="normalization-via-mini-batch-statistics">
+<a class="anchor" href="#normalization-via-mini-batch-statistics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Normalization via Mini-Batch Statistics</h2>
 
 <p>위에서 언급했듯이, 모든 layer의 input에 대한 full whitening은 computation cost가 높고, 미분가능하지 않을 수도 있다. 이런 문제를 해결하기 위해서 두가지 가정을 한다.</p>
 
@@ -221,14 +238,16 @@ metadata_key1: uncertainty in computer vision
 
   <p>이는 기저벡터(eigenbasis) 데이터를 아이겐밸류(eigenvalue) 값으로 나누어 정규화는 기법이다. 화이트닝 변환의 기하학적 해석은 만약 입력 데이터가 multivariable gaussian 분포를라면 화이트닝된 데이터는 평균은 0이고 공분산(covariance)는 단위행렬을 갖는 정규분포를 갖게된다. 와이트닝은 다음과 같이 구할 수 있다:</p>
 
-  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># whiten the data:
+  <div class="language-python highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="c1"># whiten the data:
 # divide by the eigenvalues (which are square roots of the singular values)
 </span><span class="n">Xwhite</span> <span class="o">=</span> <span class="n">Xrot</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">S</span> <span class="o">+</span> <span class="mf">1e-5</span><span class="p">)</span>
 </code></pre></div>  </div>
 </blockquote>
 
 <ol>
-  <li><strong>layer의 input과 output의 feature를 jointly하게 구하는 것이 아니라, 각 feature를 독립적으로 mean=0, var=1을 가지도록 정규화한다. ($\hat{x}^{(k)}$는 각 layer의 input의  k번째 dimension 성분)</strong>
+  <li>
+<strong>layer의 input과 output의 feature를 jointly하게 구하는 것이 아니라, 각 feature를 독립적으로 mean=0, var=1을 가지도록 정규화한다. ($\hat{x}^{(k)}$는 각 layer의 input의  k번째 dimension 성분)</strong>
    <script type="math/tex">\hat{x}^{(k)} = \frac{\hat{x}^{(k)}- E[\hat{x}^{(k)}]}{\sqrt{Var[\hat{x}^{(k)}]}}</script>
    decorrelated feature에도 불구하고 해당 normalization은 convergence 속도를 빠르게 한다고 알려져 있다.(Neural Networks: Tricks of the trade - 1998)</li>
 </ol>
@@ -252,27 +271,26 @@ metadata_key1: uncertainty in computer vision
 </ol>
 
 <p>중요한 점은 per-dimension variance를 구하는 것이 computation cost를 낮춘다는 것이다. (Singluar covariance matrices) 아래는 batch normalization algorithm에 대한 설명이다. 주목할 점은 learned parameter $\gamma, \beta$가 training example 뿐 아니라 mini-batch 안에 있는 다른 training example에 영향을 받는다는 것이다. ($\epsilon$은 stability를 위한 constant term이다.)</p>
-<center>
-<img src="https://user-images.githubusercontent.com/27891090/60887317-fe7a6280-a28e-11e9-9c60-9b750b678124.png" style="width:80%;" />
-</center>
+
+<p><img src="/FastPages/images/2019-07-08-Batch-Normalization%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC/Algorithm1.png" alt="" title="Algorithm1"></p>
 
 <p>[Backpropagation 전개]</p>
-<center>
-<img src="https://user-images.githubusercontent.com/27891090/60888587-17d0de00-a292-11e9-946a-1319c42833a8.png" style="width:80%;" />
-</center>
 
-<h3 id="training-and-inference-with-batchnormalized-networks">Training and Inference with BatchNormalized Networks</h3>
+<p><img src="/FastPages/images/2019-07-08-Batch-Normalization%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC/backpropagation.png" alt="" title="Backpropagation"></p>
+
+<h3 id="training-and-inference-with-batchnormalized-networks">
+<a class="anchor" href="#training-and-inference-with-batchnormalized-networks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Training and Inference with BatchNormalized Networks</h3>
 
 <p>Training은 위와 같이 진행하면 되지만, inference를 할 때는 더 적절한 방법이 필요하다. 모델의 output이 input에 deterministic하게 나오도록 해야한다. 이를 위해서 다음과 같은 normalization이 필요하다.
 <script type="math/tex">\hat{x} =\frac{x-E[x]}{\sqrt{Var[x] + \epsilon}}</script>
 주목할 점은 여기서 나오는 $E[x], Var[x]$는 모두 mini-batch에서 얻은 것이 아니라 <em>population</em>에서 얻은 것이다. 위의 식에서도 mean=0, var=1로 유지된다. $Var[x]$는 sample variance $\sigma_b^2$로 부터 다음과 같이 구한다.
 <script type="math/tex">Var[x] = \frac{m}{m-1}\cdot E_B[\sigma_B^2]</script>
 training과정에서 moving average를 사용하는 것과 다르게 inference과정에서는 고정된 mean과 variance를 통해서 deterministic한 output을 도출한다. 이는 각 layer마다 linear transformation을 한 것으로 해석할 수 있다. 알고리즘은 아래와 같다.</p>
-<center>
-<img src="https://user-images.githubusercontent.com/27891090/60887345-1225c900-a28f-11e9-996f-337201960b26.png" style="width:80%;" />
-</center>
 
-<h3 id="batch-normalized-convolutional-networks">Batch-Normalized Convolutional Networks</h3>
+<p><img src="/FastPages/images/2019-07-08-Batch-Normalization%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC/Algorithm2.png" alt="" title="Algorithm2"></p>
+
+<h3 id="batch-normalized-convolutional-networks">
+<a class="anchor" href="#batch-normalized-convolutional-networks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Batch-Normalized Convolutional Networks</h3>
 
 <p>Affine transformation에 어떻게 적용될 수 있는지 살펴보자.</p>
 
@@ -296,10 +314,7 @@ training과정에서 moving average를 사용하는 것과 다르게 inference�
 
 <p>그렇다면, Convolution layer에서는 어떻게 적용될 지 살펴보자. 아래는 Convolution filter의 작동방법이다.</p>
 
-<center>
-<img src="https://cdn-media-1.freecodecamp.org/images/gb08-2i83P5wPzs3SL-vosNb6Iur5kb5ZH43
-" style="width:80%;" />
-</center>
+<p><img src="/FastPages/images/2019-07-08-Batch-Normalization%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC/convolution.gif" alt="" title="Convolution"></p>
 
 <p>CNN의 특징중 하나는 ‘local connected’라는 것이다.</p>
 
@@ -322,13 +337,12 @@ training과정에서 moving average를 사용하는 것과 다르게 inference�
     <p>아래의 Alg.1에서 $B$를 한 feature map에서의 각 location에 대한 activation value로 설정한다.(in mini-batch). mini-batch $B$의 크기는 feature map크기가 $p \times q$라고 가정하고 $m\cdot pq$가 된다. 따라서 $\gamma^{(k)}, \beta^{(k)}$는 activation마다가 아니라 feature map마다 구하게 된다.</p>
   </li>
   <li>
-    <center>
-<img src="https://user-images.githubusercontent.com/27891090/60887317-fe7a6280-a28e-11e9-9c60-9b750b678124.png" style="width:50%;" />
-</center>
+    <p><img src="/FastPages/images/2019-07-08-Batch-Normalization%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC/Algorithm1" alt="" title="Algorithm1"></p>
   </li>
 </ul>
 
-<h3 id="batch-normalization-enables-higher">Batch Normalization enables higher</h3>
+<h3 id="batch-normalization-enables-higher">
+<a class="anchor" href="#batch-normalization-enables-higher" aria-hidden="true"><span class="octicon octicon-link"></span></a>Batch Normalization enables higher</h3>
 <p>Batch Normalization을 적용하면 더 높은 learning rate를 사용할 수 있으며, 이는 모델의 수렴속도를 높여준다.</p>
 
 <p>일반적으로 parameter scale이 높으면, model explosion현상이 발생한다. 하지만, batch normalization을 사용하면 parameter scale의 영향을 받지 않는다. 또한 큰 parameter scale에도 smaller gradient를 가진다.
@@ -356,7 +370,8 @@ training과정에서 moving average를 사용하는 것과 다르게 inference�
   </li>
 </ul>
 
-<h2 id="batch-normalization-regularizes-the-model">Batch Normalization regularizes the model</h2>
+<h2 id="batch-normalization-regularizes-the-model">
+<a class="anchor" href="#batch-normalization-regularizes-the-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Batch Normalization regularizes the model</h2>
 
 <p>batch normalization은 Drop-out처럼 regularization효과가 있다.</p>
 
@@ -366,7 +381,15 @@ training과정에서 moving average를 사용하는 것과 다르게 inference�
   <li>https://arxiv.org/abs/1502.03167</li>
 </ul>
 
-  </div><a class="u-url" href="/FastPages/2019/07/08/Batch-Normalization%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC.html" hidden></a>
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="RRoundTable/FastPages"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/FastPages/interview/deeplearning/2019/07/08/Batch-Normalization%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
