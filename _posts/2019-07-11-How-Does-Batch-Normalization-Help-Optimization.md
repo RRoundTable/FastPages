@@ -1,16 +1,18 @@
 ---
 title: "How Does Batch Normalization Help Optimization? 정리글"
-date: 2019-07-11
-tags: [deeplearning]
-categories: [deeplearning]
-weight: 10
+toc: true
+branch: master
+badges: true
+comments: true
+categories: ['interview', 'deeplearning']
+metadata_key1: batch normalization
 ---
 
-
+# How Does Batch Normalization Help Optimization? 정리글
 
 ## Main Contribution
 
-[Batch normalization에 대하여]([https://rroundtable.github.io/post/2019-07-08-batch-normalization%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC/](https://rroundtable.github.io/post/2019-07-08-batch-normalization에-대하여/))에서 BN이 결국 internal covariate shift현상을 해결하여, 모델의 수렴속도를 높인다고 주장하였다. 하지만,  해당 논문에서는 internal covariate shift현상을 감소하여 그러는 것이 아니며, BN이 실제로 감소시키지 않는다고 주장한다.
+[Batch normalization에 대하여](https://rroundtable.github.io/FastPages/interview/deeplearning/2019/07/08/Batch-Normalization%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC.html)에서 BN이 결국 internal covariate shift현상을 해결하여, 모델의 수렴속도를 높인다고 주장하였다. 하지만,  해당 논문에서는 internal covariate shift현상을 감소하여 그러는 것이 아니며, BN이 실제로 감소시키지 않는다고 주장한다.
 
 이 논문에서는 BN이 optimization problem을 smoother하게 만들어서 성공적이라고 주장한다.  이로 인해서 gradient는 predictive해지고 더 큰 learning rate를 사용할 수 있다.
 
@@ -22,7 +24,8 @@ weight: 10
 
 ## Batch normalization and internal covariate shift 
 
-<img src="https://user-images.githubusercontent.com/27891090/61052860-3ddbb700-a427-11e9-82ad-7d169afb3300.png" style="width:90%;">
+![]({{ site.baseurl }}/images/2019-07-11-How-Does-Batch-Normalization-Help-Optimization/figure1.png "Figure 1")
+
 
 train, test 그래프에서는 batch normalization의 역할을 잘 보여주고 있다. 높은 learning rate를 사용할 수 있는 것을 보여주고 있는데, 오른쪽의 그래프를 보면 BN을 적용한 모델의 activation과 그렇지 않은 모델의 activation의 분포가 그리 큰 차이를 가지고 있지 않는 것을 확인 할 수 있다. 이런 결과를 가지고 다음과 같은 질문을 할 수 있다.
 
@@ -38,7 +41,7 @@ layer input의 distribution의 mean, variance를 조정하는 것이 training pe
 - BN을 적용한 후, $random$ noise를 추가하였다. 이 noise는 non-zero mean을 가지며 non-unit variance distribution이다. 또한 training step마다 noise distribution은 바뀐다.
 - noise가 추가되면 결국 covariate shift현상이 생기는 것이다.
 
-<img src="https://user-images.githubusercontent.com/27891090/61054362-41247200-a42a-11e9-9c27-2ed1d4f25e3d.png" style="width:90%;">
+![]({{ site.baseurl }}/images/2019-07-11-How-Does-Batch-Normalization-Help-Optimization/figure2.png "Figure 2")
 
 위의 그림을 보면, Standard + BatchNorm과 Standard + 'noisy'BatchNorm과의 성능 차이가 거의 없음을 알 수 있다. 즉, internal covariate shift를 해결하는 것과 batch normalization의 효과를 무관하다고 볼 수 있다. 또한 오른쪽 이미지를 보면, Standard + 'noisy'BatchNormdl Standard보다 덜 안정적인 distribution을 가지고 있는 것을 확인할 수 있다. 하지만, 실험결과는 Standard + 'noisy'BatchNorm이 우수한 걸로 보아 stable distribution이 training performance에 주는 영향은 미비한 것으로 보인다. 또한 Standard에 noise를 섞을 때, 전혀 학습이 안되는 것을 확인할 수 있었다.
 
@@ -65,25 +68,24 @@ Notation
 
 - loss: $\mathcal{L}$
 
-- `$k$ layers의 parameters(time = t): $W_1^{(t)}, W_2^{(t)}, \cdots W_k{(t)} $`
+- $k$ layers의 parameters(time = t): $W_1^{(t)}, W_2^{(t)}, \cdots W_k{(t)} $
 
-- batch of input-label pairs(time = t):`$(x^{(t)}, y^{(t)})$`
+- batch of input-label pairs(time = t):$(x^{(t)}, y^{(t)})$
 
-- internal covariate shift =`$\rVert G_{t, i} - \acute{G_{t, i}}\rVert_2 $`
-  `$$
+- internal covariate shift =$\rVert G_{t, i} - \acute{G_{t, i}}\rVert_2 $
+  $$
   G_{t, i} = \nabla_{W_i^{(t)}}\mathcal{L(W_1^{(t)}, W_2^{(t)}, \cdots W_k^{(t)} ;x^{(t), y^{(t)}} )}
-  $$`
+  $$
 
-  `$$
+  $$
   \acute{G_{t, i}} = \nabla_{W_i^{(t+1)}}\mathcal{L(W_1^{(t+1)},  \cdots W_
   {i-1}^{(t+1)},W_
   {i}^{(t)}, W_
   {i+1}^{(t)} \cdots W_k^{(t)} ;x^{(t), y^{(t)}} )}
-  $$`
+  $$
 
 
-
-<img src="https://user-images.githubusercontent.com/27891090/61057776-f0644780-a430-11e9-817e-068adbfca35b.png" style="width:90%;">
+![]({{ site.baseurl }}/images/2019-07-11-How-Does-Batch-Normalization-Help-Optimization/figure3.png "Figure 3")
 
 위의 internal covariate shift 산출방법으로 bath norm을 적용한 경우와 그렇지 않은 경우를 비교하였다. 이전의 주장은 BN이 ICS를 감소시킨다고 주장하였으나, 실험결과 BN이 ICS를 증가시키기도 하였다. 위의 그림을 보면 확인 할 수 있다. 이런 현상은 DLN에서 더 도드라 진다. DLN을 보면 오히려 Standard한 것이 ICS가 적게 나타나는데 비해서 BN을 적용할 때는 $G, \acute{G}$는 서로 상관관계가 없어보인다. (하지만 training 결과는 loss, acc 측면에서 더 좋게 나온다.)
 
@@ -114,6 +116,7 @@ Notation
 > $\beta$-smoothness란?
 >
 > Recall that f is β-smooth if its gradient is β-Lipschitz 
+> 
 > $$
 > \rvert f(x) -f(y) - \nabla f(y)^T(x- y)\rvert \le \frac{\beta}{2}\rVert x-y\rVert^2
 > $$
@@ -121,15 +124,20 @@ Notation
 >
 > https://arxiv.org/pdf/1405.4980.pdf
 
-<img src="https://user-images.githubusercontent.com/27891090/61135559-d42ddc80-a4fc-11e9-8034-e11ac91dc264.png" style="width:90%;">
+![]({{ site.baseurl }}/images/2019-07-11-How-Does-Batch-Normalization-Help-Optimization/figure9.png "Figure 9")
+
 
 이 smooth 효과는 training algorithm에 매우 효과적이다. non-BatchNorm의 loss function은 non-convex할 뿐만 아니라 kinks, flat regions , sharp minima의 문제를 가지고 있다. 이 문제는 gradient 방법론이 수렴하기 불안정하도록 만든다. 하지만 BatchNorm을 적용하게 되면, gradient가 reliable하고 predictive한 방향으로 나오게 된다. 무엇보다도 개선된 Lipschitzness는 learning step을 크게 잡을 수 있게 해준다. 아래의 그래프를 보면 그 효과를 확인할 수 있다.
 
-<img src="https://user-images.githubusercontent.com/27891090/61135376-6d102800-a4fc-11e9-81e9-697787bce1b2.png" style="width:90%;">
+
+![]({{ site.baseurl }}/images/2019-07-11-How-Does-Batch-Normalization-Help-Optimization/figure10.png "Figure 10")
+
 
 ### Exploration of the optimization landscap 
 
-<img src="https://user-images.githubusercontent.com/27891090/61167097-4ab9f100-a574-11e9-80e5-7eb2aaf18e6f.png" style="width:90%;">
+
+![]({{ site.baseurl }}/images/2019-07-11-How-Does-Batch-Normalization-Help-Optimization/figure4.png "Figure 4")
+
 
 위의 그래프의 Figure 4(a)를 보면 step마다의 loss변화를 알 수 있다. 이를 통해서 non-BatchNorm의 방식은 loss의 변화량이 BatchNorm보다 크다는 것을 알 수 있다. 이런 현상은 초기 학습과정에서 특히 심하다. 
 
@@ -143,7 +151,9 @@ Figure 4(c)에서는 BatchNorm의 loss gradient stability/Lipschitzness의 향�
 
 아래의 실험결과를 보면, 꼭 BatchNorm을 고집할 이유는 없어 보인다.
 
-<img src="https://user-images.githubusercontent.com/27891090/61167302-d1240200-a577-11e9-9586-2f3a16adca3a.png" style="width:90%;">
+![]({{ site.baseurl }}/images/2019-07-11-How-Does-Batch-Normalization-Help-Optimization/figure13.png "Figure 13")
+
+
 
 ## Theoretical Analysis 
 
@@ -151,7 +161,8 @@ Figure 4(c)에서는 BatchNorm의 loss gradient stability/Lipschitzness의 향�
 
 fully-connected layer W에 single BatchNorm을 추가한 효과를 분석하고자 한다. Figure 5(b)와 같은 상황을 가정한다. 주목할 점은 input에 BatchNorm을 적용한 것이 아니라, layer W의 output에 BatchNorm을 적용한다. 이는 해당 논문의 분석이 단지 input에 대한 normalization 효과에 대한 것이 아니라 reparameterization에 대한 것임을 알려준다.
 
-<img src="https://user-images.githubusercontent.com/27891090/61167402-97ec9180-a579-11e9-9e45-a7b80ac9177c.png" style="width:90%;">
+![]({{ site.baseurl }}/images/2019-07-11-How-Does-Batch-Normalization-Help-Optimization/figure5.png "Figure 5")
+
 
 Notation
 
@@ -172,9 +183,9 @@ gradient magnitude $\rVert\nabla_{y_i}\mathcal{L}\rVert$에 대해서 먼저 생
 
 #### Theorem 4.1 (The effect of BatchNorm on the Lipschitzness of the loss). For a BatchNorm network with loss $\hat{\mathcal{L}}$ and an identical non-BN network with (identical) loss $\mathcal{L}$, 
 
-`$$
+$$
 \rVert\nabla_{y_i}\mathcal{L}\rVert^2 \le \frac{\gamma^2}{\sigma_j^2}\left( \rVert\nabla_{y_i}\mathcal{L}\rVert^2 - \frac{1}{m} 	\left\langle 1, \nabla_{y_i}\mathcal{L}\right\rangle ^ 2 - \frac{1}{m}\left\langle  \nabla_{y_i}\mathcal{L}, \hat{y}_j\right\rangle ^ 2 \right)
-$$`
+$$
 
 해당 논문에서는 어떤 가정도 없이 BatchNorm이 더 개선된 Lipschitzness를 가진다고 증명하였다. 게다가 Lipschitz constant는  normalized activation $\hat{y}$가 gradient $\nabla_{y_i}\mathcal{L}$ 혹은 0에서의 gradient deviates값의 mean값과 상관관계가 있을 때 감소되는 것을 확인할 수 있었다. 이 효과는 BN의 scaling이 기존 layer의 scaling과 일치할 때도 나타났다.  아래는 appendix에서 가져온 것이다.
 
@@ -183,12 +194,12 @@ $$`
 notation
 
 - gradient through BN: $\frac{\partial f}{\partial A^{(b)}}$
-- another function: `$f := f(C) $ `where $C = \gamma \cdot B + \beta$ and $B = BN_{0, 1}(A) := \frac{A-u}{\sigma}$
+- another function:$f := f(C) $ where $C = \gamma \cdot B + \beta$ and $B = BN_{0, 1}(A) := \frac{A-u}{\sigma}$
 - scalar elements of a batch size of size m and variance $\sigma^2$: $A^{(b)}$ 
 
-`$$
+$$
 \frac{\partial f}{\partial A^{(b)}} =\frac{\gamma}{m\sigma}\left( m\frac{\partial f}{\partial C^{(b)}} - \sum_{k=1}^{m}\frac{\partial f}{\partial C_{(k)}} - B^{(b)}\sum_{k=1}^{m}\frac{\partial f}{\partial C_{(k)}}B^{(k)}\right)
-$$`
+$$
 
 
 
@@ -204,7 +215,7 @@ $$
 $$
 
 
-`$\left\langle 1, \nabla_{y_i}\mathcal{L}\right\rangle ^ 2$ `은  해당 차원에서 quadratically하게 증가한다. 그러므로 중요한 term이다. 게다가 `$\left\langle  \nabla_{y_i}\mathcal{L}, \hat{y}_j\right\rangle ^ 2$`은 zero 값으로 부터 조금 떨어진 값이라고 기대되는데 이는 variable과 variable의 gradient term이 일반적으로 uncorrelated하기 때문이다. $\sigma_j$는 커지는 경향이 있는데$\gamma $-scaling을 해줌으로써 flatness가 되도록 해주는 효과를 기대할 수 있다.  
+$\left\langle 1, \nabla_{y_i}\mathcal{L}\right\rangle ^ 2$ 은  해당 차원에서 quadratically하게 증가한다. 그러므로 중요한 term이다. 게다가 $\left\langle  \nabla_{y_i}\mathcal{L}, \hat{y}_j\right\rangle ^ 2$은 zero 값으로 부터 조금 떨어진 값이라고 기대되는데 이는 variable과 variable의 gradient term이 일반적으로 uncorrelated하기 때문이다. $\sigma_j$는 커지는 경향이 있는데$\gamma $-scaling을 해줌으로써 flatness가 되도록 해주는 효과를 기대할 수 있다.  
 
 **proof**
 
@@ -212,21 +223,26 @@ Fact C.1을 이용하여 다음과 같이 전개한다.
 
 자세한 증명은 해당 논문의 appendix를 참고하길 바란다.
 
-<img src="https://user-images.githubusercontent.com/27891090/61185787-28b98f00-a698-11e9-9c23-ac2a3df5688e.png" style="width:80%;">
+![]({{ site.baseurl }}/images/2019-07-11-How-Does-Batch-Normalization-Help-Optimization/c2.png)
 
-<img src="https://user-images.githubusercontent.com/27891090/61185796-3838d800-a698-11e9-968d-a620e72d2b15.png" style="width:80%;">
+![]({{ site.baseurl }}/images/2019-07-11-How-Does-Batch-Normalization-Help-Optimization/c2_1.png "Lipschitzness proofs")
 
 
 
-#### Theorem 4.2 (The effect of BN to smoothness). Let` $\hat{g}_i = \nabla_{y_i}\mathcal{L}$ and $H_{j j} = \frac{\partial\mathcal{L}}{\partial{y_i}\partial{y_i}}$`be the gradient and Hessian of the loss with respect to the layer outputs respectively. Then 
 
-`$$
+
+
+#### Theorem 4.2 (The effect of BN to smoothness). Let $\hat{g}_i = \nabla_{y_i}\mathcal{L}$ and $H_{j j} = \frac{\partial\mathcal{L}}{\partial{y_i}\partial{y_i}}$ be the gradient and Hessian of the loss with respect to the layer outputs respectively. Then 
+
+$$
 \left( \nabla_{y_i}\hat{\mathcal{L}} \right)^T\frac{\partial\hat{\mathcal{L}}}{\partial{y_i}\partial{y_i}} \left( \nabla_{y_i}\hat{\mathcal{L}}\right) \le \frac{\gamma^2}{\sigma_j^2} \left(\frac{\partial\hat{\mathcal{L}}}{\partial{y_i}} \right) H_{jj} \left(\frac{\partial\mathcal{L}}{\partial{y_i}} \right) - \frac{\gamma}{m\sigma^2} \left\langle \hat{g_j}, \hat{y_j} \right\rangle \rVert\frac{\partial\mathcal{L}}{\partial{y_i}} \rVert^2
-$$`
-만약,` $\hat{g_j}, \nabla_{y_i}\hat{\mathcal{L}}$`의 relative norm을 보존하는 $H_{jj}$를 가지고 있다면?
-`$$
+$$
+
+만약,$\hat{g_j}, \nabla_{y_i}\hat{\mathcal{L}}$의 relative norm을 보존하는 $H_{jj}$를 가지고 있다면?
+
+$$
 \left( \nabla_{y_i}\hat{\mathcal{L}} \right)^T\frac{\partial\hat{\mathcal{L}}}{\partial{y_i}\partial{y_i}} \left( \nabla_{y_i}\hat{\mathcal{L}}\right) \le \frac{\gamma^2}{\sigma_j^2} \left( \hat{g_i}^TH_{jj}\hat{g}_i - \frac{1}{m\gamma} \left\langle\hat{g_j}, \hat{y_j} \right\rangle\right)\rVert\frac{\partial\mathcal{L}}{\partial{y_i}} \rVert^2
-$$`
+$$
 
 이제 landscape의 second-order 특성을 살펴보자. BatchNorm이 더해지면, loss Hessian(gradient direction에 대한 activation에 대한 hessian)은 input variance에 의해서 rescaled되고 increasing smoothness에 의해서 감소하게 된다. 이는 Taylor expansion에 의해서 도출할 수 있으며, 이 term을 감소시키는 것은 gradient가 더 predictive한 성격을 가지게 한다.
 
@@ -237,21 +253,29 @@ $\left\langle \hat{y_j},\hat{g_j}\right\rangle$이 non-negative 한 성격을 �
 #### Theorem 4.4 (Minimax bound on weight-space Lipschitzness). For a BatchNorm network with loss $\hat{\mathcal{L}}$ and an identical non-BN network (with identical loss  $\mathcal{L}$), if
 
 여기서는 BatchNorm이 layer weights에 대한 worst-case bound역할을 하는 것을 보일 것이다.
-`$$
+$$
 g_j = \max_{\rVert X \rVert \le \lambda}\rVert \nabla_W\mathcal{L}\rVert^2
-$$`
+$$
 
-`$$
+$$
 \hat{g_j} = \max_{\rVert X \rVert \le \lambda}\rVert \nabla_W\hat{\mathcal{L}}\rVert^2 \Rightarrow \hat{g}_j \le \frac{\gamma}{\sigma_j^2}\left( g_j^2 - mu^2_{g_j} -\lambda^2\left\langle \nabla_{y_j}\mathcal{L}, \hat{y}_j\right\rangle^2 \right)
-$$`
+$$
 
 아래는 이에 대한 증명이다.
 
-<img src="https://user-images.githubusercontent.com/27891090/61218325-beaef180-a74c-11e9-92e5-6ff9b91ebbbe.png" style="width: 80%;">
 
-<img src="https://user-images.githubusercontent.com/27891090/61218364-d6867580-a74c-11e9-841d-7d9bff90a3a4.png" style="width: 80%;">
 
-#### Lemma 4.5 (BatchNorm leads to a favourable initialization). Let `$W^*$ `and `$\hat{W}^*$` be the set of local optima for the weights in the normal and BN networks, respectively. For any initialization $W_0$ 
+![]({{ site.baseurl }}/images/2019-07-11-How-Does-Batch-Normalization-Help-Optimization/t4_4.png)
+
+
+
+![]({{ site.baseurl }}/images/2019-07-11-How-Does-Batch-Normalization-Help-Optimization/t4_4_1.png)
+
+
+
+
+
+#### Lemma 4.5 (BatchNorm leads to a favourable initialization). Let $W^*$ `and `$\hat{W}^*$ be the set of local optima for the weights in the normal and BN networks, respectively. For any initialization $W_0$ 
 
 initialization에서도 성능 향상이 있었다.
 

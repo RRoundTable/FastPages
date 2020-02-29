@@ -8,6 +8,7 @@ categories: ['interview', 'deeplearning']
 metadata_key1: batch normalization
 ---
 
+# Batch Normalization에 대하여
 
 ## Problem Define
 
