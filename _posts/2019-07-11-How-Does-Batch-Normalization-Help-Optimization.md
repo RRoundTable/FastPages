@@ -181,7 +181,9 @@ gradient magnitude $\rVert\nabla_{y_i}\mathcal{L}\rVert$에 대해서 먼저 생
 
 
 
-#### Theorem 4.1 (The effect of BatchNorm on the Lipschitzness of the loss). For a BatchNorm network with loss $\hat{\mathcal{L}}$ and an identical non-BN network with (identical) loss $\mathcal{L}$, 
+#### Theorem 4.1 (The effect of BatchNorm on the Lipschitzness of the loss). 
+
+**For a BatchNorm network with loss $\hat{\mathcal{L}}$ and an identical non-BN network with (identical) loss $\mathcal{L}$**, 
 
 $$
 \rVert\nabla_{y_i}\mathcal{L}\rVert^2 \le \frac{\gamma^2}{\sigma_j^2}\left( \rVert\nabla_{y_i}\mathcal{L}\rVert^2 - \frac{1}{m} 	\left\langle 1, \nabla_{y_i}\mathcal{L}\right\rangle ^ 2 - \frac{1}{m}\left\langle  \nabla_{y_i}\mathcal{L}, \hat{y}_j\right\rangle ^ 2 \right)
@@ -230,10 +232,9 @@ Fact C.1을 이용하여 다음과 같이 전개한다.
 
 
 
+#### Theorem 4.2 (The effect of BN to smoothness). 
 
-
-#### Theorem 4.2 (The effect of BN to smoothness). Let $\hat{g}_i = \nabla_{y_i}\mathcal{L}$ and $H_{j j} = \frac{\partial\mathcal{L}}{\partial{y_i}\partial{y_i}}$ be the gradient and Hessian of the loss with respect to the layer outputs respectively. Then 
-
+**Let $\hat{g}_i = \nabla_{y_i}\mathcal{L}$ and $H_{j j} = \frac{\partial\mathcal{L}}{\partial{y_i}\partial{y_i}}$ be the gradient and Hessian of the loss with respect to the layer outputs respectively. Then **
 $$
 \left( \nabla_{y_i}\hat{\mathcal{L}} \right)^T\frac{\partial\hat{\mathcal{L}}}{\partial{y_i}\partial{y_i}} \left( \nabla_{y_i}\hat{\mathcal{L}}\right) \le \frac{\gamma^2}{\sigma_j^2} \left(\frac{\partial\hat{\mathcal{L}}}{\partial{y_i}} \right) H_{jj} \left(\frac{\partial\mathcal{L}}{\partial{y_i}} \right) - \frac{\gamma}{m\sigma^2} \left\langle \hat{g_j}, \hat{y_j} \right\rangle \rVert\frac{\partial\mathcal{L}}{\partial{y_i}} \rVert^2
 $$
@@ -250,7 +251,9 @@ $\left\langle \hat{y_j},\hat{g_j}\right\rangle$이 non-negative 한 성격을 �
 
 
 
-#### Theorem 4.4 (Minimax bound on weight-space Lipschitzness). For a BatchNorm network with loss $\hat{\mathcal{L}}$ and an identical non-BN network (with identical loss  $\mathcal{L}$), if
+#### Theorem 4.4 (Minimax bound on weight-space Lipschitzness).
+
+**For a BatchNorm network with loss $\hat{\mathcal{L}}$ and an identical non-BN network (with identical loss  $\mathcal{L}$), if**
 
 여기서는 BatchNorm이 layer weights에 대한 worst-case bound역할을 하는 것을 보일 것이다.
 $$
@@ -275,7 +278,9 @@ $$
 
 
 
-#### Lemma 4.5 (BatchNorm leads to a favourable initialization). Let $W^*$ `and `$\hat{W}^*$ be the set of local optima for the weights in the normal and BN networks, respectively. For any initialization $W_0$ 
+#### Lemma 4.5 (BatchNorm leads to a favourable initialization). 
+
+**Let $W^*$ and $\hat{W}^*$ be the set of local optima for the weights in the normal and BN networks, respectively. For any initialization $W_0$ **
 
 initialization에서도 성능 향상이 있었다.
 

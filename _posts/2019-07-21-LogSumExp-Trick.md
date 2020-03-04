@@ -1,19 +1,21 @@
 ---
 title: "LogSumExp Trick"
-date: 2019-07-21
+toc: true
+branch: master
+badges: true
+comments: true
 categories: ['deeplearning']
-tags: ['deeplearning']
-weight: 20
+metadata_key1: logsumexp
 ---
+
 
 ## LogSumExp Trick
 
 머신러닝 학습을 진행하다보면, 종종 loss가 제대로 계산되지 않는 현상이 발생한다. 이는 loss를 계산하는 과정에서 불안정한 수식을 계산하기 때문에 발생한다. 특히 cross-entropy와 같이 log함수와 연관있는 수식은 주의가 필요하다.  
 
 아래 이미지는 로그 함수 그래프이다.  이 그래프에서 알 수 있듯이 $x$의 값이 0에 가까워질수록 $\log_2(x)$의 값은 음의 무한대의 값을 가지게 되며, 컴퓨터 연산과정에서 이는 연산이 불가능하다. (overflow)
-<center>
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Binary_logarithm_plot_with_ticks.svg/300px-Binary_logarithm_plot_with_ticks.svg.png" style="width: 50%">
-</center>
+
+![]({{ site.baseurl }}/images/2019-07-21-LogSumExp-Trick/log.png "log graph")
 
 
 이러한 현상을 방지하기 위해서 사용하는 것이 **LogSumExp trick**이다. 
