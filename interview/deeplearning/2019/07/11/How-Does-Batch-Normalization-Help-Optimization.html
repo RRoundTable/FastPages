@@ -139,10 +139,10 @@
 <li class="toc-entry toc-h3"><a href="#setup">Setup</a></li>
 <li class="toc-entry toc-h3"><a href="#theoretical-results">Theoretical Results</a>
 <ul>
-<li class="toc-entry toc-h4"><a href="#theorem-41-the-effect-of-batchnorm-on-the-lipschitzness-of-the-loss-for-a-batchnorm-network-with-loss-hatmathcall-and-an-identical-non-bn-network-with-identical-loss-mathcall">Theorem 4.1 (The effect of BatchNorm on the Lipschitzness of the loss). For a BatchNorm network with loss $\hat{\mathcal{L}}$ and an identical non-BN network with (identical) loss $\mathcal{L}$,</a></li>
-<li class="toc-entry toc-h4"><a href="#theorem-42-the-effect-of-bn-to-smoothness-let-hatgi--nablay_imathcall-and-h_j-j--fracpartialmathcallpartialy_ipartialy_i-be-the-gradient-and-hessian-of-the-loss-with-respect-to-the-layer-outputs-respectively-then">Theorem 4.2 (The effect of BN to smoothness). Let $\hat{g}i = \nabla{y_i}\mathcal{L}$ and $H_{j j} = \frac{\partial\mathcal{L}}{\partial{y_i}\partial{y_i}}$ be the gradient and Hessian of the loss with respect to the layer outputs respectively. Then</a></li>
-<li class="toc-entry toc-h4"><a href="#theorem-44-minimax-bound-on-weight-space-lipschitzness-for-a-batchnorm-network-with-loss-hatmathcall-and-an-identical-non-bn-network-with-identical-loss--mathcall-if">Theorem 4.4 (Minimax bound on weight-space Lipschitzness). For a BatchNorm network with loss $\hat{\mathcal{L}}$ and an identical non-BN network (with identical loss  $\mathcal{L}$), if</a></li>
-<li class="toc-entry toc-h4"><a href="#lemma-45-batchnorm-leads-to-a-favourable-initialization-let-w-and-hatw-be-the-set-of-local-optima-for-the-weights-in-the-normal-and-bn-networks-respectively-for-any-initialization-w_0">Lemma 4.5 (BatchNorm leads to a favourable initialization). Let $W^$ and $\hat{W}^$ be the set of local optima for the weights in the normal and BN networks, respectively. For any initialization $W_0$</a></li>
+<li class="toc-entry toc-h4"><a href="#theorem-41-the-effect-of-batchnorm-on-the-lipschitzness-of-the-loss">Theorem 4.1 (The effect of BatchNorm on the Lipschitzness of the loss).</a></li>
+<li class="toc-entry toc-h4"><a href="#theorem-42-the-effect-of-bn-to-smoothness">Theorem 4.2 (The effect of BN to smoothness).</a></li>
+<li class="toc-entry toc-h4"><a href="#theorem-44-minimax-bound-on-weight-space-lipschitzness">Theorem 4.4 (Minimax bound on weight-space Lipschitzness).</a></li>
+<li class="toc-entry toc-h4"><a href="#lemma-45-batchnorm-leads-to-a-favourable-initialization">Lemma 4.5 (BatchNorm leads to a favourable initialization).</a></li>
 </ul>
 </li>
 </ul>
@@ -327,8 +327,10 @@
 
 <p>gradient magnitude $\rVert\nabla_{y_i}\mathcal{L}\rVert$에 대해서 먼저 생각해보자. 이는 Lipschitzness를 나타내주는 지표이다.  loss의Lipschitzness는  optimization문제에서 큰 역할을 한다고 알려져 있다. (이 지표는 결국 loss가 training step에 따라서 얼마나 변할지 알려주기 때문)</p>
 
-<h4 id="theorem-41-the-effect-of-batchnorm-on-the-lipschitzness-of-the-loss-for-a-batchnorm-network-with-loss-hatmathcall-and-an-identical-non-bn-network-with-identical-loss-mathcall">
-<a class="anchor" href="#theorem-41-the-effect-of-batchnorm-on-the-lipschitzness-of-the-loss-for-a-batchnorm-network-with-loss-hatmathcall-and-an-identical-non-bn-network-with-identical-loss-mathcall" aria-hidden="true"><span class="octicon octicon-link"></span></a>Theorem 4.1 (The effect of BatchNorm on the Lipschitzness of the loss). For a BatchNorm network with loss $\hat{\mathcal{L}}$ and an identical non-BN network with (identical) loss $\mathcal{L}$,</h4>
+<h4 id="theorem-41-the-effect-of-batchnorm-on-the-lipschitzness-of-the-loss">
+<a class="anchor" href="#theorem-41-the-effect-of-batchnorm-on-the-lipschitzness-of-the-loss" aria-hidden="true"><span class="octicon octicon-link"></span></a>Theorem 4.1 (The effect of BatchNorm on the Lipschitzness of the loss).</h4>
+
+<p><strong>For a BatchNorm network with loss $\hat{\mathcal{L}}$ and an identical non-BN network with (identical) loss $\mathcal{L}$</strong>,</p>
 
 <script type="math/tex; mode=display">\rVert\nabla_{y_i}\mathcal{L}\rVert^2 \le \frac{\gamma^2}{\sigma_j^2}\left( \rVert\nabla_{y_i}\mathcal{L}\rVert^2 - \frac{1}{m} 	\left\langle 1, \nabla_{y_i}\mathcal{L}\right\rangle ^ 2 - \frac{1}{m}\left\langle  \nabla_{y_i}\mathcal{L}, \hat{y}_j\right\rangle ^ 2 \right)</script>
 
@@ -365,10 +367,11 @@
 
 <p><img src="/FastPages/images/2019-07-11-How-Does-Batch-Normalization-Help-Optimization/c2_1.png" alt="" title="Lipschitzness proofs"></p>
 
-<h4 id="theorem-42-the-effect-of-bn-to-smoothness-let-hatgi--nablay_imathcall-and-h_j-j--fracpartialmathcallpartialy_ipartialy_i-be-the-gradient-and-hessian-of-the-loss-with-respect-to-the-layer-outputs-respectively-then">
-<a class="anchor" href="#theorem-42-the-effect-of-bn-to-smoothness-let-hatgi--nablay_imathcall-and-h_j-j--fracpartialmathcallpartialy_ipartialy_i-be-the-gradient-and-hessian-of-the-loss-with-respect-to-the-layer-outputs-respectively-then" aria-hidden="true"><span class="octicon octicon-link"></span></a>Theorem 4.2 (The effect of BN to smoothness). Let $\hat{g}<em>i = \nabla</em>{y_i}\mathcal{L}$ and $H_{j j} = \frac{\partial\mathcal{L}}{\partial{y_i}\partial{y_i}}$ be the gradient and Hessian of the loss with respect to the layer outputs respectively. Then</h4>
+<h4 id="theorem-42-the-effect-of-bn-to-smoothness">
+<a class="anchor" href="#theorem-42-the-effect-of-bn-to-smoothness" aria-hidden="true"><span class="octicon octicon-link"></span></a>Theorem 4.2 (The effect of BN to smoothness).</h4>
 
-<script type="math/tex; mode=display">\left( \nabla_{y_i}\hat{\mathcal{L}} \right)^T\frac{\partial\hat{\mathcal{L}}}{\partial{y_i}\partial{y_i}} \left( \nabla_{y_i}\hat{\mathcal{L}}\right) \le \frac{\gamma^2}{\sigma_j^2} \left(\frac{\partial\hat{\mathcal{L}}}{\partial{y_i}} \right) H_{jj} \left(\frac{\partial\mathcal{L}}{\partial{y_i}} \right) - \frac{\gamma}{m\sigma^2} \left\langle \hat{g_j}, \hat{y_j} \right\rangle \rVert\frac{\partial\mathcal{L}}{\partial{y_i}} \rVert^2</script>
+<p>**Let $\hat{g}<em>i = \nabla</em>{y_i}\mathcal{L}$ and $H_{j j} = \frac{\partial\mathcal{L}}{\partial{y_i}\partial{y_i}}$ be the gradient and Hessian of the loss with respect to the layer outputs respectively. Then **
+<script type="math/tex">\left( \nabla_{y_i}\hat{\mathcal{L}} \right)^T\frac{\partial\hat{\mathcal{L}}}{\partial{y_i}\partial{y_i}} \left( \nabla_{y_i}\hat{\mathcal{L}}\right) \le \frac{\gamma^2}{\sigma_j^2} \left(\frac{\partial\hat{\mathcal{L}}}{\partial{y_i}} \right) H_{jj} \left(\frac{\partial\mathcal{L}}{\partial{y_i}} \right) - \frac{\gamma}{m\sigma^2} \left\langle \hat{g_j}, \hat{y_j} \right\rangle \rVert\frac{\partial\mathcal{L}}{\partial{y_i}} \rVert^2</script></p>
 
 <p>만약,$\hat{g_j}, \nabla_{y_i}\hat{\mathcal{L}}$의 relative norm을 보존하는 $H_{jj}$를 가지고 있다면?</p>
 
@@ -378,8 +381,10 @@
 
 <p>$\left\langle \hat{y_j},\hat{g_j}\right\rangle$이 non-negative 한 성격을 가지고 Hessian을 가진다면, 위의 theorem은 더 예측가능한 gradient값을 가진다.(predictive gradient) Hessian은 loss가 locally convex하게 되면, positive semi-definite한 성격을 가지게 된다.</p>
 
-<h4 id="theorem-44-minimax-bound-on-weight-space-lipschitzness-for-a-batchnorm-network-with-loss-hatmathcall-and-an-identical-non-bn-network-with-identical-loss--mathcall-if">
-<a class="anchor" href="#theorem-44-minimax-bound-on-weight-space-lipschitzness-for-a-batchnorm-network-with-loss-hatmathcall-and-an-identical-non-bn-network-with-identical-loss--mathcall-if" aria-hidden="true"><span class="octicon octicon-link"></span></a>Theorem 4.4 (Minimax bound on weight-space Lipschitzness). For a BatchNorm network with loss $\hat{\mathcal{L}}$ and an identical non-BN network (with identical loss  $\mathcal{L}$), if</h4>
+<h4 id="theorem-44-minimax-bound-on-weight-space-lipschitzness">
+<a class="anchor" href="#theorem-44-minimax-bound-on-weight-space-lipschitzness" aria-hidden="true"><span class="octicon octicon-link"></span></a>Theorem 4.4 (Minimax bound on weight-space Lipschitzness).</h4>
+
+<p><strong>For a BatchNorm network with loss $\hat{\mathcal{L}}$ and an identical non-BN network (with identical loss  $\mathcal{L}$), if</strong></p>
 
 <p>여기서는 BatchNorm이 layer weights에 대한 worst-case bound역할을 하는 것을 보일 것이다.
 <script type="math/tex">g_j = \max_{\rVert X \rVert \le \lambda}\rVert \nabla_W\mathcal{L}\rVert^2</script></p>
@@ -392,8 +397,10 @@
 
 <p><img src="/FastPages/images/2019-07-11-How-Does-Batch-Normalization-Help-Optimization/t4_4_1.png" alt=""></p>
 
-<h4 id="lemma-45-batchnorm-leads-to-a-favourable-initialization-let-w-and-hatw-be-the-set-of-local-optima-for-the-weights-in-the-normal-and-bn-networks-respectively-for-any-initialization-w_0">
-<a class="anchor" href="#lemma-45-batchnorm-leads-to-a-favourable-initialization-let-w-and-hatw-be-the-set-of-local-optima-for-the-weights-in-the-normal-and-bn-networks-respectively-for-any-initialization-w_0" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lemma 4.5 (BatchNorm leads to a favourable initialization). Let $W^<em>$ <code class="language-plaintext highlighter-rouge">and </code>$\hat{W}^</em>$ be the set of local optima for the weights in the normal and BN networks, respectively. For any initialization $W_0$</h4>
+<h4 id="lemma-45-batchnorm-leads-to-a-favourable-initialization">
+<a class="anchor" href="#lemma-45-batchnorm-leads-to-a-favourable-initialization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lemma 4.5 (BatchNorm leads to a favourable initialization).</h4>
+
+<p><em>*Let $W^</em>$ and $\hat{W}^*$ be the set of local optima for the weights in the normal and BN networks, respectively. For any initialization $W_0$ **</p>
 
 <p>initialization에서도 성능 향상이 있었다.</p>
 

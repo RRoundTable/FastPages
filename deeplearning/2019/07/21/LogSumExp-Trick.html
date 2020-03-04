@@ -116,12 +116,15 @@
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>머신러닝 학습을 진행하다보면, 종종 loss가 제대로 계산되지 않는 현상이 발생한다. 이는 loss를 계산하는 과정에서 불안정한 수식을 계산하기 때문에 발생한다. 특히 cross-entropy와 같이 log함수와 연관있는 수식은 주의가 필요하다.</p>
+    <ul class="section-nav">
+<li class="toc-entry toc-h3"><a href="#numerical-stability">Numerical Stability</a></li>
+<li class="toc-entry toc-h2"><a href="#softmax">Softmax</a></li>
+<li class="toc-entry toc-h2"><a href="#logistic-loss-in-tensorflow">Logistic loss in Tensorflow</a></li>
+</ul><p>머신러닝 학습을 진행하다보면, 종종 loss가 제대로 계산되지 않는 현상이 발생한다. 이는 loss를 계산하는 과정에서 불안정한 수식을 계산하기 때문에 발생한다. 특히 cross-entropy와 같이 log함수와 연관있는 수식은 주의가 필요하다.</p>
 
 <p>아래 이미지는 로그 함수 그래프이다.  이 그래프에서 알 수 있듯이 $x$의 값이 0에 가까워질수록 $\log_2(x)$의 값은 음의 무한대의 값을 가지게 되며, 컴퓨터 연산과정에서 이는 연산이 불가능하다. (overflow)</p>
-<center>
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Binary_logarithm_plot_with_ticks.svg/300px-Binary_logarithm_plot_with_ticks.svg.png" style="width: 50%" />
-</center>
+
+<p><img src="/FastPages/images/2019-07-21-LogSumExp-Trick/log.png" alt="" title="log graph"></p>
 
 <p>이러한 현상을 방지하기 위해서 사용하는 것이 <strong>LogSumExp trick</strong>이다.</p>
 
@@ -133,7 +136,8 @@
 
 <p>LogSumExp는 convex function인데 따라서 loss 함수에 적용하기에 이론적으로도 적절하다.(http://www.math.uwaterloo.ca/~hwolkowi/henry/teaching/w10/367.w10/367miscfiles/pages48to60.pdf)</p>
 
-<h3 id="numerical-stability">Numerical Stability</h3>
+<h3 id="numerical-stability">
+<a class="anchor" href="#numerical-stability" aria-hidden="true"><span class="octicon octicon-link"></span></a>Numerical Stability</h3>
 
 <p>아래의 코드를 보면  $-1000$을 지수로 설정해도  안정성이 확보됨을 확인 할 수 있다.</p>
 
@@ -142,7 +146,8 @@
 <span class="mf">0.0</span>
 </code></pre></div></div>
 
-<h2 id="softmax">Softmax</h2>
+<h2 id="softmax">
+<a class="anchor" href="#softmax" aria-hidden="true"><span class="octicon octicon-link"></span></a>Softmax</h2>
 
 <p>아래는 softmax의 수식이다.</p>
 
@@ -180,7 +185,8 @@ $$</code></p>
 \end{align}
 $$</code></p>
 
-<h2 id="logistic-loss-in-tensorflow">Logistic loss in Tensorflow</h2>
+<h2 id="logistic-loss-in-tensorflow">
+<a class="anchor" href="#logistic-loss-in-tensorflow" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logistic loss in Tensorflow</h2>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># sigmoid input: x
 # output: y = 1 / (1 + exp(-x))
@@ -229,7 +235,15 @@ $$</code></p>
   <li>https://blog.feedly.com/tricks-of-the-trade-logsumexp/</li>
 </ul>
 
-  </div><a class="u-url" href="/FastPages/deeplearning/2019/07/21/LogSumExp-Trick.html" hidden></a>
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="RRoundTable/FastPages"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/FastPages/deeplearning/2019/07/21/LogSumExp-Trick.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">

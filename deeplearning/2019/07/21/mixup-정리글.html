@@ -3,19 +3,19 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="shortcut icon" type="image/x-icon" href="/FastPages/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Mixup: Beyond Empirical Risk Minimization | fastpages</title>
+<title>Mixup 정리글 | fastpages</title>
 <meta name="generator" content="Jekyll v3.8.5" />
-<meta property="og:title" content="Mixup: Beyond Empirical Risk Minimization" />
+<meta property="og:title" content="Mixup 정리글" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="mixup은 deep learning model의 memorization문제나 adversarial examples에 민감한 이슈를 해결하기 위해 나온 Data Augmentation기법입니다." />
-<meta property="og:description" content="mixup은 deep learning model의 memorization문제나 adversarial examples에 민감한 이슈를 해결하기 위해 나온 Data Augmentation기법입니다." />
+<meta name="description" content="title: “Mixup 정리글” toc: true branch: master badges: true comments: true categories: [‘deeplearning’, ‘augmentation’] metadata_key1: mixup —" />
+<meta property="og:description" content="title: “Mixup 정리글” toc: true branch: master badges: true comments: true categories: [‘deeplearning’, ‘augmentation’] metadata_key1: mixup —" />
 <link rel="canonical" href="https://rroundtable.github.io/FastPages/deeplearning/2019/07/21/mixup-%EC%A0%95%EB%A6%AC%EA%B8%80.html" />
 <meta property="og:url" content="https://rroundtable.github.io/FastPages/deeplearning/2019/07/21/mixup-%EC%A0%95%EB%A6%AC%EA%B8%80.html" />
 <meta property="og:site_name" content="fastpages" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2019-07-21T00:00:00-05:00" />
 <script type="application/ld+json">
-{"mainEntityOfPage":{"@type":"WebPage","@id":"https://rroundtable.github.io/FastPages/deeplearning/2019/07/21/mixup-%EC%A0%95%EB%A6%AC%EA%B8%80.html"},"description":"mixup은 deep learning model의 memorization문제나 adversarial examples에 민감한 이슈를 해결하기 위해 나온 Data Augmentation기법입니다.","@type":"BlogPosting","url":"https://rroundtable.github.io/FastPages/deeplearning/2019/07/21/mixup-%EC%A0%95%EB%A6%AC%EA%B8%80.html","headline":"Mixup: Beyond Empirical Risk Minimization","dateModified":"2019-07-21T00:00:00-05:00","datePublished":"2019-07-21T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://rroundtable.github.io/FastPages/deeplearning/2019/07/21/mixup-%EC%A0%95%EB%A6%AC%EA%B8%80.html"},"description":"title: “Mixup 정리글” toc: true branch: master badges: true comments: true categories: [‘deeplearning’, ‘augmentation’] metadata_key1: mixup —","@type":"BlogPosting","url":"https://rroundtable.github.io/FastPages/deeplearning/2019/07/21/mixup-%EC%A0%95%EB%A6%AC%EA%B8%80.html","headline":"Mixup 정리글","dateModified":"2019-07-21T00:00:00-05:00","datePublished":"2019-07-21T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
   <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -94,7 +94,7 @@
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Mixup: Beyond Empirical Risk Minimization</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2019-07-21T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Mixup 정리글</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2019-07-21T00:00:00-05:00" itemprop="datePublished">
         Jul 21, 2019
       </time>
     •<span class="read-time" title="Estimated read time">
@@ -116,7 +116,19 @@
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p><strong>mixup은 deep learning model의 memorization문제나 adversarial examples에 민감한 이슈를 해결하기 위해 나온 Data Augmentation기법입니다.</strong></p>
+    <hr />
+<p>title: “Mixup 정리글”
+toc: true
+branch: master
+badges: true
+comments: true
+categories: [‘deeplearning’, ‘augmentation’]
+metadata_key1: mixup
+—</p>
+
+<h1 id="mixup-beyond-empirical-risk-minimization">Mixup: Beyond Empirical Risk Minimization</h1>
+
+<p><strong>mixup은 deep learning model의 memorization문제나 adversarial examples에 민감한 이슈를 해결하기 위해 나온 Data Augmentation기법입니다.</strong></p>
 
 <ul>
   <li>memorization:</li>
@@ -172,13 +184,12 @@ data augmentation의 이론적 배경으로 training data와 유사한 주변 �
 
 <p>아래의 영상은 lambda값에 따라서 mixup 데이터의 pca결과값이 어떻게 변하는지 시각화한 것이다. 아래의 그림들처럼 linear하게 PCA value가 변하는 것을 확인하였는데 이는 VRM 가정이 옳다는 것을 보여준다.</p>
 
-<center>
-<img src="https://github.com/RRoundTable/mixup_keras/raw/master/results/sample1_3.gif" style="width: 60%;" />
+<p><img src="/FastPages/images/2019-07-21-mixup-정리글/sample1.png" alt="" title="MNIST" /></p>
 
-<img src="https://github.com/RRoundTable/mixup_keras/raw/master/results/sample%5B5%5D_%5B4%5D.gif" style="width: 60%;" />
+<p><img src="/FastPages/images/2019-07-21-mixup-정리글/sample2.png" alt="" title="CIFAR10" /></p>
 
-<img src="https://github.com/RRoundTable/mixup_keras/raw/master/results/sample6_3.gif" style="width: 60%;" />
-</center>
+<p><img src="/FastPages/images/2019-07-21-mixup-정리글/sample3.png" alt="" title="Fashion MNIST" /></p>
+
 <h2 id="from-empirical-risk-minimization-to-mixup">From Empirical Risk Minimization To Mixup</h2>
 
 <p>Supervised learning에서의 task는 결국 random feature vector X와 random target vector Y간의 관계를 설명할 수 있는 함수 f를 찾는 것이다. 함수 f는 joint distribution P(X, Y)를 따른다.
@@ -190,49 +201,41 @@ data augmentation의 이론적 배경으로 training data와 유사한 주변 �
 <p>하지만, distribution P는 실제상황에서 알기 힘들다. (intractable distribution)
 이를 해결하기 위해서 <strong><em>empricial distribution</em></strong>으로 근사하는 방법론을 이용한다. 이를 수식으로 나타내면 아래와 같다.</p>
 
-<p><code class="language-plaintext highlighter-rouge">$${P}_{\sigma}=\frac{1}{n}\Sigma_{i=1}^{n}\sigma(x={x}_i, y={y}_i) \ \ [2]$$</code></p>
+<script type="math/tex; mode=display">{P}_{\sigma}=\frac{1}{n}\Sigma_{i=1}^{n}\sigma(x={x}_i, y={y}_i) \ \ [2]</script>
 
-<p><code class="language-plaintext highlighter-rouge">$$\sigma(x={x}_i, y={y}_i) 는\ Dirac\ mass\ centered \ at\ (x_i, y_i)\ 성질을 가지고 있다.   $$</code></p>
+<script type="math/tex; mode=display">\sigma(x={x}_i, y={y}_i) 는\ Dirac\ mass\ centered \ at\ (x_i, y_i)\ 성질을 가지고 있다.</script>
 
 <p>[1]수식에 [2]수식을 대입하면 아래와 같이 전개될 수 있다.</p>
 
 <p>참고: <a href="https://en.wikipedia.org/wiki/Dirac_delta_function">Dirac mass centered</a>
 아래 그림과 같이 굉장히 naive한 가정이다.</p>
 
-<center>
+<p><img src="/FastPages/images/2019-07-21-mixup-정리글/dirac.png" alt="" title="Dirac distribution" /></p>
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Dirac_distribution_PDF.svg/325px-Dirac_distribution_PDF.svg.png" style="width:50%;" />
-
-</center>
-
-<p><code class="language-plaintext highlighter-rouge">$$R_{\sigma}=\int loss(f(x), y)dP_{\sigma}(x,y)=\frac{1}{n}\Sigma_{i=1}^{n}loss(f(x_i),y_i)$$</code></p>
+<script type="math/tex; mode=display">R_{\sigma}=\int loss(f(x), y)dP_{\sigma}(x,y)=\frac{1}{n}\Sigma_{i=1}^{n}loss(f(x_i),y_i)</script>
 
 <p>위와 같이 ERM은 간단하게 계산될 수 있지만, Memorization이라는 현상을 야기할 수 있다. 
 joint distribution P에 어떤 가정을 하느냐에 따라서 결과가 달라질 수 있는데 이 논문에서는 <strong>Vicinal Risk Minimization Principle</strong>을 적용하고 있다.
 VRM을 가정하게 되면 P는 다음과 같이 정의할 수 있다.</p>
 
-<p><code class="language-plaintext highlighter-rouge">$$P_v(\tilde{x}, \tilde{y})=\frac{1}{n}\Sigma_{i=1}^{n}V(\tilde{x}, \tilde{y}|x_i, y_i) \ \ where \ v\ is \ a \ \ a \ \ vicinity \ distribution$$</code></p>
+<script type="math/tex; mode=display">P_v(\tilde{x}, \tilde{y})=\frac{1}{n}\Sigma_{i=1}^{n}V(\tilde{x}, \tilde{y} \mid x_i, y_i) \ \ \text{where V is a vicinity distribution}</script>
 
 <p>vicinity distribution은 만들어낸 feature-target pair의 probability를 측정한다. 즉, 얼마나 그럴듯한 데이터인지 판단하는 것이다.</p>
 
-<p><strong>[what is mixup doing?]</strong></p>
+<h3 id="what-is-mixup-doing">[what is mixup doing?]</h3>
 
-<center>
+<p><img src="/FastPages/images/2019-07-21-mixup-정리글/erm_mixup.png" alt="" title="ERM VS Mixup" /></p>
 
-<img src="https://pic4.zhimg.com/v2-eac38dd1863c1d26f547bb91d04fe924_1200x500.jpg" style="width: 70%;" />
-
-</center>
-
-<p>Figure 1 (b) Effect of mixup on a toy problem.
+<p>(Mixup) Effect of mixup on a toy problem.
 Green: Class 0
 Orrange: Class 1
-Blue shading indicates P(y = 1| x).</p>
+Blue shading indicates $P(y = 1 \mid  x)$.</p>
 
 <p>위의 그림을 통해서 할 수 있듯이, mixup은 uncertainty를 측정하는데 더 효과적이다. 
 파란색 부분은 해당 데이터 x가 주어졌을 때, Class 1일 확률이다. ERM을 보면 파란색 부분이 Class 1가 가까운 것과 가깝지 않는 것 사이의 차이를 나타내지 못한다.
 반면에 mixup은 가까운 부분은 더 짙은 파란색으로 나타내어, uncertainty를 smoother하게 측정할 수 있다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/61589051-ef28dc80-abdf-11e9-9650-b8cfca8e59a0.jpg" /></p>
+<p><img src="/FastPages/images/2019-07-21-mixup-정리글/erm_mixup2.png" alt="" title="ERM VS Mixup" /></p>
 
 <p>(a) 는 prediction을 나타낸 것이고, (b)는 gradient norm을 나타낸 것이다.
 (a)를 보면 mixup으로 학습시킨 것이 더 prediction측면에서 좋은 성능을 보이고 있다.</p>
@@ -244,58 +247,55 @@ Blue shading indicates P(y = 1| x).</p>
   <li>일반적으로 크기 혹은 길이를 나타낸다.</li>
 </ul>
 
-<h2 id="실험결과">실험결과</h2>
+<h2 id="experiments">Experiments</h2>
 
-<p><strong>[3.1 IMAGENET CLASSIFICATION]</strong>
-evaluation과정에서 224 * 224 크기의 중간부분이 소실된 이미지를 test하였다.  실험결과 hyperparameter alpha는 0.1에서 0.4사이의 값이 우수한 성능을 보였으며, alpha값이 이보다 더 크면 underfitting의 부작용을 가져왔다. 또한 mixup은 higer capacities와 longer training run의 효과를 가져왔다. 이는 ERM과 비교했을 때 , epoch 90에서 mixup이 더 큰 성능개선효과를 보였다는 것으로 증명하였다.</p>
+<h3 id="31-imagenet-classification">3.1 IMAGENET CLASSIFICATION]</h3>
 
-<p><strong>[3.2 CIFAR10 AND CIFAR100]</strong></p>
+<p>evaluation과정에서 224 * 224 크기의 중간부분이 소실된 이미지를 test하였다.  실험결과 hyperparameter alpha는 0.1에서 0.4사이의 값이 우수한 성능을 보였으며, alpha값이 이보다 더 크면 underfitting의 부작용을 가져왔다. 또한 mixup은 higer capacities와 longer training run의 효과를 가져왔다. 이는 ERM과 비교했을 때 , epoch 90에서 mixup이 더 큰 성능개선효과를 보였다는 것으로 증명하였다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/61589071-24cdc580-abe0-11e9-8fdd-9575261c1d15.png" /></p>
+<h3 id="32-cifar10-and-cifar100">3.2 CIFAR10 AND CIFAR100</h3>
 
-<p>실험결과: imagenet</p>
+<p><img src="/FastPages/images/2019-07-21-mixup-정리글/figure3.png" alt="" /></p>
 
-<p><strong>[3.3 SPEECH DATA]</strong></p>
+<h3 id="33-speech-data">3.3 SPEECH DATA]</h3>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/61589086-50e94680-abe0-11e9-8d39-7ee284126604.png" /></p>
+<p><img src="/FastPages/images/2019-07-21-mixup-정리글/figure4.png" alt="" /></p>
 
-<p><strong>[3.4 MEMORIZATION OF CORRUPTED LABELS]</strong></p>
+<h3 id="34-memorization-of-corrupted-labels">3.4 MEMORIZATION OF CORRUPTED LABELS]</h3>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/61589115-986fd280-abe0-11e9-805a-f546f7531bc8.png" /></p>
+<p><img src="/FastPages/images/2019-07-21-mixup-정리글/table2.png" alt="" /></p>
 
 <p>mixup interpolation alpha가 더 커질수록 memorization이 더 어려워진다는 가설을 세웠다.
 corruption label을 가지고 학습을 시켰다. 이는 memorizaiton을 검증하는 실험에서 사용된다. (더 찾아보기)
 실험결과 test과정에서 large alpha가 dropout(0.7, 0.8)보다 test error를 더 줄일 수 있었으며, real label에 대해서는 낮은 training error를 보이고 noisy label에 대해서는 높은 training error를 보였다. 주목할 점은 dropout과 mixup을 같이 사용했을 때 성능이 가장 좋았다.</p>
 
-<p><strong>[3.5 ROBUSTNESS TO ADVERSARIAL EXAMPLES]</strong></p>
+<h3 id="35-robustness-to-adversarial-examples">3.5 ROBUSTNESS TO ADVERSARIAL EXAMPLES</h3>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/61589119-acb3cf80-abe0-11e9-8b5c-12f60a21f108.png" /></p>
+<p><img src="/FastPages/images/2019-07-21-mixup-정리글/table3.png" alt="" /></p>
 
-<p><strong>[3.6 TABULAR DATA]</strong></p>
+<h3 id="36-tabular-data">3.6 TABULAR DATA</h3>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/61589126-c35a2680-abe0-11e9-8b30-21679d86d0e5.png" /></p>
+<p><img src="/FastPages/images/2019-07-21-mixup-정리글/table4.png" alt="" /></p>
 
-<p><strong>[3.7 STABILIZATION OF GENERATIVE ADVERSARIAL NETWORKS]</strong></p>
+<h3 id="37-stabilization-of-generative-adversarial-networks">3.7 STABILIZATION OF GENERATIVE ADVERSARIAL NETWORKS</h3>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/61589135-d5d46000-abe0-11e9-97fa-96bd771c656c.png" /></p>
+<p><img src="/FastPages/images/2019-07-21-mixup-정리글/figure5.png" alt="" /></p>
 
 <p>mixup은 disciriminator의 <strong>gradient regularizer</strong>의 역할을 하기 때문에, 더 안정적인 학습을 할 수 있다.</p>
 
-<p><code class="language-plaintext highlighter-rouge">$$
-\max_g\min_d E_{x,  z}\mathcal{l}(d(x), 1) + l(d(g(z)), 0)
-$$</code></p>
+<script type="math/tex; mode=display">\max_g\min_d E_{x,  z}\mathcal{l}(d(x), 1) + l(d(g(z)), 0)</script>
 
 <p>기존의 GAN objective</p>
 
-<p>아래는 mixup이 적용된 <strong><em>GAN distriminator objective</em></strong>이다.</p>
+<p>아래는 mixup이 적용된  <strong>GAN distriminator objective</strong>이다.</p>
 
-<p><code class="language-plaintext highlighter-rouge">$$max_gmin_dE_{x, y, \lambda}l(d(\lambda x + (1-\lambda)g(z), \lambda).$$</code></p>
+<script type="math/tex; mode=display">max_gmin_dE_{x, y, \lambda}l(d(\lambda x + (1-\lambda)g(z), \lambda).</script>
 
-<p><strong>[3.8 ABLATION STUDIES]</strong></p>
+<h3 id="38-ablation-studies">3.8 ABLATION STUDIES</h3>
 
-<p>이 논문에서는 convex combination을 통한 data augmentation방법론을 제안했지만, 다양한 방법론이 있을 수 있다.
-[예시]</p>
+<p>이 논문에서는 convex combination을 통한 data augmentation방법론을 제안했지만, 다양한 방법론이 있을 수 있다.</p>
 
+<p>[예시]</p>
 <ul>
   <li>feature map을 섞는다.</li>
   <li>같은 클레스의 데이터</li>
