@@ -3,19 +3,19 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="shortcut icon" type="image/x-icon" href="/FastPages/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Abstract | fastpages</title>
+<title>“MixConv: Mixed Depthwise Convolutional Kernels” | fastpages</title>
 <meta name="generator" content="Jekyll v3.8.5" />
-<meta property="og:title" content="Abstract" />
+<meta property="og:title" content="“MixConv: Mixed Depthwise Convolutional Kernels”" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="다양한 kernel size의 효과 다양한 kernel size의 조합은 모델의 accuracy 및 efficient를 향상 시킬 수 있다. 위를 바탕으로 depth-wise convolution(MixConv)제안 MixConv의 효과를 증명하기 위해서 AutoML을 결합" />
-<meta property="og:description" content="다양한 kernel size의 효과 다양한 kernel size의 조합은 모델의 accuracy 및 efficient를 향상 시킬 수 있다. 위를 바탕으로 depth-wise convolution(MixConv)제안 MixConv의 효과를 증명하기 위해서 AutoML을 결합" />
-<link rel="canonical" href="https://rroundtable.github.io/FastPages/2019/08/23/mixconv.html" />
-<meta property="og:url" content="https://rroundtable.github.io/FastPages/2019/08/23/mixconv.html" />
+<meta name="description" content="Abstract" />
+<meta property="og:description" content="Abstract" />
+<link rel="canonical" href="https://rroundtable.github.io/FastPages/deeplearning/2019/08/23/mixconv.html" />
+<meta property="og:url" content="https://rroundtable.github.io/FastPages/deeplearning/2019/08/23/mixconv.html" />
 <meta property="og:site_name" content="fastpages" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2019-08-23T00:00:00-05:00" />
 <script type="application/ld+json">
-{"mainEntityOfPage":{"@type":"WebPage","@id":"https://rroundtable.github.io/FastPages/2019/08/23/mixconv.html"},"description":"다양한 kernel size의 효과 다양한 kernel size의 조합은 모델의 accuracy 및 efficient를 향상 시킬 수 있다. 위를 바탕으로 depth-wise convolution(MixConv)제안 MixConv의 효과를 증명하기 위해서 AutoML을 결합","@type":"BlogPosting","url":"https://rroundtable.github.io/FastPages/2019/08/23/mixconv.html","headline":"Abstract","dateModified":"2019-08-23T00:00:00-05:00","datePublished":"2019-08-23T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://rroundtable.github.io/FastPages/deeplearning/2019/08/23/mixconv.html"},"description":"Abstract","@type":"BlogPosting","url":"https://rroundtable.github.io/FastPages/deeplearning/2019/08/23/mixconv.html","headline":"“MixConv: Mixed Depthwise Convolutional Kernels”","dateModified":"2019-08-23T00:00:00-05:00","datePublished":"2019-08-23T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
   <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -94,22 +94,31 @@
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Abstract</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2019-08-23T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">“MixConv: Mixed Depthwise Convolutional Kernels”</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2019-08-23T00:00:00-05:00" itemprop="datePublished">
         Aug 23, 2019
       </time>
     •<span class="read-time" title="Estimated read time">
     
     
-      4 min read
+      3 min read
     
 </span></p>
 
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/FastPages/categories/#deeplearning">deeplearning</a>
+        
+      
+      </p>
     
 
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul>
+    <h2 id="abstract">Abstract</h2>
+
+<ul>
   <li>다양한 kernel size의 효과
     <ul>
       <li>다양한 kernel size의 조합은 모델의 accuracy 및 efficient를 향상 시킬 수 있다.</li>
@@ -121,7 +130,7 @@
 
 <h2 id="introduction">Introduction</h2>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63566425-13ddee80-c5a8-11e9-8c9f-0bb50224c913.png" style="width: 70%" /></p>
+<p><img src="/FastPages/images/2019-08-23-mixconv/figure1.png" alt="" title="Figure1" /></p>
 
 <p>Figure 1에서 볼 수 있듯이, kernel size가 클수록 모델의 성능이 올라간다고 할 수 없다.  올라가는 추세를 보이다가 k9*9를 넘어서면 accuracy가 떨어지는 것을 확인할 수 있다.</p>
 
@@ -129,7 +138,7 @@
 
 <p>아래는 해당 논문의 MixConv의 개략적인 구조이다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63566675-0b39e800-c5a9-11e9-8fdb-7943cb6fc28d.png" style="width: 70%" /></p>
+<p><img src="/FastPages/images/2019-08-23-mixconv/figure2.png" alt="" title="Figure1" /></p>
 
 <h2 id="related-work">Related Work</h2>
 
@@ -183,33 +192,32 @@
   <li>$Y^{(h, w, c*m)}$: same spatial shape (h, w), multiplied output channel size $m \cdot c$</li>
 </ul>
 
-<p><code class="language-plaintext highlighter-rouge">$$
-Y_{x, y, z} = \sum_{-\frac{k}{2} \le i \le \frac{k}{2}, -\frac{k}{2} \le j \le \frac{k}{2}}
+<script type="math/tex; mode=display">Y_{x, y, z} = \sum_{-\frac{k}{2} \le i \le \frac{k}{2}, -\frac{k}{2} \le j \le \frac{k}{2}}
 X_{x+i, y+j, \frac{z}{m}} \cdot W_{i, j, z} \
-\ \ \forall z=1, \cdots, m \cdot c
-$$</code></p>
+\ \ \forall z=1, \cdots, m \cdot c</script>
 
-<p>위의 식은 MixConv과 적용되는 과정을 수식화한 것이다. Input tensor를 g개의 그룹으로 분리하면 아래와 같다.
-<code class="language-plaintext highlighter-rouge">$$
-&lt;\hat{X}^{(h,w,c_1)}, \cdots, \hat{X}^{(h,w,c_g)}&gt;
-$$</code>
-각 tensor의 spatial height와 width는 모두 동일하며, 각 channel을 모두 더하면 다음과 같다.
-<code class="language-plaintext highlighter-rouge">$$
-c_1 + c_2 + \cdots + c_g = c
-$$</code>
-또한 g개의 kernel group을 구성할 수 있다.
-<code class="language-plaintext highlighter-rouge">$$
-&lt;\hat{W}^{(k_1,k_1,c_1, m)}, \cdots, \hat{W}^{(k_g,k_g,c_g, m)}&gt;
-$$</code>
-t-th group output은 다음과 같이 구성된다.
-<code class="language-plaintext highlighter-rouge">$$
-\hat{Y^t}_{x, y, z} = \sum_{-\frac{k_t}{2} \le i \le \frac{k_t}{2}, -\frac{k_t}{2} \le j \le \frac{k_t}{2}} \hat{X^t}_{x+i, y+i, \frac{z}{m}} \cdot\hat{W^t}_{i, j, z} \
-\ \ \forall z=1, \cdots, m \cdot c_t
-$$</code>
-그리고 final output tensor는 아래와 같다.
-<code class="language-plaintext highlighter-rouge">$$
-Y_{x, y, z_0}=Concat(\hat{Y^1}_{x,y,z_1}, \cdots,\hat{Y^g}_{x,y,z_g})
-$$</code></p>
+<p>위의 식은 MixConv과 적용되는 과정을 수식화한 것이다. Input tensor를 g개의 그룹으로 분리하면 아래와 같다.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+<\hat{X}^{(h,w,c_1)}, \cdots, \hat{X}^{(h,w,c_g)}> %]]></script>
+
+<p>각 tensor의 spatial height와 width는 모두 동일하며, 각 channel을 모두 더하면 다음과 같다.</p>
+
+<script type="math/tex; mode=display">c_1 + c_2 + \cdots + c_g = c</script>
+
+<p>또한 g개의 kernel group을 구성할 수 있다.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+<\hat{W}^{(k_1,k_1,c_1, m)}, \cdots, \hat{W}^{(k_g,k_g,c_g, m)}> %]]></script>
+
+<p>t-th group output은 다음과 같이 구성된다.</p>
+
+<script type="math/tex; mode=display">\hat{Y^t}_{x, y, z} = \sum_{-\frac{k_t}{2} \le i \le \frac{k_t}{2}, -\frac{k_t}{2} \le j \le \frac{k_t}{2}} \hat{X^t}_{x+i, y+i, \frac{z}{m}} \cdot\hat{W^t}_{i, j, z} \
+\ \ \forall z=1, \cdots, m \cdot c_t</script>
+
+<p>그리고 final output tensor는 아래와 같다.</p>
+
+<p><script type="math/tex">Y_{x, y, z_0}=Concat(\hat{Y^1}_{x,y,z_1}, \cdots,\hat{Y^g}_{x,y,z_g})</script>`</p>
 
 <h3 id="32-mixconv-design-choices">3.2 MixConv Design Choices</h3>
 
@@ -248,16 +256,17 @@ $$</code></p>
 
       <p>출처: https://3months.tistory.com/213 [Deep Play]</p>
 
-      <p><img src="https://t1.daumcdn.net/cfile/tistory/99448C335A014DD609" style="width: 30%" /></p>
+      <p><img src="/FastPages/images/2019-08-23-mixconv/dilatedconv.png" alt="" /></p>
+
     </blockquote>
   </li>
 </ul>
 
 <h3 id="33-mixconv-performance-on-mobile-nets">3.3 MixConv Performance on Mobile Nets</h3>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63569061-b7340100-c5b2-11e9-9610-8f1fc18b48ae.png" style="width: 70%" /></p>
+<p><img src="/FastPages/images/2019-08-23-mixconv/figure4.png" alt="" /></p>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63568374-fca2ff00-c5af-11e9-9894-f19c51bec874.png" style="width: 70%" /></p>
+<p><img src="/FastPages/images/2019-08-23-mixconv/table1.png" alt="" /></p>
 
 <h3 id="3-4-ablation-study">3. 4 Ablation Study</h3>
 
@@ -271,7 +280,7 @@ $$</code></p>
   <li>MixConv for Single Layer</li>
 </ul>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63568354-e5fca800-c5af-11e9-8add-abd49321aaf2.png" style="width: 70%" /></p>
+<p><img src="/FastPages/images/2019-08-23-mixconv/figure5.png" alt="" /></p>
 
 <p>​	하나의 layer씩 변화시켜본 결과는 위의 Figure 5와 같다. 2(s2)-(with large kernel size + stride2)를 보면 accuracy가 상승한 것을 확인할 수 있으며, 대부분의 레이어에서  비슷하거나 조금의 성능 향상이 있었다.</p>
 
@@ -279,7 +288,7 @@ $$</code></p>
   <li>
     <p>Channel Partition Method/ Dilated Convolution</p>
 
-    <p><img src="https://user-images.githubusercontent.com/27891090/63569248-97e9a380-c5b3-11e9-9382-80a0f4bdff64.png" style="width: 70%" /></p>
+    <p><img src="/FastPages/images/2019-08-23-mixconv/figure6.png" alt="" /></p>
   </li>
 </ul>
 
@@ -306,9 +315,9 @@ $$</code></p>
 
 <h3 id="42-mixnet-performance-on-imagenet">4.2 MixNet Performance on ImageNet</h3>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63569698-6d004f00-c5b5-11e9-97ea-1dfa879bda33.png" style="width: 70%" /></p>
+<p><img src="/FastPages/images/2019-08-23-mixconv/figure7.png" alt="" /></p>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63569603-0418d700-c5b5-11e9-8358-31d30f1a65e4.png" style="width: 70%" /></p>
+<p><img src="/FastPages/images/2019-08-23-mixconv/table2.png" alt="" /></p>
 
 <h3 id="43-mixnet-architectures">4.3 MixNet Architectures</h3>
 
@@ -319,9 +328,8 @@ $$</code></p>
 <ul>
   <li>small kernel은 앞단의 stage에서 computation cost를 줄이기 위하여 사용함</li>
   <li>large kernel은 뒷단의 stage에서 더 좋은 accuracy를 위해서 많이 나타남.</li>
+  <li><img src="/FastPages/images/2019-08-23-mixconv/figure8.png" alt="" /></li>
 </ul>
-
-<p><img src="https://user-images.githubusercontent.com/27891090/63569643-332f4880-c5b5-11e9-9ec8-a564342c1efd.png" style="70%" /></p>
 
 <p>또한, 큰 MixNet model일수록 parameter와 FLOPS를 비용으로 지불하면서 더 큰 size의 kernel을 많이 사용하고 더 많은 수의 layer를 사용하였다.</p>
 
@@ -329,7 +337,9 @@ $$</code></p>
 
 <h3 id="44-transfer-learning-performance">4.4 Transfer Learning Performance</h3>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63570033-b1401f00-c5b6-11e9-99db-95aea0bfd8d4.png" style="70%" /></p>
+<ul>
+  <li><img src="/FastPages/images/2019-08-23-mixconv/figure9.png" alt="" /></li>
+</ul>
 
 <p>Figure 9는 transfer learning을 MixNet에 적용하였을 때, 성능향상을 나타내는 이미지이다. MixNet-M은 97.92%의 성능향상을 했으며 이는 ResNet-50보다 1% 높은 수치이다.</p>
 
@@ -341,7 +351,15 @@ $$</code></p>
   <li>https://arxiv.org/pdf/1907.09595.pdf</li>
 </ul>
 
-  </div><a class="u-url" href="/FastPages/2019/08/23/mixconv.html" hidden></a>
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="RRoundTable/FastPages"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/FastPages/deeplearning/2019/08/23/mixconv.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">

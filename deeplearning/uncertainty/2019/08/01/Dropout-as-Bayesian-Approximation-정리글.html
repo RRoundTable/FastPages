@@ -3,19 +3,19 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="shortcut icon" type="image/x-icon" href="/FastPages/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Problem | fastpages</title>
+<title>Dropout as Bayesian Approximation 정리글 | fastpages</title>
 <meta name="generator" content="Jekyll v3.8.5" />
-<meta property="og:title" content="Problem" />
+<meta property="og:title" content="Dropout as Bayesian Approximation 정리글" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="일반적으로 Bayesain model은 model의 uncertainty를 측정할 수 있다는 장점이 있지만, computation cost가 너무 커서 사용하기 힘들다는 문제를 가지고 있다. 이런 문제점을 해결하기 위해서 이 논문에서는 Dropout을 사용한 딥러닝 모델이 결국은 gaussian porcess에서의 bayesain inference를 근사한 것이라는 증명을 할 것이다." />
-<meta property="og:description" content="일반적으로 Bayesain model은 model의 uncertainty를 측정할 수 있다는 장점이 있지만, computation cost가 너무 커서 사용하기 힘들다는 문제를 가지고 있다. 이런 문제점을 해결하기 위해서 이 논문에서는 Dropout을 사용한 딥러닝 모델이 결국은 gaussian porcess에서의 bayesain inference를 근사한 것이라는 증명을 할 것이다." />
-<link rel="canonical" href="https://rroundtable.github.io/FastPages/deeplearning/2019/08/01/Dropout-as-Bayesian-Approximation-%EC%A0%95%EB%A6%AC%EA%B8%80.html" />
-<meta property="og:url" content="https://rroundtable.github.io/FastPages/deeplearning/2019/08/01/Dropout-as-Bayesian-Approximation-%EC%A0%95%EB%A6%AC%EA%B8%80.html" />
+<meta name="description" content="Problem" />
+<meta property="og:description" content="Problem" />
+<link rel="canonical" href="https://rroundtable.github.io/FastPages/deeplearning/uncertainty/2019/08/01/Dropout-as-Bayesian-Approximation-%EC%A0%95%EB%A6%AC%EA%B8%80.html" />
+<meta property="og:url" content="https://rroundtable.github.io/FastPages/deeplearning/uncertainty/2019/08/01/Dropout-as-Bayesian-Approximation-%EC%A0%95%EB%A6%AC%EA%B8%80.html" />
 <meta property="og:site_name" content="fastpages" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2019-08-01T00:00:00-05:00" />
 <script type="application/ld+json">
-{"mainEntityOfPage":{"@type":"WebPage","@id":"https://rroundtable.github.io/FastPages/deeplearning/2019/08/01/Dropout-as-Bayesian-Approximation-%EC%A0%95%EB%A6%AC%EA%B8%80.html"},"description":"일반적으로 Bayesain model은 model의 uncertainty를 측정할 수 있다는 장점이 있지만, computation cost가 너무 커서 사용하기 힘들다는 문제를 가지고 있다. 이런 문제점을 해결하기 위해서 이 논문에서는 Dropout을 사용한 딥러닝 모델이 결국은 gaussian porcess에서의 bayesain inference를 근사한 것이라는 증명을 할 것이다.","@type":"BlogPosting","url":"https://rroundtable.github.io/FastPages/deeplearning/2019/08/01/Dropout-as-Bayesian-Approximation-%EC%A0%95%EB%A6%AC%EA%B8%80.html","headline":"Problem","dateModified":"2019-08-01T00:00:00-05:00","datePublished":"2019-08-01T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://rroundtable.github.io/FastPages/deeplearning/uncertainty/2019/08/01/Dropout-as-Bayesian-Approximation-%EC%A0%95%EB%A6%AC%EA%B8%80.html"},"description":"Problem","@type":"BlogPosting","url":"https://rroundtable.github.io/FastPages/deeplearning/uncertainty/2019/08/01/Dropout-as-Bayesian-Approximation-%EC%A0%95%EB%A6%AC%EA%B8%80.html","headline":"Dropout as Bayesian Approximation 정리글","dateModified":"2019-08-01T00:00:00-05:00","datePublished":"2019-08-01T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
   <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -94,13 +94,13 @@
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Problem</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2019-08-01T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Dropout as Bayesian Approximation 정리글</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2019-08-01T00:00:00-05:00" itemprop="datePublished">
         Aug 1, 2019
       </time>
     •<span class="read-time" title="Estimated read time">
     
     
-      5 min read
+      4 min read
     
 </span></p>
 
@@ -108,6 +108,9 @@
       <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
       
         <a class="category-tags-link" href="/FastPages/categories/#deeplearning">deeplearning</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/FastPages/categories/#uncertainty">uncertainty</a>
         
       
       </p>
@@ -116,9 +119,27 @@
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>일반적으로 Bayesain model은 model의 uncertainty를 측정할 수 있다는 장점이 있지만, computation cost가 너무 커서 사용하기 힘들다는 문제를 가지고 있다. 이런 문제점을 해결하기 위해서 이 논문에서는 Dropout을 사용한 딥러닝 모델이 결국은 gaussian porcess에서의 bayesain inference를 근사한 것이라는 증명을 할 것이다.</p>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#problem">Problem</a></li>
+<li class="toc-entry toc-h2"><a href="#related-research">Related Research</a></li>
+<li class="toc-entry toc-h2"><a href="#dropout-as-a-bayesian-approximation">Dropout as a Bayesian Approximation</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#dropout-objective는-approximation-distribution과-deep-gaussian-process의-posterior간의-kl-divergence를-감소시킨다">Dropout objective는 approximation distribution과 deep gaussian process의 posterior간의 Kl-divergence를 감소시킨다.</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#obtaining-model-uncertainty">Obtaining Model Uncertainty</a></li>
+<li class="toc-entry toc-h2"><a href="#example-code-image-segmentaton">Example code: image segmentaton</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#reference">Reference</a></li>
+</ul>
+</li>
+</ul><h2 id="problem">
+<a class="anchor" href="#problem" aria-hidden="true"><span class="octicon octicon-link"></span></a>Problem</h2>
 
-<h2 id="related-research">Related Research</h2>
+<p>일반적으로 Bayesain model은 model의 uncertainty를 측정할 수 있다는 장점이 있지만, computation cost가 너무 커서 사용하기 힘들다는 문제를 가지고 있다. 이런 문제점을 해결하기 위해서 이 논문에서는 Dropout을 사용한 딥러닝 모델이 결국은 gaussian porcess에서의 bayesain inference를 근사한 것이라는 증명을 할 것이다.</p>
+
+<h2 id="related-research">
+<a class="anchor" href="#related-research" aria-hidden="true"><span class="octicon octicon-link"></span></a>Related Research</h2>
 
 <ul>
   <li>
@@ -140,70 +161,57 @@
   </li>
 </ul>
 
-<h2 id="dropout-as-a-bayesian-approximation">Dropout as a Bayesian Approximation</h2>
+<h2 id="dropout-as-a-bayesian-approximation">
+<a class="anchor" href="#dropout-as-a-bayesian-approximation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dropout as a Bayesian Approximation</h2>
 
 <p>이 section에서는 Dropout이 결국에는 Deep gaussian process를 근사한다는 것을 수학적으로 증명할 것이다. 특히, 어떠한 가정도 없이 증명할 수 있으며, 어떤 network에도 적용가능하다는 장점을 가지고 있다.</p>
 
-<h4 id="dropout-objective는-approximation-distribution과-deep-gaussian-process의-posterior간의-kl-divergence를-감소시킨다">Dropout objective는 approximation distribution과 deep gaussian process의 posterior간의 Kl-divergence를 감소시킨다.</h4>
+<h4 id="dropout-objective는-approximation-distribution과-deep-gaussian-process의-posterior간의-kl-divergence를-감소시킨다">
+<a class="anchor" href="#dropout-objective%EB%8A%94-approximation-distribution%EA%B3%BC-deep-gaussian-process%EC%9D%98-posterior%EA%B0%84%EC%9D%98-kl-divergence%EB%A5%BC-%EA%B0%90%EC%86%8C%EC%8B%9C%ED%82%A8%EB%8B%A4" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dropout objective는 approximation distribution과 deep gaussian process의 posterior간의 Kl-divergence를 감소시킨다.</h4>
 
-<p>우선 Dropout objective를 확인해보자. ( add regularization)
-<code class="language-plaintext highlighter-rouge">$$
-\mathcal{L}_{dropout} = \frac{1}{N}\sum_{i=1}^N E(y_i, \hat{y}_i) + \lambda\sum_{i=1}^N (\rVert W_i \rVert_2 ^ 2+ \rVert b \rVert_2 ^ 2)
-$$</code>
-dropout은 결국 모든 input point와 각 layer의 모든 network에 binary distribution을 적용한 것으로 해석할 수있다. 참고로 output에는 적용하지 않는다. 이는 아래의 이미지 처럼 적용될 수 있다.</p>
+<p>우선 Dropout objective를 확인해보자. ( add regularization)</p>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/62261081-13da4b00-b44f-11e9-8293-c022acbd574f.png" style="width: 50%" /></p>
+<script type="math/tex; mode=display">\mathcal{L}_{dropout} = \frac{1}{N}\sum_{i=1}^N E(y_i, \hat{y}_i) + \lambda\sum_{i=1}^N (\rVert W_i \rVert_2 ^ 2+ \rVert b \rVert_2 ^ 2)</script>
 
-<p>GP 모델에서 predictive probability는 아래와 같이 전개된다. ($x^*$ is unseen)
-<code class="language-plaintext highlighter-rouge">$$
-p(y|x^*, X, Y) = \int p(y|x^*, w) p(w|X, Y) dw
-$$</code></p>
+<p>dropout은 결국 모든 input point와 각 layer의 모든 network에 binary distribution을 적용한 것으로 해석할 수있다. 참고로 output에는 적용하지 않는다. 이는 아래의 이미지 처럼 적용될 수 있다.</p>
 
-<p><code class="language-plaintext highlighter-rouge">$$
-p(y|x, w) = \mathcal{N}(y; \hat{y}(x, w), \tau^{-1}I_D)
-$$</code></p>
+<p><img src="/FastPages/images/2019-08-01-Dropout-as-Bayesian-Approximation-%EC%A0%95%EB%A6%AC%EA%B8%80/dropout.png" alt="" title="Dropout"></p>
 
-<p><code class="language-plaintext highlighter-rouge">$$
-\hat{y}(x, w= \{ W_1, \cdots, W_L\}) = \sqrt\frac{1}{K_L}W_L\sigma( \cdots \sqrt\frac{1}{K_1}W_2 \sigma(W_1x + m_1) \cdots)
-$$</code></p>
+<p>GP 모델에서 predictive probability는 아래와 같이 전개된다. ($x^*$ is unseen)</p>
 
-<p><code class="language-plaintext highlighter-rouge">여기서 posterior $p(w|X, Y)$가 untractable한데 이를 해결하기 위해서 variational inference를 사용하며, simple distribution으로 $q(w)$를 가정한다. 이때 $q(w)$는 matrix형태를 가지고 있으며 random하게 0으로 값이 지정된다. (여기서 $K$ 는 matrix dimension을 의미한다. $W_i$ 의 dim은 $K_i * K_{i-1}$)</code></p>
+<script type="math/tex; mode=display">p(y\mid x^*, X, Y) = \int p(y\mid x^*, w) p(w\mid X, Y) dw</script>
 
-<p><code class="language-plaintext highlighter-rouge">$$
-W_i = M_i \cdot diag([z_{i, j}]_{j=1}^{K_i})
-$$</code></p>
+<script type="math/tex; mode=display">p(y\mid x, w) = \mathcal{N}(y; \hat{y}(x, w), \tau^{-1}I_D)</script>
 
-<p><code class="language-plaintext highlighter-rouge">$$
-Z_{i, j} = Bernoulli(p_i)  \ for \ i = 1, \cdots, L, \ j= 1, \cdots, K_{i-1}
-$$</code></p>
+<script type="math/tex; mode=display">\hat{y}(x, w= \{ W_1, \cdots, W_L\}) = \sqrt\frac{1}{K_L}W_L\sigma( \cdots \sqrt\frac{1}{K_1}W_2 \sigma(W_1x + m_1) \cdots)</script>
 
-<p>여기서 <code class="language-plaintext highlighter-rouge">$z_{i, j}$</code>가 0이라면, layer $i - 1$ 의 unit $j$가 drop된다는 것을 의미한다. 위의 이미지에서는 layer에 dropout을 설정한 것을 시각화 한것이라면 위의 수식은 parameter자체에 dropout을 걸었다는 차이가 있다. (그리고 BNN을 적용하기 위해서는 위의 수식처럼 parameter 자체에 dropout을 설정하는 것이 타당하다고 생각한다.)</p>
+<p>여기서 posterior $p(w\ mid X, Y)$가 untractable한데 이를 해결하기 위해서 variational inference를 사용하며, simple distribution으로 $q(w)$를 가정한다. 이때 $q(w)$는 matrix형태를 가지고 있으며 random하게 0으로 값이 지정된다. (여기서 $K$ 는 matrix dimension을 의미한다. $W_i$ 의 dim은 $K_i * K_{i-1}$)</p>
+
+<script type="math/tex; mode=display">W_i = M_i \cdot diag([z_{i, j}]_{j=1}^{K_i})</script>
+
+<script type="math/tex; mode=display">Z_{i, j} = Bernoulli(p_i)  \ for \ i = 1, \cdots, L, \ j= 1, \cdots, K_{i-1}</script>
+
+<p>여기서 $z_{i, j}$가 0이라면, layer $i - 1$ 의 unit $j$가 drop된다는 것을 의미한다. 위의 이미지에서는 layer에 dropout을 설정한 것을 시각화 한것이라면 위의 수식은 parameter자체에 dropout을 걸었다는 차이가 있다. (그리고 BNN을 적용하기 위해서는 위의 수식처럼 parameter 자체에 dropout을 설정하는 것이 타당하다고 생각한다.)</p>
 
 <p>variational distribution $q(w)$는 highly multi modal한 특징을 가지고 있다. 왜냐하면, 각 layer에 대한 Bernoulli distribution의 output값이 layer의 크기 만큼 나와야 하기 때문이다.</p>
 
-<p>$q(w)$를 바탕으로 objective를 도출하면 아래와 같다. (lower bound: <a href="https://en.wikipedia.org/wiki/Variational_Bayesian_methods">variational inference</a> 참고) 
-$$</p>
+<p>$q(w)$를 바탕으로 objective를 도출하면 아래와 같다. (lower bound: <a href="https://en.wikipedia.org/wiki/Variational_Bayesian_methods">variational inference</a> 참고)</p>
+
+<script type="math/tex; mode=display">- \int q(w) \log p(Y \mid X, w) dw +KL(q(w) \rVert p(w)).</script>
+
 <ul>
-  <li>
-    <p>\int q(w) \log p(Y|X, w) dw +KL(q(w) \rVert p(w)).
-$$</p>
-  </li>
-  <li>
-    <p>$p(w)$ 는 prior distribution을 의미한다.</p>
-  </li>
+  <li>$p(w)$ 는 prior distribution을 의미한다.</li>
 </ul>
 
-<p>첫번째 term <code class="language-plaintext highlighter-rouge">$- \int q(w) \log p(Y|X, w) dw$</code>은 아래처럼 바꿀 수 있다.
-`$$</p>
+<p>첫번째 term $- \int q(w) \log p(Y\mid X, w) dw$은 아래처럼 바꿀 수 있다.</p>
+
+<script type="math/tex; mode=display">- \int q(w) \log p(Y\mid X, w) dw \approx- \sum_{n=1} ^N \int q(w) \log p(y_n \mid x_n, w) dw</script>
+
+<p>두번째 term $ KL(q(w) \rVert p(w))$에서는 아래와 같은 식을 얻을 수 있다.</p>
+
+<script type="math/tex; mode=display">\sum_{i=1}^ L(\frac{p_il^2}{2}\rVert M_i\rVert_2^2 + \frac{l^2}{2}\rVert m_i \rVert_2^2)</script>
+
 <ul>
-  <li>
-    <p>\int q(w) \log p(Y|X, w) dw \approx- \sum_{n=1} ^N \int q(w) \log p(y_n|x_n, w) dw
-<script type="math/tex">`
-두번째 term $ KL(q(w) \rVert p(w))$에서는 아래와 같은 식을 얻을 수 있다.
-`</script>
-\sum_{i=1}^ L(\frac{p_il^2}{2}\rVert M_i\rVert_2^2 + \frac{l^2}{2}\rVert m_i \rVert_2^2)
-$$`</p>
-  </li>
   <li>$p_i$ bernoulli 분포의 확률값</li>
   <li>$l$ 은 prior length scale 값: appendix section 4.2
     <ul>
@@ -218,11 +226,11 @@ $$`</p>
 
 </blockquote>
 
-<p>model precision $\tau$를 고려하면, 아래와 같이 scale한 값이 도출된다.
-<code class="language-plaintext highlighter-rouge">$$
-\mathcal{L}_{GP-MC} \propto \frac {1}{N}\sum_{i=1}^N\frac{- \log p (y_n | x_n, \hat{w_n})}{\tau} + \sum_{i=1}^{L}(\frac{p_i l^2}{2\tau N}\rVert M_i\rVert_2^2 + \frac{l^2}{2\tau N}\rVert m_i \rVert_2^2)
-$$</code>
-여기서 $\tau$와 length-scale $l$은 hyperparameter이다. lengh-scale은 function frequency를 가정하는 것으로 만약 $l$을 강하게 준다면, regularization 효과는 더 강해진다.</p>
+<p>model precision $\tau$를 고려하면, 아래와 같이 scale한 값이 도출된다.</p>
+
+<script type="math/tex; mode=display">\mathcal{L}_{GP-MC} \propto \frac {1}{N}\sum_{i=1}^N\frac{- \log p (y_n \mid  x_n, \hat{w_n})}{\tau} + \sum_{i=1}^{L}(\frac{p_i l^2}{2\tau N}\rVert M_i\rVert_2^2 + \frac{l^2}{2\tau N}\rVert m_i \rVert_2^2)</script>
+
+<p>여기서 $\tau$와 length-scale $l$은 hyperparameter이다. lengh-scale은 function frequency를 가정하는 것으로 만약 $l$을 강하게 준다면, regularization 효과는 더 강해진다.</p>
 
 <script type="math/tex; mode=display">\lambda_1 = \frac{l^2 p_1}{2N\tau}</script>
 
@@ -233,71 +241,64 @@ $$</code>
   <li>long length scale $l$ (low frequency data) + low precision $\tau$ (large observation noise) result in large weight-decay</li>
 </ul>
 
-<h2 id="obtaining-model-uncertainty">Obtaining Model Uncertainty</h2>
+<h2 id="obtaining-model-uncertainty">
+<a class="anchor" href="#obtaining-model-uncertainty" aria-hidden="true"><span class="octicon octicon-link"></span></a>Obtaining Model Uncertainty</h2>
 
-<p>predictive distributioin은 아래와 같이 주어진다.
-<code class="language-plaintext highlighter-rouge">$$
-q(y^*|x^*) = \int p(y^*|x^*, w) q(w) dw
-$$</code></p>
+<p>predictive distributioin은 아래와 같이 주어진다.</p>
+
+<script type="math/tex; mode=display">q(y^*\mid x^*) = \int p(y^*\mid x^*, w) q(w) dw</script>
 
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">$w = \{  W_i\}_{i=1} ^ L$</code></li>
+  <li>$w = {  W_i}_{i=1} ^ L$</li>
   <li>unseen input data: $x^*$</li>
   <li>prediction from unseen input data: $y^*$</li>
 </ul>
 
-<p>dropout을 이용하여, uncertainty를 estimate를 하기 위해서는 bernoulli distribution<code class="language-plaintext highlighter-rouge"> $\{z_1^t, \cdots, z_L^t\}_{t=1}^T$</code>를  sampling해주면 된다. 이 식에서는 T번의 sampling을 진행한 것이다.</p>
+<p>dropout을 이용하여, uncertainty를 estimate를 하기 위해서는 bernoulli distribution ${z_1^t, \cdots, z_L^t}_{t=1}^T$를  sampling해주면 된다. 이 식에서는 T번의 sampling을 진행한 것이다.</p>
 
-<p>sampling한 분포를 바탕으로 predictive mean값을 근사할 수 있다. 이를 MC-dropout이라고 부른다.
-<code class="language-plaintext highlighter-rouge">$$
-E_{q(y^*|x^*)}(y^*) = \frac{1}{T}\sum_{i=1}^T \hat{y}^*(x^*, W_1^t, \cdots, W_L^t)
-$$
-다음은</code> raw moment를 근사하는 과정이다.
-<code class="language-plaintext highlighter-rouge">$$
-E_{q(y^*|x^*)}((y^*) ^T y^*) \approx \tau^{-1}I_D +\frac{1}{T}\sum_{i=1}^T \hat{y}^*(x^*, W_1^t, \cdots, W_L^t) ^ T \hat{y}^*(x^*, W_1^t, \cdots, W_L^t)
-$$</code></p>
+<p>sampling한 분포를 바탕으로 predictive mean값을 근사할 수 있다. 이를 MC-dropout이라고 부른다.</p>
+
+<script type="math/tex; mode=display">E_{q(y^* \mid x^*)}(y^*) = \frac{1}{T}\sum_{i=1}^T \hat{y}^*(x^*, W_1^t, \cdots, W_L^t)</script>
+
+<p>다음은 raw moment를 근사하는 과정이다.</p>
+
+<script type="math/tex; mode=display">E_{q(y^* \mid x^*)}((y^*) ^T y^*) \approx \tau^{-1}I_D +\frac{1}{T}\sum_{i=1}^T \hat{y}^*(x^*, W_1^t, \cdots, W_L^t) ^ T \hat{y}^*(x^*, W_1^t, \cdots, W_L^t)</script>
 
 <p>predictive variance는 다음과 같이 도출된다.</p>
 
-<p><code class="language-plaintext highlighter-rouge">$$
-Var_{q(y^*|x^*)}(y^*) \approx  \tau^{-1}I_D + \frac{1}{T}\sum_{i=1}^T \hat{y}^*(x^*, W_1^t, \cdots, W_L^t) ^ T \hat{y}^*(x^*, W_1^t, \cdots, W_L^t) -E_{q(y^*|x^*)}(y^*) ^T E_{q(y^*|x^*)}(y^*)
-$$</code></p>
+<script type="math/tex; mode=display">Var_{q(y^* \mid x^*)}(y^*) \approx  \tau^{-1}I_D + \frac{1}{T}\sum_{i=1}^T \hat{y}^*(x^*, W_1^t, \cdots, W_L^t) ^ T \hat{y}^*(x^*, W_1^t, \cdots, W_L^t) -E_{q(y^* \mid x^*)}(y^*) ^T E_{q(y^* \mid x^*)}(y^*)</script>
 
-<p>참고로 $y^*$는 row vector를 의미하며<code class="language-plaintext highlighter-rouge"> $ \hat{y}^*(x^*, W_1^t, \cdots, W_L^t) ^ T \hat{y}^*(x^*, W_1^t, \cdots, W_L^t)$ </code>연산은 outer product이다.</p>
+<p>참고로 $y^<em>$는 row vector를 의미하며 $ \hat{y}^</em>(x^<em>, W_1^t, \cdots, W_L^t) ^ T \hat{y}^</em>(x^*, W_1^t, \cdots, W_L^t)$ 연산은 outer product이다.</p>
 
 <p>weight-decay 값 $\lambda$와 length scale $l$이 주어지면 아래의 식으로 <strong>model precision $\tau$</strong> 를 도출할 수 있다.</p>
 
-<p><code class="language-plaintext highlighter-rouge">$$
-\tau = \frac{l^2 p_1}{2N \lambda_1}
-$$</code></p>
+<script type="math/tex; mode=display">\tau = \frac{l^2 p_1}{2N \lambda_1}</script>
 
 <p>regression task에서 다음과 같이 predictive log-likelihood를 monte-carlo integration을 통해서 근사할 수 있다. 이를 통해서 model이 mean과 얼마나 일치하는지 uncertainty가 어떤지 알 수 있다.</p>
 
 <p>with $w_t \sim q(w)$
-<code class="language-plaintext highlighter-rouge">$$
+<script type="math/tex">% <![CDATA[
 \begin{align}
-\log p(y^* |x^*, X, Y) &amp;= \log \int p(y^*|x^*, w) p(w|X, Y) dw\\
-&amp; \approx \log \int p(y^*|x^*, w) q(w) dw \\
-&amp;\approx \log\frac{1}{T} \sum_{t=1}^{T}  p(y^*|x^*, w_t)
-\end{align}
-$$</code></p>
+\log p(y^* \mid x^*, X, Y) &= \log \int p(y^* \mid x^*, w) p(w \midX, Y) dw\\
+& \approx \log \int p(y^* \mid x^*, w) q(w) dw \\
+&\approx \log\frac{1}{T} \sum_{t=1}^{T}  p(y^* \mid x^*, w_t)
+\end{align} %]]></script></p>
 
 <p>At regression task,</p>
 
-<p><code class="language-plaintext highlighter-rouge">$$
-\log p(y^*|x^*, X, Y) \approx \mathrm{logsumexp} ( -\frac{1}{2}\tau\rVert y - \hat{y}\rVert^2) -\log T - \frac{1}{2}2\pi - \frac{1}{2}\log \tau ^{-1}
-$$</code></p>
+<script type="math/tex; mode=display">\log p(y^* \mid x^*, X, Y) \approx \mathrm{logsumexp} ( -\frac{1}{2}\tau\rVert y - \hat{y}\rVert^2) -\log T - \frac{1}{2}2\pi - \frac{1}{2}\log \tau ^{-1}</script>
 
 <ul>
   <li>$y$  : predictive mean</li>
   <li>$\hat{y}$ : sample</li>
 </ul>
 
-<p>predictive distribution<code class="language-plaintext highlighter-rouge"> $q(y^*|x^*)$</code>은 highly multi modal이기 때문에 그 특성을 정확히 알 수 없다. 이는 weight element에 bi-modal한 distribution을 설정하였고 이들의 joint distribution은 multi modal이기 때문이다.</p>
+<p>predictive distribution $q(y^* \mid x^*)$은 highly multi modal이기 때문에 그 특성을 정확히 알 수 없다. 이는 weight element에 bi-modal한 distribution을 설정하였고 이들의 joint distribution은 multi modal이기 때문이다.</p>
 
 <p>하지만, 구현하기 매우 싶다.  dropout을 수정하지 않고 사용하며, samples을 모아서 uncertainty를 측정할 수 있다. 또한 forward pass는 기존의 standard 한 모델과 차이가 나지 않는다.</p>
 
-<h2 id="example-code-image-segmentaton">Example code: image segmentaton</h2>
+<h2 id="example-code-image-segmentaton">
+<a class="anchor" href="#example-code-image-segmentaton" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example code: image segmentaton</h2>
 
 <p>아래는 test과정에서 predictive mean를 구하는 method의 예시이다. 주목할 점은 dropout을 낀채로 sampling을 진행해야 한다는 것이다.</p>
 
@@ -349,13 +350,22 @@ $$</code></p>
     <span class="k">return</span> <span class="n">result</span>
 </code></pre></div></div>
 
-<h4 id="reference">Reference</h4>
+<h4 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h4>
 
 <ul>
   <li>https://arxiv.org/abs/1506.02142</li>
 </ul>
 
-  </div><a class="u-url" href="/FastPages/deeplearning/2019/08/01/Dropout-as-Bayesian-Approximation-%EC%A0%95%EB%A6%AC%EA%B8%80.html" hidden></a>
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="RRoundTable/FastPages"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/FastPages/deeplearning/uncertainty/2019/08/01/Dropout-as-Bayesian-Approximation-%EC%A0%95%EB%A6%AC%EA%B8%80.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">

@@ -151,39 +151,36 @@
 
 <p>아래는 softmax의 수식이다.</p>
 
-<p><code class="language-plaintext highlighter-rouge">$$
-\frac{e^{x_j}}{\sum_{i=1}^ne^{x_j}}
-$$</code></p>
+<script type="math/tex; mode=display">\frac{e^{x_j}}{\sum_{i=1}^ne^{x_j}}</script>
 
-<p>softmax는 특정 수를 non-linear한 방식으로 probability로 변환하는 것으로 해석할 수 있다. 이는 위의 LogSumExp pattern을 나타내고 있다.
-<code class="language-plaintext highlighter-rouge">$$
-\begin{align}\log\left(\frac{e^{x_j}}{\sum_{i=1}^{n} e^{x_i}}\right) &amp;= \log(e^{x_j}) \:-\: \log\left(\sum_{i=1}^{n} e^{x_i}\right) \\ &amp;= x_j \:-\: \log\left(\sum_{i=1}^{n} e^{x_i}\right) &amp; (1)\end{align}
-$$</code></p>
+<p>softmax는 특정 수를 non-linear한 방식으로 probability로 변환하는 것으로 해석할 수 있다. 이는 위의 LogSumExp pattern을 나타내고 있다.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}\log\left(\frac{e^{x_j}}{\sum_{i=1}^{n} e^{x_i}}\right) &= \log(e^{x_j}) \:-\: \log\left(\sum_{i=1}^{n} e^{x_i}\right) \\ &= x_j \:-\: \log\left(\sum_{i=1}^{n} e^{x_i}\right) & (1)\end{align} %]]></script>
 
 <p>지수의 곱셈은 다음과 같이 전개된다.
 <script type="math/tex">e^a \cdot e^b = e^{a+b}</script>
 이는 log함수에서 다음과 같이 표현된다.
 <script type="math/tex">\log(a \cdot b) = \log(a) + \log(b)</script>
-위의 두 공식을 이용하면 LogSumExp의 공식은 아래와 같이 전개된다.
-<code class="language-plaintext highlighter-rouge">$$
+위의 두 공식을 이용하면 LogSumExp의 공식은 아래와 같이 전개된다.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
 \begin{align} 
-LogSumExp(x_1…x_n) &amp;= \log\big( \sum_{i=1}^{n} e^{x_i} \big) \\ 
- &amp;= \log\big( \sum_{i=1}^{n} e^{x_i – c}e^{c} \big) \\ 
- &amp;= \log\big( e^{c} \sum_{i=1}^{n} e^{x_i – c} \big) \\ 
- &amp;= \log\big( \sum_{i=1}^{n} e^{x_i – c} \big) + \log(e^{c}) \\ 
- &amp;= \log\big( \sum_{i=1}^{n} e^{x_i – c} \big) + c &amp; (2)\\ 
-\end{align}
-$$</code></p>
+LogSumExp(x_1…x_n) &= \log\big( \sum_{i=1}^{n} e^{x_i} \big) \\ 
+ &= \log\big( \sum_{i=1}^{n} e^{x_i – c}e^{c} \big) \\ 
+ &= \log\big( e^{c} \sum_{i=1}^{n} e^{x_i – c} \big) \\ 
+ &= \log\big( \sum_{i=1}^{n} e^{x_i – c} \big) + \log(e^{c}) \\ 
+ &= \log\big( \sum_{i=1}^{n} e^{x_i – c} \big) + c & (2)\\ 
+\end{align} %]]></script>
 
 <p>그렇다면, softmax에 적용해보자. 위에서 log softmax는 다음과 같이 전개되었다.</p>
 
-<p><code class="language-plaintext highlighter-rouge">$$
+<script type="math/tex; mode=display">% <![CDATA[
 \begin{align} 
-\log(Softmax(x_j, x_1…x_n)) &amp;= x_j \:-\: LogSumExp(x_1…x_n) \\ 
-&amp;= x_j \:-\: \log\left(\sum_{i=1}^{n} e^{x_i}\right)\\
- &amp;= x_j \:-\: \log\big( \sum_{i=1}^{n} e^{x_i – c} \big) \:-\: c 
-\end{align}
-$$</code></p>
+\log(Softmax(x_j, x_1…x_n)) &= x_j \:-\: LogSumExp(x_1…x_n) \\ 
+&= x_j \:-\: \log\left(\sum_{i=1}^{n} e^{x_i}\right)\\
+ &= x_j \:-\: \log\big( \sum_{i=1}^{n} e^{x_i – c} \big) \:-\: c 
+\end{align} %]]></script>
 
 <h2 id="logistic-loss-in-tensorflow">
 <a class="anchor" href="#logistic-loss-in-tensorflow" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logistic loss in Tensorflow</h2>

@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="shortcut icon" type="image/x-icon" href="/FastPages/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Missing Semester 정리글 | fastpages</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Missing Semester 정리글" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="1. Shell" />
+<meta property="og:description" content="1. Shell" />
+<link rel="canonical" href="https://rroundtable.github.io/FastPages/shell/bash/2020/03/05/missing-semeste-%EC%A0%95%EB%A6%AC%EA%B8%80.html" />
+<meta property="og:url" content="https://rroundtable.github.io/FastPages/shell/bash/2020/03/05/missing-semeste-%EC%A0%95%EB%A6%AC%EA%B8%80.html" />
+<meta property="og:site_name" content="fastpages" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-03-05T00:00:00-06:00" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://rroundtable.github.io/FastPages/shell/bash/2020/03/05/missing-semeste-%EC%A0%95%EB%A6%AC%EA%B8%80.html"},"description":"1. Shell","@type":"BlogPosting","url":"https://rroundtable.github.io/FastPages/shell/bash/2020/03/05/missing-semeste-%EC%A0%95%EB%A6%AC%EA%B8%80.html","headline":"Missing Semester 정리글","dateModified":"2020-03-05T00:00:00-06:00","datePublished":"2020-03-05T00:00:00-06:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/FastPages/assets/main.css">
+  <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://rroundtable.github.io/FastPages/feed.xml" title="fastpages" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+          delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+          ]}
+        );
+      });
+    </script>
+  
+
+  <script>
+  function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+  }
+  window.onload = wrap_img;
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function(){
+      // add link icon to anchor tags
+      var elem = document.querySelectorAll(".anchor-link")
+      elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+      // remove paragraph tags in rendered toc (happens from notebooks)
+      var toctags = document.querySelectorAll(".toc-entry")
+      toctags.forEach(e => (e.firstElementChild.innerText = e.firstElementChild.innerText.replace('¶', '')))
+    });
+  </script>
+
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+
+</head><body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/FastPages/">fastpages</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/FastPages/about/">About Me</a><a class="page-link" href="/FastPages/">Posts</a><a class="page-link" href="/FastPages/search/">Search</a><a class="page-link" href="/FastPages/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Missing Semester 정리글</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-03-05T00:00:00-06:00" itemprop="datePublished">
+        Mar 5, 2020
+      </time>
+    •<span class="read-time" title="Estimated read time">
+    
+    
+      7 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/FastPages/categories/#shell">shell</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/FastPages/categories/#bash">bash</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <h2 id="1-shell">1. Shell</h2>
+
+<p>리눅스의 쉘은 명령어와 프로그램을 실행할 때 사용하는 인터페이스이다.</p>
+
+<p><img src="/FastPages/images/2020-03-05-missing-semeste-정리글/shell.png" alt="" title="Shell" /></p>
+
+<p><strong>echo</strong></p>
+
+<p>리눅스 명령어 echo는 주어진 문자열을, 문자열 사이에 포함된 공백과 줄 마지막에 개행문자를 포함하여 표준출력으로 출력하는 명령어다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "Hellow Wolrd"
+&gt;&gt;&gt; Hellow World
+
+echo Hellow\ Wolrd
+&gt;&gt;&gt; Hellow World
+
+echo $HOME
+&gt;&gt;&gt; /root
+
+echo $PATH
+&gt;&gt;&gt; $PATH에 포함된 주소들을 출력
+
+which echo
+&gt;&gt;&gt; /usr/bin/echo # 사용하고 있는 echo 위치 출력
+
+</code></pre></div></div>
+
+<p><strong>pwd</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pwd
+&gt;&gt;&gt; /home # present working directory
+</code></pre></div></div>
+
+<p><strong>cd</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /roundtable # change directory
+</code></pre></div></div>
+
+<p><strong>. (dot) / .. (dot dot)</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.. # parent directory
+cd .. # /home/roundtable -&gt; /home
+
+. # current directory
+cd ./roundtable # /home -&gt; /home/roundtable
+</code></pre></div></div>
+
+<p><strong>ls</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls
+&gt;&gt;&gt; print all files in the current directory
+ls -help
+&gt;&gt;&gt; 다양한 옵션에 대한 정보를 받아볼 수 있음
+ls -l
+&gt;&gt;&gt; 파일에 대한 추가적인 정보를 얻을 수 있음
+</code></pre></div></div>
+
+<p><strong>~</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ~ # home directory
+cd ~/roundtable # cd /home/roundtable
+</code></pre></div></div>
+
+<p><strong>cd -</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd - # back to parent directory
+</code></pre></div></div>
+
+<p><strong>mv</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mv &lt;current_file&gt; &lt;new_file&gt; # rename the file or move the file in dirrent directory
+</code></pre></div></div>
+
+<p><strong>cp</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cp &lt;current_file&gt; &lt;new_file&gt; # copy
+cp -r &lt;current folder&gt; &lt;new_folder&gt;
+</code></pre></div></div>
+
+<p><strong>rm</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rm &lt;current_file&gt; # remove
+rmdir &lt;folder&gt;
+</code></pre></div></div>
+
+<p><strong>mkdir</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir &lt;new directory name&gt; # make directory
+</code></pre></div></div>
+
+<p><strong>man</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>man ls # manual page for ls
+# if you want to quik, press q
+</code></pre></div></div>
+
+<p><strong>ctrl + l</strong>: clear the terminal</p>
+
+<p><strong>Angle bracket signs</strong></p>
+
+<p>input stream, output stream이 존재한다. 이를 적절히 조절할 수 있다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># &lt; file 
+# &gt; file
+
+echo hello &gt; hello.txt # hello(print)가 hello.txt의 입력으로 들어간다.
+cat hello.txt
+&gt;&gt;&gt; hello
+
+cat &lt; hello.txt &gt; hello2.txt
+cat hello2.txt
+&gt;&gt;&gt; hello
+</code></pre></div></div>
+
+<table>
+  <tbody>
+    <tr>
+      <td>**</td>
+      <td>(pipe)**</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># file1 | file2 # make output of file1 input of file2
+# tail # 마지막 line만 출력해준다.
+
+ls -l / tail -n1
+&gt;&gt;&gt; drwxrwxr-x 11 ubuntu ubuntu 4096 Mar  4 12:55 dev # print last line
+
+curl --head --silent google.com | grep -i content-length
+</code></pre></div></div>
+
+<p><strong>tail</strong></p>
+
+<p>마지막 line만 출력해준다.</p>
+
+<p><strong>curl</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl --head --silent google.com | grep -i content-length
+</code></pre></div></div>
+
+<p><strong>sudo: root permission</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo find -L /sys/class/backlight -maxdepth 2 -name '*brightness*'
+&gt;&gt;&gt; /sys/class/backlight/thinkpad_screen/brightness
+
+cd /sys/class/backlight/thinkpad_screen
+
+sudo echo 3 &gt; brightness
+
+&gt;&gt;&gt; An error occurred while redirecting file 'brightness'
+open: Permission denied
+
+
+echo 3 | sudo tee brightness
+</code></pre></div></div>
+
+<p><strong>cat</strong>: concatenate</p>
+
+<p>파일의 내용을 출력</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat file1
+# file1의 내용 출력
+
+cat file1 file2 file3
+# file1, file2, file3 이어서 출력
+
+cat &gt; file1 # (내용을 입력하고 ctrl + d를 눌러 저장한다.) 기존 내용을 지우고
+cat &gt;&gt; file1 # (내용을 입력하고 ctrl + d를 눌러 저장한다.) 기존의 내용에 이어서
+
+cat file1 file2 &gt; file3 # file1 + file2 = file3
+</code></pre></div></div>
+
+<p><strong>cd /sys</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /sys # to access various kernel parameters
+
+total 0
+drwxr-xr-x   2 root root  0 Mar  5 08:03 block
+drwxr-xr-x  47 root root  0 Mar  3 06:53 bus
+drwxr-xr-x  69 root root  0 Mar  3 06:51 class
+drwxr-xr-x   4 root root  0 Mar  5 08:03 dev
+drwxr-xr-x  71 root root  0 Mar  3 04:43 devices
+drwxrwxrwt   2 root root 40 Mar  3 04:43 firmware
+drwxr-xr-x  12 root root  0 Mar  3 04:43 fs
+drwxr-xr-x   2 root root  0 Mar  5 08:03 hypervisor
+drwxr-xr-x  14 root root  0 Mar  5 08:03 kernel
+drwxr-xr-x 219 root root  0 Mar  5 08:03 module
+drwxr-xr-x   2 root root  0 Mar  5 08:03 power
+</code></pre></div></div>
+
+<p>shell은 단순한 argument가 아니라 일종의 프로그래밍이라고 볼 수 있다. 예를 들어서 조건문이나 반복문같은 설정을 할 수 있다.</p>
+
+<h2 id="2-shell-tools-and-scripting">2. Shell Tools and Scripting</h2>
+
+<p>’’ 하고 “” 는 유사해보이지만, 서로 다르다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>foo=bar
+echo "$foo"
+# prints bar
+echo '$foo'
+# prints $foo
+
+echo "Value is $foo"
+# prints 'Value is foo'
+
+echo 'Value is $foo'
+# prints 'Value is $foo'
+</code></pre></div></div>
+
+<p>bash는  if, case, while, for와 같은 구문을 제공한다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mcd (){
+	mkdir -p "$1"
+	cd "$1"
+}
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/home: vim mcd.sh
+/home: source mcd.sh
+/home: mcd.sh test
+
+/home/test:  # /home -&gt; mkdir /home/test -&gt; cd /home/test
+</code></pre></div></div>
+
+<ul>
+  <li>$0 - Name of the script</li>
+  <li>$1 to $9 - Arguments to the script. $1 is the first argument and so on.</li>
+  <li>$@ - All the arguments</li>
+  <li>$# - Number of arguments</li>
+  <li>$? - Return code of the previous command</li>
+  <li>$$ - Process Identification number for the current script</li>
+  <li>!! - Entire last command, including arguments. A common pattern is to execute a command only for it to fail due to missing permissions, then you can quickly execute it with sudo by doing sudo !!</li>
+  <li>$_ - Last argument from the last command. If you are in an interactive shell, you can also quickly get this value by typing Esc followed by .</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "Hello"
+&gt;&gt;&gt; Hello
+
+echo $?
+&gt;&gt;&gt; 0 # No Error
+
+grep foobar mcd.sh
+echo $?
+&gt;&gt;&gt; 1 # Error
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># || or
+false || echo "Oops, fail" 
+# Oops, fail
+
+
+true || echo "Will not be printed"
+#
+
+# &amp;&amp; and
+true &amp;&amp; echo "Things went well"
+# Things went well
+
+false &amp;&amp; echo "Will not be printed"
+#
+
+false ; echo "This will always run"
+# This will always run
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#!/bin/bash
+
+echo "Starting program at $(date)" # Date will be substituted
+
+echo "Running program $0 with $# arguments with pid $$"
+
+for file in $@; do
+    grep foobar $file &gt; /dev/null 2&gt; /dev/null
+    # When pattern is not found, grep has exit status 1
+    # We redirect STDOUT and STDERR to a null register since we do not care about them
+    if [[ $? -ne 0 ]]; then
+        echo "File $file does not have any foobar, adding one"
+        echo "# foobar" &gt;&gt; "$file"
+    fi
+done
+</code></pre></div></div>
+
+<p><strong>?</strong> : one of character
+***** : any amount of characters</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+convert image.{png,jpg}
+# Will expand to
+convert image.png image.jpg
+
+cp /path/to/project/{foo,bar,baz}.sh /newpath
+# Will expand to
+cp /path/to/project/foo.sh /path/to/project/bar.sh /path/to/project/baz.sh /newpath
+
+# Globbing techniques can also be combined
+mv *{.py,.sh} folder
+# Will move all *.py and *.sh files
+
+
+mkdir foo bar
+# This creates files foo/a, foo/b, ... foo/h, bar/a, bar/b, ... bar/h
+touch {foo,bar}/{a..j}
+touch foo/x bar/y
+# Show differences between files in foo and bar
+diff &lt;(ls foo) &lt;(ls bar)
+# Outputs
+# &lt; x
+# ---
+# &gt; y
+</code></pre></div></div>
+
+<p><strong>in python</strong></p>
+
+<p><strong>Shebang</strong>은 (사전에 검색해보면) 쉬뱅이라고 읽습니다. 쉬뱅은 <code class="language-plaintext highlighter-rouge">#!</code>로 시작하는 문자열이며 스크립트의 맨 첫번째 라인에 있습니다. 쉬뱅은 유닉스 계열 운영체제에서 스크립트가 실행될 때, 파이썬, 배쉬쉘 등 어떤 인터프리터에 의해서 동작이 되는지 알려줍니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#!/usr/local/bin/python
+import sys
+for arg in reversed(sys.argv[1:]):
+    print(arg)
+</code></pre></div></div>
+
+<p><strong>shellcheck</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ shellcheck test.sh
+
+In test.sh line 2:
+T0=`date +%s`
+   ^-- SC2006: Use $(..) instead of legacy `..`.
+
+In test.sh line 4:
+T1=`date +%s`
+   ^-- SC2006: Use $(..) instead of legacy `..`.
+
+In test.sh line 5:
+ELAPSED_TIME=$((T1-T0))
+^-- SC2034: ELAPSED_TIME appears unused. Verify it or export it.
+
+In test.sh line 7:
+echo "START_TIME: " ${T0}
+                    ^-- SC2086: Double quote to prevent globbing and word splitting.
+
+In test.sh line 8:
+echo "END_TIME: " ${T1}
+                  ^-- SC2086: Double quote to prevent globbing and word splitting.
+
+In test.sh line 9:
+echo "ELAPSED_TIME: ${ELAPSES_TIME} sec"
+                    ^-- SC2153: Possible misspelling: ELAPSES_TIME may not be assigned, but ELAPSED_TIME is.
+</code></pre></div></div>
+
+<p><strong>export</strong></p>
+
+<p>환경변수를 저장하는 역할, 터미널이 꺼지면 사라진다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi ~/.bashrc # 해당 주소에서 작업을 하게되면 영구적으로 남는다.
+
+export water="삼다수"
+export TEMP_DIR=/tmp
+export BASE_DIR=$TEMP_DIR/backup
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># gpu idx를 지정할 때 사용할 수도 있다.
+
+export CUDA_VISIBLE_DEVICES = 1
+</code></pre></div></div>
+
+<p><strong>Finding how to use commands</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls -h
+ls --help
+
+man ls
+</code></pre></div></div>
+
+<ul>
+  <li>manpage</li>
+  <li><a href="https://tldr.sh/">TLDR pages</a>: 간단하게 찾아볼 수 있음</li>
+</ul>
+
+<p><strong>Finding files</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Find all directories named src
+find . -name src -type d
+# Find all python files that have a folder named test in their path
+find . -path '**/test/**/*.py' -type f
+# Find all files modified in the last day
+find . -mtime -1
+# Find all zip files with size in range 500k to 10M
+find . -size +500k -size -10M -name '*.tar.gz'
+
+# Delete all files with .tmp extension
+find . -name '*.tmp' -exec rm {} \;
+# Find all PNG files and convert them to JPG
+find . -name '*.png' -exec convert {} {.}.jpg \;
+</code></pre></div></div>
+
+<p><strong>Finding code</strong></p>
+
+<p><a href="http://man7.org/linux/man-pages/man1/grep.1.html"><strong>grep</strong></a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>grep foobar mcd.sh
+grep -R foobar . # source code 검색도 가능
+</code></pre></div></div>
+
+<p><a href="https://github.com/BurntSushi/ripgrep"><strong>ripgrep</strong></a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Find all python files where I used the requests library
+rg -t py 'import requests'
+# Find all files (including hidden files) without a shebang line
+rg -u --files-without-match "^#!"
+# Find all matches of foo and print the following 5 lines
+rg foo -A 5
+# Print statistics of matches (# of matched lines and files )
+rg --stats PATTERN
+</code></pre></div></div>
+
+<p><strong>Finding shell commands</strong></p>
+
+<p><strong>history</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>history
+
+ 1 cd .\OneDrive\sourceCode\CPPS\
+ 2 cd ..
+ 3 cd .\EEN-with-Keras\
+
+</code></pre></div></div>
+
+<p><strong>Ctrl + R</strong> : history 추적, 유용</p>
+
+<p><strong>zsh</strong>: 유용한 bash 도구</p>
+
+<p><strong>Directory Naviation</strong></p>
+
+<ul>
+  <li>ls -R</li>
+  <li><a href="https://linux.die.net/man/1/tree">tree</a></li>
+  <li><a href="https://github.com/Canop/broot">broot</a></li>
+  <li>nnn</li>
+  <li>ranger</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls -R
+tree 
+</code></pre></div></div>
+
+<ul>
+  <li>Reference: https://missing.csail.mit.edu/2020/?fbclid=IwAR2gQe5LToKuqVUwbfegqSOk6BnIqscbnqjK0e3js64EceMswNqW0KgeSEo</li>
+</ul>
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="RRoundTable/FastPages"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/FastPages/shell/bash/2020/03/05/missing-semeste-%EC%A0%95%EB%A6%AC%EA%B8%80.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/FastPages/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">fastpages</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">fastpages</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list">
+  <li><a href="https://github.com/RRoundTable"><svg class="social svg-icon"><use xlink:href="/FastPages/assets/minima-social-icons.svg#github"></use></svg> <span class="username">RRoundTable</span></a></li><li><a href="https://www.twitter.com/fastdotai"><svg class="social svg-icon"><use xlink:href="/FastPages/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">fastdotai</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
