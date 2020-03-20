@@ -2,6 +2,12 @@
 title: "Image segmentation에서 사용되는 loss"
 ---
 
+
+
+# "Image segmentation에서 사용되는 loss"
+
+
+
 ## Basic: Cross Entropy
 
 일반적으로 classification문제에서 사용되는 term이다.

@@ -1,9 +1,16 @@
 ---
 title: "mesh tensorflow 정리글"
-date: 2019-07-30
+toc: true
+branch: master
+badges: true
+comments: true
 categories: ['deeplearning']
-tags: ['deeplearning', 'engineering']
+metadata_key1: mesh tensorflow
 ---
+
+
+
+# mesh tensorflow 정리글
 
 ## 요약
 
@@ -82,29 +89,30 @@ Model-Paralleism같은 경우 위와 다른  dimension을 분리한다. 예를 �
 
 ## Case Study 
 
-<img src="https://user-images.githubusercontent.com/27891090/62110969-8847a980-b2ea-11e9-9919-c216afaef8f0.png" style="width:70%;>
+![]({{ site.baseurl }}/images/2019-07-30-mesh-tensorflow-정리글/case0.png )
+
 
 위의 이미지는 간단한 뉴럴네트워크를 batch dimension기준으로 분리한 것이다. - data parreliesm
 
-<img src="https://user-images.githubusercontent.com/27891090/62111135-e70d2300-b2ea-11e9-97fd-6c3e15c6d395.png"  style="width:70%;">
+![]({{ site.baseurl }}/images/2019-07-30-mesh-tensorflow-정리글/case1.png )
+
 위의 이미지는 hidden layer dimension을 기준으로 분리한 것이다.
 
-<img src="https://user-images.githubusercontent.com/27891090/62111660-00fb3580-b2ec-11e9-924d-49dd49652b6e.png"  style="width: 70%;">
+![]({{ site.baseurl }}/images/2019-07-30-mesh-tensorflow-정리글/case2.png )
 위의 이미지는 data dimension을 기준으로 분리한 것이다.
 
 
 
 아래의 이미지는 data-parallelism과 Model parallelism을 함께 구성한 것이다.
 
-<img src="https://user-images.githubusercontent.com/27891090/62111707-25efa880-b2ec-11e9-9f89-2a6efb23cda8.png" style="width: 70%;">
-
+![]({{ site.baseurl }}/images/2019-07-30-mesh-tensorflow-정리글/case3.png )
 
 
 
 
 ### Layout for Transformer Model
 
-<img src="https://user-images.githubusercontent.com/27891090/62111937-a31b1d80-b2ec-11e9-95e5-2ee93cd3a49d.png" style="width: 70%;">
+![]({{ site.baseurl }}/images/2019-07-30-mesh-tensorflow-정리글/case4.png )
 
 ### Picking a Good Layout
 

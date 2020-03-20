@@ -48,14 +48,15 @@ LogSumExp는 convex function인데 따라서 loss 함수에 적용하기에 이�
 
 아래는 softmax의 수식이다.
 
-`$$
+$$
 \frac{e^{x_j}}{\sum_{i=1}^ne^{x_j}}
-$$`
+$$
 
 softmax는 특정 수를 non-linear한 방식으로 probability로 변환하는 것으로 해석할 수 있다. 이는 위의 LogSumExp pattern을 나타내고 있다.
-`$$
+
+$$
 \begin{align}\log\left(\frac{e^{x_j}}{\sum_{i=1}^{n} e^{x_i}}\right) &= \log(e^{x_j}) \:-\: \log\left(\sum_{i=1}^{n} e^{x_i}\right) \\ &= x_j \:-\: \log\left(\sum_{i=1}^{n} e^{x_i}\right) & (1)\end{align}
-$$`
+$$
 
 
 지수의 곱셈은 다음과 같이 전개된다.
@@ -67,7 +68,8 @@ $$
 \log(a \cdot b) = \log(a) + \log(b)
 $$
 위의 두 공식을 이용하면 LogSumExp의 공식은 아래와 같이 전개된다.
-`$$
+
+$$
 \begin{align} 
 LogSumExp(x_1…x_n) &= \log\big( \sum_{i=1}^{n} e^{x_i} \big) \\ 
  &= \log\big( \sum_{i=1}^{n} e^{x_i – c}e^{c} \big) \\ 
@@ -75,19 +77,19 @@ LogSumExp(x_1…x_n) &= \log\big( \sum_{i=1}^{n} e^{x_i} \big) \\
  &= \log\big( \sum_{i=1}^{n} e^{x_i – c} \big) + \log(e^{c}) \\ 
  &= \log\big( \sum_{i=1}^{n} e^{x_i – c} \big) + c & (2)\\ 
 \end{align}
-$$`
+$$
 
 
 그렇다면, softmax에 적용해보자. 위에서 log softmax는 다음과 같이 전개되었다.
 
 
-`$$
+$$
 \begin{align} 
 \log(Softmax(x_j, x_1…x_n)) &= x_j \:-\: LogSumExp(x_1…x_n) \\ 
 &= x_j \:-\: \log\left(\sum_{i=1}^{n} e^{x_i}\right)\\
  &= x_j \:-\: \log\big( \sum_{i=1}^{n} e^{x_i – c} \big) \:-\: c 
 \end{align}
-$$`
+$$
 
 
 

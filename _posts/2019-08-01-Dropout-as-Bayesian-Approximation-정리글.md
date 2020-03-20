@@ -1,9 +1,17 @@
 ---
 title: "Dropout as Bayesian Approximation 정리글"
-date: 2019-08-01
-tags: ['deeplearning']
-categories: ['deeplearning']
+toc: true
+branch: master
+badges: true
+comments: true
+categories: ['deeplearning', 'uncertainty']
+metadata_key1: dropout
 ---
+
+
+
+
+# Dropout as Bayesian Approximation 정리글
 
 
 
@@ -40,62 +48,68 @@ categories: ['deeplearning']
 #### Dropout objective는 approximation distribution과 deep gaussian process의 posterior간의 Kl-divergence를 감소시킨다.
 
 우선 Dropout objective를 확인해보자. ( add regularization)
-`$$
+
+$$
 \mathcal{L}_{dropout} = \frac{1}{N}\sum_{i=1}^N E(y_i, \hat{y}_i) + \lambda\sum_{i=1}^N (\rVert W_i \rVert_2 ^ 2+ \rVert b \rVert_2 ^ 2)
-$$`
+$$
+
 dropout은 결국 모든 input point와 각 layer의 모든 network에 binary distribution을 적용한 것으로 해석할 수있다. 참고로 output에는 적용하지 않는다. 이는 아래의 이미지 처럼 적용될 수 있다. 
 
-<img src="https://user-images.githubusercontent.com/27891090/62261081-13da4b00-b44f-11e9-8293-c022acbd574f.png" style="width: 50%">
-
+![]({{ site.baseurl }}/images/2019-08-01-Dropout-as-Bayesian-Approximation-정리글/dropout.png "Dropout")
 
 
 GP 모델에서 predictive probability는 아래와 같이 전개된다. ($x^*$ is unseen)
-`$$
-p(y|x^*, X, Y) = \int p(y|x^*, w) p(w|X, Y) dw
-$$`
 
-`$$
-p(y|x, w) = \mathcal{N}(y; \hat{y}(x, w), \tau^{-1}I_D)
-$$`
+$$
+p(y\mid x^*, X, Y) = \int p(y\mid x^*, w) p(w\mid X, Y) dw
+$$
 
-`$$
+$$
+p(y\mid x, w) = \mathcal{N}(y; \hat{y}(x, w), \tau^{-1}I_D)
+$$
+
+$$
 \hat{y}(x, w= \{ W_1, \cdots, W_L\}) = \sqrt\frac{1}{K_L}W_L\sigma( \cdots \sqrt\frac{1}{K_1}W_2 \sigma(W_1x + m_1) \cdots)
-$$`
+$$
 
-`여기서 posterior $p(w|X, Y)$가 untractable한데 이를 해결하기 위해서 variational inference를 사용하며, simple distribution으로 $q(w)$를 가정한다. 이때 $q(w)$는 matrix형태를 가지고 있으며 random하게 0으로 값이 지정된다. (여기서 $K$ 는 matrix dimension을 의미한다. $W_i$ 의 dim은 $K_i * K_{i-1}$)`
+여기서 posterior $p(w\ mid X, Y)$가 untractable한데 이를 해결하기 위해서 variational inference를 사용하며, simple distribution으로 $q(w)$를 가정한다. 이때 $q(w)$는 matrix형태를 가지고 있으며 random하게 0으로 값이 지정된다. (여기서 $K$ 는 matrix dimension을 의미한다. $W_i$ 의 dim은 $K_i * K_{i-1}$)
 
 
-`$$
+$$
 W_i = M_i \cdot diag([z_{i, j}]_{j=1}^{K_i})
-$$`
+$$
 
-`$$
+$$
 Z_{i, j} = Bernoulli(p_i)  \ for \ i = 1, \cdots, L, \ j= 1, \cdots, K_{i-1}
-$$`
+$$
 
-여기서 `$z_{i, j}$`가 0이라면, layer $i - 1$ 의 unit $j$가 drop된다는 것을 의미한다. 위의 이미지에서는 layer에 dropout을 설정한 것을 시각화 한것이라면 위의 수식은 parameter자체에 dropout을 걸었다는 차이가 있다. (그리고 BNN을 적용하기 위해서는 위의 수식처럼 parameter 자체에 dropout을 설정하는 것이 타당하다고 생각한다.)
+여기서 $z_{i, j}$가 0이라면, layer $i - 1$ 의 unit $j$가 drop된다는 것을 의미한다. 위의 이미지에서는 layer에 dropout을 설정한 것을 시각화 한것이라면 위의 수식은 parameter자체에 dropout을 걸었다는 차이가 있다. (그리고 BNN을 적용하기 위해서는 위의 수식처럼 parameter 자체에 dropout을 설정하는 것이 타당하다고 생각한다.)
 
 variational distribution $q(w)$는 highly multi modal한 특징을 가지고 있다. 왜냐하면, 각 layer에 대한 Bernoulli distribution의 output값이 layer의 크기 만큼 나와야 하기 때문이다.
 
 
 
 $q(w)$를 바탕으로 objective를 도출하면 아래와 같다. (lower bound: [variational inference](https://en.wikipedia.org/wiki/Variational_Bayesian_methods) 참고) 
+
 $$
-- \int q(w) \log p(Y|X, w) dw +KL(q(w) \rVert p(w)).
+- \int q(w) \log p(Y \mid X, w) dw +KL(q(w) \rVert p(w)).
 $$
 
 - $p(w)$ 는 prior distribution을 의미한다.
 
   
 
-첫번째 term `$- \int q(w) \log p(Y|X, w) dw$`은 아래처럼 바꿀 수 있다.
-`$$
-- \int q(w) \log p(Y|X, w) dw \approx- \sum_{n=1} ^N \int q(w) \log p(y_n|x_n, w) dw
-$$`
+첫번째 term $- \int q(w) \log p(Y\mid X, w) dw$은 아래처럼 바꿀 수 있다.
+
+$$
+- \int q(w) \log p(Y\mid X, w) dw \approx- \sum_{n=1} ^N \int q(w) \log p(y_n \mid x_n, w) dw
+$$
+
 두번째 term $ KL(q(w) \rVert p(w))$에서는 아래와 같은 식을 얻을 수 있다.
-`$$
+
+$$
 \sum_{i=1}^ L(\frac{p_il^2}{2}\rVert M_i\rVert_2^2 + \frac{l^2}{2}\rVert m_i \rVert_2^2)
-$$`
+$$
 
 - $p_i$ bernoulli 분포의 확률값
 - $l$ 은 prior length scale 값: appendix section 4.2
@@ -110,9 +124,11 @@ $$`
 
 
 model precision $\tau$를 고려하면, 아래와 같이 scale한 값이 도출된다.
-`$$
-\mathcal{L}_{GP-MC} \propto \frac {1}{N}\sum_{i=1}^N\frac{- \log p (y_n | x_n, \hat{w_n})}{\tau} + \sum_{i=1}^{L}(\frac{p_i l^2}{2\tau N}\rVert M_i\rVert_2^2 + \frac{l^2}{2\tau N}\rVert m_i \rVert_2^2)
-$$`
+
+$$
+\mathcal{L}_{GP-MC} \propto \frac {1}{N}\sum_{i=1}^N\frac{- \log p (y_n \mid  x_n, \hat{w_n})}{\tau} + \sum_{i=1}^{L}(\frac{p_i l^2}{2\tau N}\rVert M_i\rVert_2^2 + \frac{l^2}{2\tau N}\rVert m_i \rVert_2^2)
+$$
+
 여기서 $\tau$와 length-scale $l$은 hyperparameter이다. lengh-scale은 function frequency를 가정하는 것으로 만약 $l$을 강하게 준다면, regularization 효과는 더 강해진다.
 
 
@@ -135,67 +151,71 @@ $$
 
 
 predictive distributioin은 아래와 같이 주어진다.
-`$$
-q(y^*|x^*) = \int p(y^*|x^*, w) q(w) dw
-$$`
 
-- `$w = \{  W_i\}_{i=1} ^ L$`
+$$
+q(y^*\mid x^*) = \int p(y^*\mid x^*, w) q(w) dw
+$$
+
+- $w = \{  W_i\}_{i=1} ^ L$
 - unseen input data: $x^*$
 - prediction from unseen input data: $y^*$
 
 
 
-dropout을 이용하여, uncertainty를 estimate를 하기 위해서는 bernoulli distribution` $\{z_1^t, \cdots, z_L^t\}_{t=1}^T$`를  sampling해주면 된다. 이 식에서는 T번의 sampling을 진행한 것이다. 
+dropout을 이용하여, uncertainty를 estimate를 하기 위해서는 bernoulli distribution $\{z_1^t, \cdots, z_L^t\}_{t=1}^T$를  sampling해주면 된다. 이 식에서는 T번의 sampling을 진행한 것이다. 
 
 sampling한 분포를 바탕으로 predictive mean값을 근사할 수 있다. 이를 MC-dropout이라고 부른다.
-`$$
-E_{q(y^*|x^*)}(y^*) = \frac{1}{T}\sum_{i=1}^T \hat{y}^*(x^*, W_1^t, \cdots, W_L^t)
+
 $$
-다음은` raw moment를 근사하는 과정이다.
-`$$
-E_{q(y^*|x^*)}((y^*) ^T y^*) \approx \tau^{-1}I_D +\frac{1}{T}\sum_{i=1}^T \hat{y}^*(x^*, W_1^t, \cdots, W_L^t) ^ T \hat{y}^*(x^*, W_1^t, \cdots, W_L^t)
-$$`
+E_{q(y^* \mid x^*)}(y^*) = \frac{1}{T}\sum_{i=1}^T \hat{y}^*(x^*, W_1^t, \cdots, W_L^t)
+$$
+
+다음은 raw moment를 근사하는 과정이다.
+
+$$
+E_{q(y^* \mid x^*)}((y^*) ^T y^*) \approx \tau^{-1}I_D +\frac{1}{T}\sum_{i=1}^T \hat{y}^*(x^*, W_1^t, \cdots, W_L^t) ^ T \hat{y}^*(x^*, W_1^t, \cdots, W_L^t)
+$$
 
 
 predictive variance는 다음과 같이 도출된다.
 
-`$$
-Var_{q(y^*|x^*)}(y^*) \approx  \tau^{-1}I_D + \frac{1}{T}\sum_{i=1}^T \hat{y}^*(x^*, W_1^t, \cdots, W_L^t) ^ T \hat{y}^*(x^*, W_1^t, \cdots, W_L^t) -E_{q(y^*|x^*)}(y^*) ^T E_{q(y^*|x^*)}(y^*)
-$$`
+$$
+Var_{q(y^* \mid x^*)}(y^*) \approx  \tau^{-1}I_D + \frac{1}{T}\sum_{i=1}^T \hat{y}^*(x^*, W_1^t, \cdots, W_L^t) ^ T \hat{y}^*(x^*, W_1^t, \cdots, W_L^t) -E_{q(y^* \mid x^*)}(y^*) ^T E_{q(y^* \mid x^*)}(y^*)
+$$
 
-참고로 $y^*$는 row vector를 의미하며` $ \hat{y}^*(x^*, W_1^t, \cdots, W_L^t) ^ T \hat{y}^*(x^*, W_1^t, \cdots, W_L^t)$ `연산은 outer product이다.
+참고로 $y^*$는 row vector를 의미하며 $ \hat{y}^*(x^*, W_1^t, \cdots, W_L^t) ^ T \hat{y}^*(x^*, W_1^t, \cdots, W_L^t)$ 연산은 outer product이다.
 
 
 
 weight-decay 값 $\lambda$와 length scale $l$이 주어지면 아래의 식으로 **model precision $\tau$** 를 도출할 수 있다.
 
-`$$
+$$
 \tau = \frac{l^2 p_1}{2N \lambda_1}
-$$`
+$$
 
 regression task에서 다음과 같이 predictive log-likelihood를 monte-carlo integration을 통해서 근사할 수 있다. 이를 통해서 model이 mean과 얼마나 일치하는지 uncertainty가 어떤지 알 수 있다.
 
 with $w_t \sim q(w)$
-`$$
+$$
 \begin{align}
-\log p(y^* |x^*, X, Y) &= \log \int p(y^*|x^*, w) p(w|X, Y) dw\\
-& \approx \log \int p(y^*|x^*, w) q(w) dw \\
-&\approx \log\frac{1}{T} \sum_{t=1}^{T}  p(y^*|x^*, w_t)
+\log p(y^* \mid x^*, X, Y) &= \log \int p(y^* \mid x^*, w) p(w \midX, Y) dw\\
+& \approx \log \int p(y^* \mid x^*, w) q(w) dw \\
+&\approx \log\frac{1}{T} \sum_{t=1}^{T}  p(y^* \mid x^*, w_t)
 \end{align}
-$$`
+$$
 
 At regression task,
 
-`$$
-\log p(y^*|x^*, X, Y) \approx \mathrm{logsumexp} ( -\frac{1}{2}\tau\rVert y - \hat{y}\rVert^2) -\log T - \frac{1}{2}2\pi - \frac{1}{2}\log \tau ^{-1}
-$$`
+$$
+\log p(y^* \mid x^*, X, Y) \approx \mathrm{logsumexp} ( -\frac{1}{2}\tau\rVert y - \hat{y}\rVert^2) -\log T - \frac{1}{2}2\pi - \frac{1}{2}\log \tau ^{-1}
+$$
 
 - $y$  : predictive mean
 - $\hat{y}$ : sample 
 
 
 
-predictive distribution` $q(y^*|x^*)$`은 highly multi modal이기 때문에 그 특성을 정확히 알 수 없다. 이는 weight element에 bi-modal한 distribution을 설정하였고 이들의 joint distribution은 multi modal이기 때문이다.
+predictive distribution $q(y^* \mid x^*)$은 highly multi modal이기 때문에 그 특성을 정확히 알 수 없다. 이는 weight element에 bi-modal한 distribution을 설정하였고 이들의 joint distribution은 multi modal이기 때문이다.
 
 하지만, 구현하기 매우 싶다.  dropout을 수정하지 않고 사용하며, samples을 모아서 uncertainty를 측정할 수 있다. 또한 forward pass는 기존의 standard 한 모델과 차이가 나지 않는다.
 
