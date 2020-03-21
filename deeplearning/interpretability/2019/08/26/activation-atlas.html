@@ -3,19 +3,19 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="shortcut icon" type="image/x-icon" href="/FastPages/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Introduction | RoundTable</title>
+<title>Activation atlas 정리글 | RoundTable</title>
 <meta name="generator" content="Jekyll v3.8.5" />
-<meta property="og:title" content="Introduction" />
+<meta property="og:title" content="Activation atlas 정리글" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="What have these networks learned that allows them to classify images so well?" />
-<meta property="og:description" content="What have these networks learned that allows them to classify images so well?" />
-<link rel="canonical" href="https://rroundtable.github.io/FastPages/2019/08/26/activation-atlas.html" />
-<meta property="og:url" content="https://rroundtable.github.io/FastPages/2019/08/26/activation-atlas.html" />
+<meta name="description" content="Introduction" />
+<meta property="og:description" content="Introduction" />
+<link rel="canonical" href="https://rroundtable.github.io/FastPages/deeplearning/interpretability/2019/08/26/activation-atlas.html" />
+<meta property="og:url" content="https://rroundtable.github.io/FastPages/deeplearning/interpretability/2019/08/26/activation-atlas.html" />
 <meta property="og:site_name" content="RoundTable" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2019-08-26T00:00:00-05:00" />
 <script type="application/ld+json">
-{"mainEntityOfPage":{"@type":"WebPage","@id":"https://rroundtable.github.io/FastPages/2019/08/26/activation-atlas.html"},"description":"What have these networks learned that allows them to classify images so well?","@type":"BlogPosting","url":"https://rroundtable.github.io/FastPages/2019/08/26/activation-atlas.html","headline":"Introduction","dateModified":"2019-08-26T00:00:00-05:00","datePublished":"2019-08-26T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://rroundtable.github.io/FastPages/deeplearning/interpretability/2019/08/26/activation-atlas.html"},"description":"Introduction","@type":"BlogPosting","url":"https://rroundtable.github.io/FastPages/deeplearning/interpretability/2019/08/26/activation-atlas.html","headline":"Activation atlas 정리글","dateModified":"2019-08-26T00:00:00-05:00","datePublished":"2019-08-26T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
   <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -94,7 +94,7 @@
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Introduction</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2019-08-26T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Activation atlas 정리글</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2019-08-26T00:00:00-05:00" itemprop="datePublished">
         Aug 26, 2019
       </time>
     •<span class="read-time" title="Estimated read time">
@@ -105,17 +105,47 @@
 </span></p>
 
     
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/FastPages/categories/#deeplearning">deeplearning</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/FastPages/categories/#interpretability">interpretability</a>
+        
+      
+      </p>
+    
 
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>What have these networks learned that allows them to classify images so well?</p>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
+<li class="toc-entry toc-h2"><a href="#looking-at-single-images">Looking at single images</a></li>
+<li class="toc-entry toc-h2"><a href="#aggregating-multiple-images">Aggregating Multiple Images</a></li>
+<li class="toc-entry toc-h2"><a href="#looking-at-multiple-layers">Looking at Multiple Layers</a></li>
+<li class="toc-entry toc-h2"><a href="#focusing-on-a-single-classification">Focusing on a Single Classification</a></li>
+<li class="toc-entry toc-h2"><a href="#further-isolating-classes">Further Isolating Classes</a></li>
+<li class="toc-entry toc-h2"><a href="#conclusion">Conclusion</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#surfacing-inner-properties-of-models">Surfacing Inner Properties of Models</a></li>
+<li class="toc-entry toc-h3"><a href="#new-interfaces">New interfaces</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#reference">reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><h2 id="introduction">
+<a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+
+<p>What have these networks learned that allows them to classify images so well?</p>
 
 <p>네트워크가 classification을 잘하는 이유를 찾기 위해서 다음과 같은 시도를 하였다.</p>
 
 <p>기본적으로 네트워크를 시각적으로 분석할려고 노력했다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63659574-0c5b5700-c7ed-11e9-9f00-d9a8b5274b1b.png" style="width: 70%" /></p>
+<p><img src="/FastPages/images/2019-08-26-activation%20atlas/figure1.png" alt="" title="Figure1"></p>
 
 <ul>
   <li>
@@ -146,8 +176,10 @@
 <ul>
   <li>
     <p><a href="https://cs.stanford.edu/people/karpathy/cnnembed/">CNN code visualization</a></p>
-
-    <p><img src="https://cs.stanford.edu/people/karpathy/cnnembed/cnn_embed_1k_icon.jpg" style="width: 40%" /></p>
+  </li>
+  <li>
+  <li>
+    <p><img src="/FastPages/images/2019-08-26-activation%20atlas/tsne.jpg" alt="" title="t-sne"></p>
 
     <p>t-SNE 기반의 시각화 방법이다. 간략히 설명하면, 각 input tensor 혹은 activation value에 대해서 t-SNE로 mapping 시킬 좌표를 구하고 해당 좌표에 위와 같이 이미지를 시각화 하는 것이다.</p>
   </li>
@@ -162,7 +194,8 @@
   <li>data distribution에 영향을 받는다는 단점 또한 가지고 있다.</li>
 </ul>
 
-<h2 id="looking-at-single-images">Looking at single images</h2>
+<h2 id="looking-at-single-images">
+<a class="anchor" href="#looking-at-single-images" aria-hidden="true"><span class="octicon octicon-link"></span></a>Looking at single images</h2>
 
 <p>activation atlas를 살펴보기전에 activation vector를 시각화하는 <a href="https://distill.pub/2018/building-blocks/">spatial activation</a>부터 살펴볼 것이다. 사용할 모델은 InceptionV1이이며, 시각화 과정은 다음과 같다.</p>
 
@@ -179,15 +212,16 @@
 
 <p>InceptionV1은 convolution layers로 이루어져 있으므로, 각 layer마다 복수의 activation vector가 존재한다. (Filter의 수만큼) 또한 아래의 이미지 처럼 하나의 뉴런이 각 patch를 이동하면서 activation vector를 생성한다. (Parameter-sharing)</p>
 
-<p><img src="https://taewanmerepo.github.io/2018/01/cnn/filter.jpg" style="width: 30%" /></p>
+<p><img src="/FastPages/images/2019-08-26-activation%20atlas/filter.jpg" alt="" title="CNN filter"></p>
 
 <p>그러므로, network에 input image를 넣으면 하나의 뉴런은 많은 수의 evaluation을 받는다. 우리는 이를 각 뉴런이 각 patch에 대해서 얼마나 활성화됐는지 평가할 수 있다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63660761-ed5fc380-c7f2-11e9-8481-d680187ecfcf.png" style="width: 70%" /></p>
+<p><img src="/FastPages/images/2019-08-26-activation%20atlas/figure2.png" alt="" title="Figure2"></p>
 
-<p><img src="https://distill.pub/2019/activation-atlas/assets/images/dogcat-grid.jpg" /></p>
+<p><img src="/FastPages/images/2019-08-26-activation%20atlas/figure3.jpg" alt="" title="Figure3"></p>
 
-<h2 id="aggregating-multiple-images">Aggregating Multiple Images</h2>
+<h2 id="aggregating-multiple-images">
+<a class="anchor" href="#aggregating-multiple-images" aria-hidden="true"><span class="octicon octicon-link"></span></a>Aggregating Multiple Images</h2>
 
 <p>위의 방법론은 single image에 대해서만 접근한 것이다. 하지만, global view를 얻고 싶다면 어떻게 해야할까?</p>
 
@@ -197,7 +231,7 @@
 
 <p>이렇게 수집된 vector는 high-dimension(512 dim)의 성격을 가진다. 이를 dimensionality reduction방법론을 적용해서 2차원으로 mapping 하면 아래의 이미지처럼 나타나게 된다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63661257-b8547080-c7f4-11e9-9ee5-972d32716965.png" style="width: 60%" /></p>
+<p><img src="/FastPages/images/2019-08-26-activation%20atlas/figure4.jpg" alt="" title="Figure4"></p>
 
 <p>Feature visualization을 적용할 때, regularization을 사용하였다.(ex: <a href="https://distill.pub/2017/feature-visualization/#regularizer-playground-robust">transformation robustness</a>)</p>
 
@@ -213,7 +247,7 @@
 <blockquote>
   <p>cosine similarity
 <script type="math/tex">similarity = \cos(\theta)= \frac{A\cdot B}{\rVert A \rVert \rVert B \rVert}</script>
-<img src="https://www.oreilly.com/library/view/statistics-for-machine/9781788295758/assets/2b4a7a82-ad4c-4b2a-b808-e423a334de6f.png" style="width: 50%" /></p>
+<img src="/FastPages/images/2019-08-26-activation%20atlas/similarity.png" alt="" title="Similarity"></p>
 </blockquote>
 
 <p>각 activation vector마다 attribution vector를 구할 수 있다. attribution vector란, 각 calss에 대한 항목이 있으며 각 class의 logit에 영향을 받은 activation vector의 값을 근사한다. attribution vector는 주변 contex에 영향을 받는다.
@@ -226,11 +260,11 @@
   <li>Code: https://colab.research.google.com/github/tensorflow/lucid/blob/master/notebooks/building-blocks/AttrSpatial.ipynb</li>
 </ul>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63746516-f7132500-c8df-11e9-9bd2-67cdc3e2892e.png" style="width: 50%" /></p>
+<p><img src="/FastPages/images/2019-08-26-activation%20atlas/figure5.png" alt="" title="Figure5"></p>
 
 <p>위에서 보이는 이미지는 오른쪽의 feature space에 상단 좌측에 위치한 average attribution을 시각화 한 것이다. 위의 이미지는 모두 조금씩 다르지만, 비슷한 류의 동물의 형상을 하고 있다. 특히, 눈, 털, 코 등의 특징을 잡아내고 있다. 주의 할 점은 앞단의 레이어에서 실행하면, 상당히 혼란스러울수 있다는 점이다. (앞단의 레이어에서는 위와 같은 특징을 못잡을 수도 있다.)</p>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63746563-1611b700-c8e0-11e9-9e52-3b39f3d1c07d.png" style="width: 50%" /></p>
+<p><img src="/FastPages/images/2019-08-26-activation%20atlas/figure6.png" alt="" title="Figure6"></p>
 
 <p>위의 이미지는 좌측 하단의 위치한 average attribution vector이다. 위의 이미지와 다르게 바다 해변의 형상을 가지고 있다.</p>
 
@@ -240,15 +274,16 @@
 
 <p>위의 두 사례를 보았을 때, 해당 activation atlas가 유의미한 2차원 좌표(semantic)를 가지고 있음을 확인할 수 있다.</p>
 
-<h2 id="looking-at-multiple-layers">Looking at Multiple Layers</h2>
+<h2 id="looking-at-multiple-layers">
+<a class="anchor" href="#looking-at-multiple-layers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Looking at Multiple Layers</h2>
 
 <p>위에서는 하나의 레이어에서 다른 object가 어떻게 시각화되는지 확인하였다면, 이번 세션에서는 유사한 object에 대해서 서로 다른 layer에서 어떻게 나타타는지 알아볼 것이다.</p>
 
 <p>사용할 레이어는 다음과 같다.(강조된 부분)</p>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63747602-7ace1100-c8e2-11e9-8783-dd9222cb1008.png" style="width: 50%" /></p>
+<p><img src="/FastPages/images/2019-08-26-activation%20atlas/figure7.png" alt="" title="Figure7"></p>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63747623-87526980-c8e2-11e9-8a3d-15cbc80a8812.png" style="width: 70%" /></p>
+<p><img src="/FastPages/images/2019-08-26-activation%20atlas/figure8.png" alt="" title="Figure8"></p>
 
 <p>위의 이미지는 cabbage class를 시각화한 것이다. 왼쪽에서 오른쪽으로 갈 수록 더 cabbage처럼 구체적이고 복잡해지는 것을 확인할 수 있다. 이는 해당연구에서 기대했던 바인데 이유는 다음과 같다.</p>
 
@@ -256,39 +291,41 @@
   <li>뒷 단의 레이어일수록 receptive field가 크기 때문</li>
 </ul>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63747659-9a653980-c8e2-11e9-9b0b-775754cfeb6e.png" style="width: 70%" /></p>
+<p><img src="/FastPages/images/2019-08-26-activation%20atlas/figur9.png" alt="" title="Figure9"></p>
 
 <p>위의 이미지는 sand와 water 그리고 sandbar의 이미지의 activation value를 나타낸 것이다. sandbar를 보면, 앞의 두 이미지를 합친 것과 유사해 보인다.</p>
 
-<h2 id="focusing-on-a-single-classification">Focusing on a Single Classification</h2>
+<h2 id="focusing-on-a-single-classification">
+<a class="anchor" href="#focusing-on-a-single-classification" aria-hidden="true"><span class="octicon octicon-link"></span></a>Focusing on a Single Classification</h2>
 
 <p>이제부터는 network가 classification하는 것에 대해서 살펴볼 차례이다.</p>
 
 <p>예를 들어서, network가 어떤 과정을 거쳐서 ‘fireboat’라는 class로 결정하는지 살펴볼 것이다.</p>
 
-<p><img src="https://distill.pub/2019/activation-atlas/assets/images/fireboat-01.jpg" style="width: 30%" /></p>
+<p><img src="/FastPages/images/2019-08-26-activation%20atlas/figur10.jpg" alt="" title="Figure10"></p>
 
 <p>먼저 last layer(mixed5b)를 살펴볼 것이다. 뚜렷하게 보이는 부분일수록 ‘fireboat’로 결정하는데 큰 기여를 한 activation이다. classification 전의 layer이기 때문에 ‘fireboat’와 매우 유사한 이미지들이 진하게 보인다는 것을 확인 할 수 있다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63762216-6b0ff600-c8fd-11e9-9b99-958d99722393.png" style="width: 70%" /></p>
+<p><img src="/FastPages/images/2019-08-26-activation%20atlas/figur11.png" alt="" title="Figure11"></p>
 
 <p>아래의 이미지는 mixed4d의 이미지로 여러가지 부분의 조합으로 ‘fireboat’로 인식하고 있음을 확인할 수 있다. 각 부분들은 fireboat와 유사해 보이지 않지만, 위의 fireboat사진을 보면 이렇게 인식하는 이유를 이해할 수 있다.</p>
 
 <p>fireboat를 보면 창문 + 기중기 + 물로 이루어져 있음을 알 수 있다. 해당 부분도 물, 기중기, 창문들로 이루어져 있다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63762688-38b2c880-c8fe-11e9-814c-cefa31eff0bb.png" style="width: 70%" /></p>
+<p><img src="/FastPages/images/2019-08-26-activation%20atlas/figur12.png" alt="" title="Figure12"></p>
 
 <p>이러한 특성은 ‘fireboat’와 ‘streetcar’와 비교해보면 잘 알 수 있다. (조금 유사하지만 다른 object)</p>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63763195-31d88580-c8ff-11e9-8325-5e1aa3b42f1d.png" style="width: 70%" /></p>
+<p><img src="/FastPages/images/2019-08-26-activation%20atlas/figur13.png" alt="" title="Figure13"></p>
 
 <p>해당 이미지를 보면 streetcar는 기중기나 물에서는 약한 activation을 가지고 있으나 창문과 집에 대한 activation에서는 매우 강한 activation을 가진다. 반대로 fireboat는 물과 기중기, 창문에서는 강한 activation을 가지지만 집에 대한 activation에서는 약한 activation을 가지고 있음을 확인할 수 있다.</p>
 
-<h2 id="further-isolating-classes">Further Isolating Classes</h2>
+<h2 id="further-isolating-classes">
+<a class="anchor" href="#further-isolating-classes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Further Isolating Classes</h2>
 
 <p>특정 class에 기여하는 activation만을 확인하고 싶다면, 다른 activation을 완전히 제외할 수 있다. 이를 class-specific activation이라고 한다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63764502-ebd0f100-c901-11e9-8f8e-780a55ac0f1d.png" style="width: 50%" /></p>
+<p><img src="/FastPages/images/2019-08-26-activation%20atlas/figur14.png" alt="" title="Figure14"></p>
 
 <ul>
   <li>
@@ -301,17 +338,17 @@
 
 <p>class activation atlas는 특정 class에 대해서 어떤 detector가 더 많은 기여를 했는지 명확하게 보여준다. 위의 스노쿨링 예시에서 강한 attribution만 보여주는 것이 아니라, strength가 약하더라도 해당 class에 전반적인 영향을 끼친 attribution도 보여준다. 특정 경우 우리가 보고 싶어하는 object와 매우 강하게 상관관계가 있는 object가 있다. (스노쿨러 - 물고기) 물고기는 우리가 보고 싶어하는 부분과 다른 부분이다. 따라서 적절한 filtering 방법이 필요하다</p>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63765574-4c612d80-c904-11e9-924f-e68fd1c39712.png" style="width: 100%" /></p>
+<p><img src="/FastPages/images/2019-08-26-activation%20atlas/figur15.png" alt="" title="Figure15"></p>
 
 <p>위의 이미지 다른 필터링을 적용한 것이다. 위의 설명을 참고 바란다.</p>
 
 <p>이제는 유사한 두 클레스를 비교해볼 것이다. (magnitude 기준으로)</p>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63766039-4e77bc00-c905-11e9-8e8b-21c7a8e4a172.png" /></p>
+<p><img src="/FastPages/images/2019-08-26-activation%20atlas/figur16.png" alt="" title="Figure16"></p>
 
 <p>위의 이미지를 보면 두 클레스를 구분하기 힘들것이다. 아래의 이미지를 보면 도움이 될 것이다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63766282-d067e500-c905-11e9-89f8-8bb8a300ee0c.png" style="width: 70%" /></p>
+<p><img src="/FastPages/images/2019-08-26-activation%20atlas/figur17.png" alt="" title="Figure17"></p>
 
 <blockquote>
   <p>To help make the comparison easier, we can combine the two views into one. We’ll plot the difference between the attributions of the “snorkel” and “scuba diver” horizontally, and use t-SNE  to cluster similar activations vertically.</p>
@@ -321,28 +358,31 @@
 
 <p>스노쿨링 이미지에 조금씩 기관차 이미지를 사이즈 업하여 더한 것이다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63766479-318fb880-c906-11e9-9562-d3bac82703a8.png" style="width: 70%" /></p>
+<p><img src="/FastPages/images/2019-08-26-activation%20atlas/figur18.png" alt="" title="Figure18"></p>
 
 <p>해당 이미지를 보면 조금 더 하면 스쿠버 다이버의 softmax값이 올라가나 일정수준이 넘으면 기관차로 인식함을 알 수 있다. 아마도 기관차의 스팀이 그런역할을 한 것으로 보이며 이와 같은 feature를 multi-use feature라고 칭한다.(시각적으로 유사해 보여도 서로 다른 시각적으로 다른 class에 반응)</p>
 
 <p>위와 같은 실험을 attack의 개념으로 1000여번을 진행했다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63767051-7bc56980-c907-11e9-96f4-8c7b2f55a2cc.png" style="width: 60%" /></p>
+<p><img src="/FastPages/images/2019-08-26-activation%20atlas/figur19.png" alt="" title="Figure19"></p>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63767073-867ffe80-c907-11e9-8592-8e2e0f1cf29f.png" style="width: 60%" /></p>
+<p><img src="/FastPages/images/2019-08-26-activation%20atlas/figur20.png" alt="" title="Figure20"></p>
 
-<p><img src="https://user-images.githubusercontent.com/27891090/63767088-9861a180-c907-11e9-84a2-ff25db136abd.png" style="width: 60%" /></p>
+<p><img src="/FastPages/images/2019-08-26-activation%20atlas/figur21.png" alt="" title="Figure21"></p>
 
 <p>위의 공격은 모든 클레스에 대해서 효과적인것은 아니었으나, 다섯개의 이미지에서 2개 정도로 target image로 인식하게 만들 수 있었다.</p>
 
-<h2 id="conclusion">Conclusion</h2>
+<h2 id="conclusion">
+<a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h2>
 
 <ul>
   <li>
-    <h3 id="surfacing-inner-properties-of-models">Surfacing Inner Properties of Models</h3>
+    <h3 id="surfacing-inner-properties-of-models">
+<a class="anchor" href="#surfacing-inner-properties-of-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Surfacing Inner Properties of Models</h3>
   </li>
   <li>
-    <h3 id="new-interfaces">New interfaces</h3>
+    <h3 id="new-interfaces">
+<a class="anchor" href="#new-interfaces" aria-hidden="true"><span class="octicon octicon-link"></span></a>New interfaces</h3>
 
     <ul>
       <li>using AI to augment Human intelligence: 인간지능 보조</li>
@@ -356,13 +396,14 @@
   </li>
 </ul>
 
-<h4 id="reference">reference</h4>
+<h4 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>reference</h4>
 
 <ul>
   <li>https://distill.pub/2019/activation-atlas/</li>
 </ul>
 
-  </div><a class="u-url" href="/FastPages/2019/08/26/activation-atlas.html" hidden></a>
+  </div><a class="u-url" href="/FastPages/deeplearning/interpretability/2019/08/26/activation-atlas.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
