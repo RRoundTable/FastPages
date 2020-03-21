@@ -1,8 +1,17 @@
 ---
 
 title: "Activation atlas 정리글"
-Date: 2019-08-26
+toc: true
+branch: master
+badges: true
+categories: ['deeplearning', 'interpretability']
 ---
+
+
+
+# Activation atlas 정리글
+
+
 
 ## Introduction
 
@@ -12,7 +21,9 @@ What have these networks learned that allows them to classify images so well?
 
 기본적으로 네트워크를 시각적으로 분석할려고 노력했다.
 
-<img src="https://user-images.githubusercontent.com/27891090/63659574-0c5b5700-c7ed-11e9-9f00-d9a8b5274b1b.png" style="width: 70%">
+![]({{ site.baseurl }}/images/2019-08-26-activation atlas/figure1.png "Figure1")
+
+
 
 - [individual neurons](https://distill.pub/2017/feature-visualization/)
 
@@ -36,7 +47,11 @@ What have these networks learned that allows them to classify images so well?
 
 - [CNN code visualization](https://cs.stanford.edu/people/karpathy/cnnembed/)
 
-  <img src="https://cs.stanford.edu/people/karpathy/cnnembed/cnn_embed_1k_icon.jpg" style="width: 40%">
+- 
+
+- ![]({{ site.baseurl }}/images/2019-08-26-activation atlas/tsne.jpg "t-sne")
+
+  
 
   t-SNE 기반의 시각화 방법이다. 간략히 설명하면, 각 input tensor 혹은 activation value에 대해서 t-SNE로 mapping 시킬 좌표를 구하고 해당 좌표에 위와 같이 이미지를 시각화 하는 것이다.
 
@@ -61,13 +76,17 @@ activation atlas를 살펴보기전에 activation vector를 시각화하는 [spa
 
 InceptionV1은 convolution layers로 이루어져 있으므로, 각 layer마다 복수의 activation vector가 존재한다. (Filter의 수만큼) 또한 아래의 이미지 처럼 하나의 뉴런이 각 patch를 이동하면서 activation vector를 생성한다. (Parameter-sharing) 
 
-<img src="https://taewanmerepo.github.io/2018/01/cnn/filter.jpg" style="width: 30%">
+![]({{ site.baseurl }}/images/2019-08-26-activation atlas/filter.jpg "CNN filter")
+
+
 
 그러므로, network에 input image를 넣으면 하나의 뉴런은 많은 수의 evaluation을 받는다. 우리는 이를 각 뉴런이 각 patch에 대해서 얼마나 활성화됐는지 평가할 수 있다.
 
-<img src="https://user-images.githubusercontent.com/27891090/63660761-ed5fc380-c7f2-11e9-8481-d680187ecfcf.png" style="width: 70%">
+![]({{ site.baseurl }}/images/2019-08-26-activation atlas/figure2.png "Figure2")
 
-<img src="https://distill.pub/2019/activation-atlas/assets/images/dogcat-grid.jpg">
+![]({{ site.baseurl }}/images/2019-08-26-activation atlas/figure3.jpg "Figure3")
+
+
 
 
 
@@ -81,7 +100,9 @@ InceptionV1은 convolution layers로 이루어져 있으므로, 각 layer마다 
 
 이렇게 수집된 vector는 high-dimension(512 dim)의 성격을 가진다. 이를 dimensionality reduction방법론을 적용해서 2차원으로 mapping 하면 아래의 이미지처럼 나타나게 된다.
 
-<img src="https://user-images.githubusercontent.com/27891090/63661257-b8547080-c7f4-11e9-9ee5-972d32716965.png" style="width: 60%">
+![]({{ site.baseurl }}/images/2019-08-26-activation atlas/figure4.jpg "Figure4")
+
+
 
 Feature visualization을 적용할 때, regularization을 사용하였다.(ex: [transformation robustness](https://distill.pub/2017/feature-visualization/#regularizer-playground-robust)) 
 
@@ -98,7 +119,7 @@ $$
 > $$
 > similarity = \cos(\theta)= \frac{A\cdot B}{\rVert A \rVert \rVert B \rVert}
 > $$
-> <img src="https://www.oreilly.com/library/view/statistics-for-machine/9781788295758/assets/2b4a7a82-ad4c-4b2a-b808-e423a334de6f.png" style="width: 50%">
+> ![]({{ site.baseurl }}/images/2019-08-26-activation atlas/similarity.png "Similarity")
 
 각 activation vector마다 attribution vector를 구할 수 있다. attribution vector란, 각 calss에 대한 항목이 있으며 각 class의 logit에 영향을 받은 activation vector의 값을 근사한다. attribution vector는 주변 contex에 영향을 받는다.
 $$
@@ -112,11 +133,17 @@ $$
 
 
 
-<img src="https://user-images.githubusercontent.com/27891090/63746516-f7132500-c8df-11e9-9bd2-67cdc3e2892e.png" style="width: 50%">
+![]({{ site.baseurl }}/images/2019-08-26-activation atlas/figure5.png "Figure5")
+
+
 
 위에서 보이는 이미지는 오른쪽의 feature space에 상단 좌측에 위치한 average attribution을 시각화 한 것이다. 위의 이미지는 모두 조금씩 다르지만, 비슷한 류의 동물의 형상을 하고 있다. 특히, 눈, 털, 코 등의 특징을 잡아내고 있다. 주의 할 점은 앞단의 레이어에서 실행하면, 상당히 혼란스러울수 있다는 점이다. (앞단의 레이어에서는 위와 같은 특징을 못잡을 수도 있다.)
 
-<img src="https://user-images.githubusercontent.com/27891090/63746563-1611b700-c8e0-11e9-9e52-3b39f3d1c07d.png" style="width: 50%">
+
+
+![]({{ site.baseurl }}/images/2019-08-26-activation atlas/figure6.png "Figure6")
+
+
 
 위의 이미지는 좌측 하단의 위치한 average attribution vector이다. 위의 이미지와 다르게 바다 해변의 형상을 가지고 있다. 
 
@@ -132,19 +159,19 @@ $$
 
 사용할 레이어는 다음과 같다.(강조된 부분)
 
-<img src="https://user-images.githubusercontent.com/27891090/63747602-7ace1100-c8e2-11e9-8783-dd9222cb1008.png" style="width: 50%">
+![]({{ site.baseurl }}/images/2019-08-26-activation atlas/figure7.png "Figure7")
+
+![]({{ site.baseurl }}/images/2019-08-26-activation atlas/figure8.png "Figure8")
 
 
-
-<img src="https://user-images.githubusercontent.com/27891090/63747623-87526980-c8e2-11e9-8a3d-15cbc80a8812.png" style="width: 70%">
 
 위의 이미지는 cabbage class를 시각화한 것이다. 왼쪽에서 오른쪽으로 갈 수록 더 cabbage처럼 구체적이고 복잡해지는 것을 확인할 수 있다. 이는 해당연구에서 기대했던 바인데 이유는 다음과 같다.
 
 - 뒷 단의 레이어일수록 receptive field가 크기 때문
 
+![]({{ site.baseurl }}/images/2019-08-26-activation atlas/figur9.png "Figure9")
 
 
-<img src="https://user-images.githubusercontent.com/27891090/63747659-9a653980-c8e2-11e9-9b0b-775754cfeb6e.png" style="width: 70%">
 
 위의 이미지는 sand와 water 그리고 sandbar의 이미지의 activation value를 나타낸 것이다. sandbar를 보면, 앞의 두 이미지를 합친 것과 유사해 보인다.
 
@@ -156,11 +183,15 @@ $$
 
 예를 들어서, network가 어떤 과정을 거쳐서 'fireboat'라는 class로 결정하는지 살펴볼 것이다.
 
-<img src="https://distill.pub/2019/activation-atlas/assets/images/fireboat-01.jpg" style="width: 30%">
+
+
+![]({{ site.baseurl }}/images/2019-08-26-activation atlas/figur10.jpg "Figure10")
+
+
 
 먼저 last layer(mixed5b)를 살펴볼 것이다. 뚜렷하게 보이는 부분일수록 'fireboat'로 결정하는데 큰 기여를 한 activation이다. classification 전의 layer이기 때문에 'fireboat'와 매우 유사한 이미지들이 진하게 보인다는 것을 확인 할 수 있다.
 
-<img src="https://user-images.githubusercontent.com/27891090/63762216-6b0ff600-c8fd-11e9-9b99-958d99722393.png" style="width: 70%">
+![]({{ site.baseurl }}/images/2019-08-26-activation atlas/figur11.png "Figure11")
 
 
 
@@ -168,13 +199,17 @@ $$
 
 fireboat를 보면 창문 + 기중기 + 물로 이루어져 있음을 알 수 있다. 해당 부분도 물, 기중기, 창문들로 이루어져 있다.
 
-<img src="https://user-images.githubusercontent.com/27891090/63762688-38b2c880-c8fe-11e9-814c-cefa31eff0bb.png" style="width: 70%">
+![]({{ site.baseurl }}/images/2019-08-26-activation atlas/figur12.png "Figure12")
+
+
 
 
 
 이러한 특성은 'fireboat'와 'streetcar'와 비교해보면 잘 알 수 있다. (조금 유사하지만 다른 object)
 
-<img src="https://user-images.githubusercontent.com/27891090/63763195-31d88580-c8ff-11e9-8325-5e1aa3b42f1d.png" style="width: 70%">
+![]({{ site.baseurl }}/images/2019-08-26-activation atlas/figur13.png "Figure13")
+
+
 
 해당 이미지를 보면 streetcar는 기중기나 물에서는 약한 activation을 가지고 있으나 창문과 집에 대한 activation에서는 매우 강한 activation을 가진다. 반대로 fireboat는 물과 기중기, 창문에서는 강한 activation을 가지지만 집에 대한 activation에서는 약한 activation을 가지고 있음을 확인할 수 있다.
 
@@ -184,7 +219,11 @@ fireboat를 보면 창문 + 기중기 + 물로 이루어져 있음을 알 수 �
 
 특정 class에 기여하는 activation만을 확인하고 싶다면, 다른 activation을 완전히 제외할 수 있다. 이를 class-specific activation이라고 한다.
 
-<img src="https://user-images.githubusercontent.com/27891090/63764502-ebd0f100-c901-11e9-8f8e-780a55ac0f1d.png" style="width: 50%">
+
+
+![]({{ site.baseurl }}/images/2019-08-26-activation atlas/figur14.png "Figure14")
+
+
 
 - 스노쿨링 이미지
 
@@ -192,17 +231,31 @@ fireboat를 보면 창문 + 기중기 + 물로 이루어져 있음을 알 수 �
 
 class activation atlas는 특정 class에 대해서 어떤 detector가 더 많은 기여를 했는지 명확하게 보여준다. 위의 스노쿨링 예시에서 강한 attribution만 보여주는 것이 아니라, strength가 약하더라도 해당 class에 전반적인 영향을 끼친 attribution도 보여준다. 특정 경우 우리가 보고 싶어하는 object와 매우 강하게 상관관계가 있는 object가 있다. (스노쿨러 - 물고기) 물고기는 우리가 보고 싶어하는 부분과 다른 부분이다. 따라서 적절한 filtering 방법이 필요하다
 
-<img src="https://user-images.githubusercontent.com/27891090/63765574-4c612d80-c904-11e9-924f-e68fd1c39712.png" style="width: 100%">
+
+
+![]({{ site.baseurl }}/images/2019-08-26-activation atlas/figur15.png "Figure15")
+
+
 
 위의 이미지 다른 필터링을 적용한 것이다. 위의 설명을 참고 바란다.
 
 이제는 유사한 두 클레스를 비교해볼 것이다. (magnitude 기준으로)
 
-<img src="https://user-images.githubusercontent.com/27891090/63766039-4e77bc00-c905-11e9-8e8b-21c7a8e4a172.png">
+
+
+![]({{ site.baseurl }}/images/2019-08-26-activation atlas/figur16.png "Figure16")
+
+
 
 위의 이미지를 보면 두 클레스를 구분하기 힘들것이다. 아래의 이미지를 보면 도움이 될 것이다.
 
-<img src="https://user-images.githubusercontent.com/27891090/63766282-d067e500-c905-11e9-89f8-8bb8a300ee0c.png" style="width: 70%">
+
+
+
+
+![]({{ site.baseurl }}/images/2019-08-26-activation atlas/figur17.png "Figure17")
+
+
 
 >To help make the comparison easier, we can combine the two views into one. We’ll plot the difference between the attributions of the “snorkel” and “scuba diver” horizontally, and use t-SNE  to cluster similar activations vertically.
 
@@ -210,17 +263,25 @@ class activation atlas는 특정 class에 대해서 어떤 detector가 더 많�
 
 스노쿨링 이미지에 조금씩 기관차 이미지를 사이즈 업하여 더한 것이다.
 
-<img src="https://user-images.githubusercontent.com/27891090/63766479-318fb880-c906-11e9-9562-d3bac82703a8.png" style="width: 70%">
+
+
+![]({{ site.baseurl }}/images/2019-08-26-activation atlas/figur18.png "Figure18")
+
+
 
 해당 이미지를 보면 조금 더 하면 스쿠버 다이버의 softmax값이 올라가나 일정수준이 넘으면 기관차로 인식함을 알 수 있다. 아마도 기관차의 스팀이 그런역할을 한 것으로 보이며 이와 같은 feature를 multi-use feature라고 칭한다.(시각적으로 유사해 보여도 서로 다른 시각적으로 다른 class에 반응)
 
 위와 같은 실험을 attack의 개념으로 1000여번을 진행했다.
 
-<img src="https://user-images.githubusercontent.com/27891090/63767051-7bc56980-c907-11e9-96f4-8c7b2f55a2cc.png" style="width: 60%">
 
-<img src="https://user-images.githubusercontent.com/27891090/63767073-867ffe80-c907-11e9-8592-8e2e0f1cf29f.png" style="width: 60%">
 
-<img src="https://user-images.githubusercontent.com/27891090/63767088-9861a180-c907-11e9-84a2-ff25db136abd.png" style="width: 60%">
+![]({{ site.baseurl }}/images/2019-08-26-activation atlas/figur19.png "Figure19")
+
+![]({{ site.baseurl }}/images/2019-08-26-activation atlas/figur20.png "Figure20")
+
+![]({{ site.baseurl }}/images/2019-08-26-activation atlas/figur21.png "Figure21")
+
+
 
 위의 공격은 모든 클레스에 대해서 효과적인것은 아니었으나, 다섯개의 이미지에서 2개 정도로 target image로 인식하게 만들 수 있었다.
 
