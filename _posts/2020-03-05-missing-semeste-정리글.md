@@ -500,6 +500,579 @@ tree
 
 
 
+## 3. Git
+
+
+
+### Git's data model
+
+- snapshots
+
+```
+<root> (tree): snapshots, top-level directory
+|
++- foo (tree)
+|  |
+|  + bar.txt (blob, contents = "hello world")
+|
++- baz.txt (blob, contents = "git is wonderful")
+```
+
+- Modeling history: relating snapshots
+
+  
+
+```
+o <-- o <-- o <-- o
+^  
+\
+--- o <-- o
+```
+
+with the newly created merge commit shown in bold:
+
+```
+o <-- o <-- o <-- o <---- o
+            ^            /
+             \          v
+              --- o <-- o
+```
+
+```
+// a file is a bunch of bytes
+type blob = array<byte>
+
+// a directory contains named files and directories
+type tree = map<string, tree | file>
+
+// a commit has parents, metadata, and the top-level tree
+type commit = struct {
+    parent: array<commit>
+    author: string
+    message: string
+    snapshot: tree
+}
+
+type object = blob | tree | commit # 모두 다 object다
+
+
+objects = map<string, object>
+
+def store(object):
+    id = sha1(object)
+    objects[id] = object
+
+def load(id):
+    return objects[id]
+```
+
+**References**: HEAD
+
+```
+references = map<string, string>
+
+def update_reference(name, id):
+    references[name] = id
+
+def read_reference(name):
+    return references[name]
+
+def load_reference(name_or_id):
+    if name_or_id in references:
+        return load(references[name_or_id])
+    else:
+        return load(name_or_id)
+```
+
+
+
+### Hook
+
+특정상황에서 특정 스크립트를 실행할 수 있도록 하는 기능
+
+위치: cd ./git/hook
+
+```
+#!/bin/sh
+
+# git diff --exit-code --cached --name-only --diff-filter=ACM -- '*.png' '*.jpg'
+# 위의 명령어는 현재 add 되어있는 파일 중, .png와 .jpg 확장자를 가진 파일들을 '이름만' 추출합니다.
+images=$(git diff --exit-code --cached --name-only --diff-filter=ACM -- '*.png' '*.jpg')
+
+# 추출된 이미지 파일들을 ImageOptimCLI에 넘겨주기만 하면 되는 것이죠!
+# 이미지들이 압축되어 변경되었으니 다시 add 해줘야겠죠?
+$(exit $?) || (echo "$images" | ~/.woowa/imageoptim-cli/bin/imageOptim && git add $images)
+
+```
+
+- **pre-commit**: https://pre-commit.com/
+
+- reference: https://woowabros.github.io/tools/2017/07/12/git_hook.html
+
+
+
+### Github Deployment & Actions
+
+https://blog.banksalad.com/tech/become-an-organization-that-deploys-1000-times-a-day/?fbclid=IwAR1X6CC1mz6Akrxcyt-BpeMZ-ZnpLOvdGlK7dvxh0De85D1qsEoLN2JEhAU
+
+### Git command-line interface
+
+```
+git help <command>: get help for a git command
+git init: creates a new git repo, with data stored in the .git directory
+git status: tells you what’s going on
+git add <filename>: adds files to staging area
+git commit: creates a new commit
+git log: shows a flattened log of history
+git log --all --graph --decorate: visualizes history as a DAG
+git diff <filename>: show differences since the last commit
+git diff <revision> <filename>: shows differences in a file between snapshots
+git checkout <revision>
+```
+
+
+
+**Branching and merging**
+
+```
+git branch: shows branches
+git branch <name>: creates a branch
+git checkout -b <name>: creates a branch and switches to it
+same as git branch <name>; git checkout <name>
+git merge <revision>: merges into current branch
+git mergetool: use a fancy tool to help resolve merge conflicts
+git rebase: rebase set of patches onto a new base
+```
+
+
+
+**Remotes**
+
+```
+git remote: list remotes
+git remote add <name> <url>: add a remote
+git push <remote> <local branch>:<remote branch>: send objects to remote, and update remote reference
+git branch --set-upstream-to=<remote>/<remote branch>: set up correspondence between local and remote branch
+git fetch: retrieve objects/references from a remote
+git pull: same as git fetch; git merge
+git clone: download repository from remote
+```
+
+
+
+**Undo**
+
+```
+git commit --amend: edit a commit’s contents/message
+git reset HEAD <file>: unstage a file
+git checkout -- <file>: discard changes
+```
+
+
+
+
+
+
+
+- https://git-scm.com/book/en/v2
+
+
+
+### **Github Actions**
+
+- Build
+
+  코드 스타일 검사를 위한 lint
+
+  유닛 테스트를 실행하는 test
+
+  docker image를 build하는 build
+
+- Deploy
+
+  아직은 경험하기 힘든 영역이라고 생각
+
+
+
+### Gitflow
+
+- https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
+
+
+
+### Github slack integration
+
+- https://slack.github.com/
+
+- http://wepla.net/?p=2353
+
+
+
+### Github Commit message
+
+```
+Type: 제목
+
+본문
+
+꼬리말
+```
+
+
+
+feat: 새로운 기능을 추가할 경우
+fix: 버그를 고친 경우
+docs: 문서 수정한 경우
+style: 코드 포맷 변경, 세미 콜론 누락, 코드 수정이 없는 경우
+refactor: 프로덕션 코드 리팩터링
+test: 테스트 추가, 테스트 리팩터링 (프로덕션 코드 변경 없음)
+chore: 빌드 테스크 업데이트, 패키지 매니저 설정할 경우 (프로덕션 코드 변경 없음)
+
+```
+feat: Summarize changes in around 50 characters or less
+
+More detailed explanatory text, if necessary. Wrap it to about 72
+characters or so. In some contexts, the first line is treated as the
+subject of the commit and the rest of the text as the body. The
+blank line separating the summary from the body is critical (unless
+you omit the body entirely); various tools like `log`, `shortlog`
+and `rebase` can get confused if you run the two together.
+
+Explain the problem that this commit is solving. Focus on why you
+are making this change as opposed to how (the code explains that).
+Are there side effects or other unintuitive consequenses of this
+change? Here's the place to explain them.
+
+Further paragraphs come after blank lines.
+
+ - Bullet points are okay, too
+
+ - Typically a hyphen or asterisk is used for the bullet, preceded
+   by a single space, with blank lines in between, but conventions
+   vary here
+
+If you use an issue tracker, put references to them at the bottom,
+like this:
+
+Resolves: #123
+See also: #456, #789
+```
+
+
+
+- https://sujinlee.me/professional-github/
+- https://junwoo45.github.io/2020-02-06-commit_template/?fbclid=IwAR2HKgwO9imOxWAvWUPtaXDymUzMRRJ18LnwR_Cwa3s6kcrFidIwvz8CvmY
+
+## 4. [Python CI: 핑퐁팀 사례](https://blog.pingpong.us/python-in-pingpong/?fbclid=IwAR0ijQfAoKTFtXsppYN-b9iqw_vnnR6VoEMcL9Wr8TJFUyHnuOBwBgyHCZw#%EC%8B%9C%EC%9E%91%EC%9D%80-%EA%B0%80%EB%B3%8D%EA%B2%8C-%EC%BD%94%EB%93%9C-%ED%92%88%EC%A7%88-%EA%B4%80%EB%A6%AC-%EB%8F%84%EA%B5%AC)
+
+**코드 스타일 확인 및 포맷 자동화****
+
+- [black](https://github.com/psf/black)
+	Python Software Foundation에서 작성한 Python 자동 포맷팅 도구입니다. pycodestyle을 따른다.
+	
+- flake8
+	
+	**pycodestyle + pyflakes + 복잡도 검사 기능**
+	
+	Python Code Quality Authority (PyCQA)에서 작성한 스타일 체크 도구로, 플러그인을 붙이기 쉬운 것이 장점이다. docstring 형식 부분을 잡아내기 위해서 적용하기도 한다. 
+	
+- yapf
+	구글에서 배포하는 자동 포맷팅 도구입니다. 다른 포맷팅 도구들이 스타일 가이드를 어긴 부분만 잡아준다면, yapf는 스타일 가이드를 어기지 않았더라도 다시 포맷팅을 진행하는 상당히 엄격한 자동 포맷팅 도구입니다.
+	
+- isort: import statement 정렬하는 도구
+
+
+
+**Type Checker**
+
+Type Hints란, 예상치 못한 타입이 변수에 할당되는 것을 검사기가 막아주는 역할을 한다. 
+
+- [pyright](https://github.com/microsoft/pyright): vscode와 연동가능
+- mypy
+- pyre-check
+
+
+
+**CI**
+
+- CircleCI
+- Jenkins Blueocean
+- GitHub Actions
+- travisCI
+
+
+
+**테스트 코드**
+
+- [pytest](https://docs.pytest.org/en/latest/)
+- unittest
+
+
+
+**Code Coverage**
+
+- pytest-cov
+
+
+
+**초기 템플릿 생성**
+
+
+
+
+
+## 5. Debugging and Profiling
+
+
+
+### Logging
+
+- print문 삽입하는 법
+- [log](https://docs.python.org/ko/3/howto/logging.html): 일반적으로 log가 더 좋은 방법
+
+
+
+**Log의 장점**
+
+1. log를 사용하면 file로 저장할 수 있다. (remote server에도 가능)
+2. Serverity level별로 나타낼 수 있다.
+   1. INFO
+   2. DEBUG
+   3. WARN
+   4. ERROR
+3. 새로운 이슈가 추가될 때, 더 골고루 살펴볼 수 있다.
+
+
+
+python logging 모듈 활용하기
+
+```python
+
+import logging
+
+# logger instance
+logger = logging.getLogger(__name__)
+
+# handler
+streamHandler = logging.StreamHandler()
+fileHandler = logging.FileHandler('./server.log')
+
+
+logger.addHandler(streamHandler)
+logger.addHandler(FileHandler)
+
+
+logger.setLevel(level=logging.DEBUG)
+logger.debug('원하는 log 문 작성하기')
+
+```
+
+- https://hamait.tistory.com/880
+
+
+
+### Debugger
+
+[pdb](https://docs.python.org/3/library/pdb.html)
+
+### Static Analysis
+
+[shellcheck](https://www.shellcheck.net/)
+
+### linting
+
+잠재적인 오류에 대한 코드를 분석하는 프로그램.
+
+flake8을 이용하여 진행할 수 있다.
+
+
+### Profiling
+
+
+#### Timing
+
+```python
+import time, random
+
+n = random.randint(1, 10) * 100
+
+# Get current time
+start = time.time()
+
+# Do some work
+print("Sleeping for {} ms".format(n))
+time.sleep(n/1000)
+
+# Compute time between start and now
+print(time.time() - start)
+
+# Output
+# Sleeping for 500 ms
+# 0.5713930130004883
+```
+
+위의 예시처럼 시간을 측정하면, 실제 시간과 차이가 나는 경우가 있다. 예를 들면, 다른 작업이 cpu를 할당 받고 있어서 그 후에 실행된 경우가 그러한 경우이다. 따라서, 해당 소스코드의 동작시간을 알고 싶다면, User가 사용한 시간 + system이 사용한 시간을 더해서 구할 수 있다. (User + Sys)
+
+- Real - Wall clock elapsed time from start to finish of the program, including the time taken by other processes and time taken while blocked (e.g. waiting for I/O or network)
+- User - Amount of time spent in the CPU running user code
+- Sys - Amount of time spent in the CPU running kernel code
+
+
+#### Profilers
+##### CPU
+
+tracing, sampling profilers 두 가지의 종류가 있다.
+
+tracing profiler는 모든 function call을 기록하는 반면에 sampling profiler는 특정 간격마다 기록한다.
+
+python의 경우 cProfile 모듈을 이용할 수 있다. 아래와 같은 소스코드가 있다고 가정하자.
+
+```python
+#!/usr/bin/env python
+
+import sys, re
+
+def grep(pattern, file):
+    with open(file, 'r') as f:
+        print(file)
+        for i, line in enumerate(f.readlines()):
+            pattern = re.compile(pattern)
+            match = pattern.search(line)
+            if match is not None:
+                print("{}: {}".format(i, line), end="")
+
+if __name__ == '__main__':
+    times = int(sys.argv[1])
+    pattern = sys.argv[2]
+    for i in range(times):
+        for file in sys.argv[3:]:
+            grep(pattern, file)
+
+```
+아래와 같이 프로파일링을 진행할 수 있다. 모든 function call을 확인할 수 있다.
+```
+$ python -m cProfile -s tottime grep.py 1000 '^(import|\s*def)[^,]*$' *.py
+
+[omitted program output]
+
+ ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+     8000    0.266    0.000    0.292    0.000 {built-in method io.open}
+     8000    0.153    0.000    0.894    0.000 grep.py:5(grep)
+    17000    0.101    0.000    0.101    0.000 {built-in method builtins.print}
+     8000    0.100    0.000    0.129    0.000 {method 'readlines' of '_io._IOBase' objects}
+    93000    0.097    0.000    0.111    0.000 re.py:286(_compile)
+    93000    0.069    0.000    0.069    0.000 {method 'search' of '_sre.SRE_Pattern' objects}
+    93000    0.030    0.000    0.141    0.000 re.py:231(compile)
+    17000    0.019    0.000    0.029    0.000 codecs.py:318(decode)
+        1    0.017    0.017    0.911    0.911 grep.py:3(<module>)
+
+[omitted lines]
+```
+
+line마다 profiling 하고 싶다면, kernprof를 사용할 수 있다. 단, 데코레이터를 사용해야한다.
+
+```
+#!/usr/bin/env python
+import requests
+from bs4 import BeautifulSoup
+
+# This is a decorator that tells line_profiler
+# that we want to analyze this function
+@profile
+def get_urls():
+    response = requests.get('https://missing.csail.mit.edu')
+    s = BeautifulSoup(response.content, 'lxml')
+    urls = []
+    for url in s.find_all('a'):
+        urls.append(url['href'])
+
+if __name__ == '__main__':
+    get_urls()
+```
+
+```
+$ kernprof -l -v a.py
+Wrote profile results to urls.py.lprof
+Timer unit: 1e-06 s
+
+Total time: 0.636188 s
+File: a.py
+Function: get_urls at line 5
+
+Line #  Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+ 5                                           @profile
+ 6                                           def get_urls():
+ 7         1     613909.0 613909.0     96.5      response = requests.get('https://missing.csail.mit.edu')
+ 8         1      21559.0  21559.0      3.4      s = BeautifulSoup(response.content, 'lxml')
+ 9         1          2.0      2.0      0.0      urls = []
+10        25        685.0     27.4      0.1      for url in s.find_all('a'):
+11        24         33.0      1.4      0.0          urls.append(url['href'])
+```
+
+##### Memory
+
+python을 사용할 시에, 데코레이터를 사용한 후, memory_profiler를 사용하면, 메모리 사용량을 검사할 수 있다.
+
+```python
+@profile
+def my_func():
+    a = [1] * (10 ** 6)
+    b = [2] * (2 * 10 ** 7)
+    del b
+    return a
+
+if __name__ == '__main__':
+    my_func()
+
+```
+
+```
+$ python -m memory_profiler example.py
+Line #    Mem usage  Increment   Line Contents
+==============================================
+     3                           @profile
+     4      5.97 MB    0.00 MB   def my_func():
+     5     13.61 MB    7.64 MB       a = [1] * (10 ** 6)
+     6    166.20 MB  152.59 MB       b = [2] * (2 * 10 ** 7)
+     7     13.61 MB -152.59 MB       del b
+     8     13.61 MB    0.00 MB       return a
+```
+
+
+
+> 파이썬에서 데코레이터란
+>
+> https://wikidocs.net/23106
+
+
+
+
+
+##### Event Profiling
+
+- strace
+- perf
+
+#### Visualization
+
+- Call graphs: python - [pycallgraph](http://pycallgraph.slowchop.com/en/master/)
+- Flame Graph
+
+
+
+### Resource Monitoring
+
+- **General Monitoring** - Probably the most popular is [`htop`](https://hisham.hm/htop/index.php), which is an improved version of [`top`](http://man7.org/linux/man-pages/man1/top.1.html). `htop` presents various statistics for the currently running processes on the system. `htop` has a myriad of options and keybinds, some useful ones are: `` to sort processes, `t` to show tree hierarchy and `h` to toggle threads. See also [`glances`](https://nicolargo.github.io/glances/) for similar implementation with a great UI. For getting aggregate measures across all processes, [`dstat`](http://dag.wiee.rs/home-made/dstat/) is another nifty tool that computes real-time resource metrics for lots of different subsystems like I/O, networking, CPU utilization, context switches, &c.
+- **I/O operations** - [`iotop`](http://man7.org/linux/man-pages/man8/iotop.8.html) displays live I/O usage information and is handy to check if a process is doing heavy I/O disk operations
+- **Disk Usage** - [`df`](http://man7.org/linux/man-pages/man1/df.1.html) displays metrics per partitions and [`du`](http://man7.org/linux/man-pages/man1/du.1.html) displays **d**isk **u**sage per file for the current directory. In these tools the `-h` flag tells the program to print with **h**uman readable format. A more interactive version of `du` is [`ncdu`](https://dev.yorhel.nl/ncdu) which lets you navigate folders and delete files and folders as you navigate.
+- **Memory Usage** - [`free`](http://man7.org/linux/man-pages/man1/free.1.html) displays the total amount of free and used memory in the system. Memory is also displayed in tools like `htop`.
+- **Open Files** - [`lsof`](http://man7.org/linux/man-pages/man8/lsof.8.html) lists file information about files opened by processes. It can be quite useful for checking which process has opened a specific file.
+- **Network Connections and Config** - [`ss`](http://man7.org/linux/man-pages/man8/ss.8.html) lets you monitor incoming and outgoing network packets statistics as well as interface statistics. A common use case of `ss` is figuring out what process is using a given port in a machine. For displaying routing, network devices and interfaces you can use [`ip`](http://man7.org/linux/man-pages/man8/ip.8.html). Note that `netstat` and `ifconfig` have been deprecated in favor of the former tools respectively.
+- **Network Usage** - [`nethogs`](https://github.com/raboof/nethogs) and [`iftop`](http://www.ex-parrot.com/pdw/iftop/) are good interactive CLI tools for monitoring network usage.
+
+
+
 
 
 - Reference: https://missing.csail.mit.edu/2020/?fbclid=IwAR2gQe5LToKuqVUwbfegqSOk6BnIqscbnqjK0e3js64EceMswNqW0KgeSEo
