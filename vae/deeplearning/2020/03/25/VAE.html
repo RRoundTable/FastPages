@@ -191,14 +191,14 @@
 <p>이 논문의 contribution은 두 가지이다.</p>
 <ol>
 <li>reparameterisztion of variational lower bound를 통해서 SGD를 사용하여 최적화할 수 있다.</li>
-<li>독립적인 데이터라는 가정하에서 lower bound estimator를 이용하여 poseterior inference(intractable)를 근사하여 구할 수 있다.</li>
-</ol>
-<blockquote>
+<li>독립적인 데이터라는 가정하에서 lower bound estimator를 이용하여 poseterior inference(intractable)를 근사하여 구할 수 있다.<blockquote>
 <p>probabilistic model과 대비되는 개념으로는 deterministic model이 있다. 일반적으로 output이 특정확률 분포에서 추출된 random variable이라고 가정한다.</p>
 </blockquote>
+</li>
+</ol>
 <p><strong>graph model</strong></p>
-<p><img src="/images/copied_from_nb/./images/2020-03-25-VAE/graph_model.PNG" alt=""></p>
-<p>위의 그림을 보면, 대략적인 구조를 알 수 있다. 우선, 실선은 generative model $p_{\theta}(Z)p_{\theta}(X \mid Z)$을 나타내며, 점선은 variational approximation $q_{\phi}(Z \mid X)$과정을 나타낸다.</p>
+<p><img src="https://2.bp.blogspot.com/-VnKSz_Ds8HI/WPV9J6d7CCI/AAAAAAAABno/oySdUuZJOS83tBdTnb00ADIK8G7IUrAvQCK4B/s400/vae_2.PNG" alt="" title="Directed Graphical Model">
+위의 그림을 보면, 대략적인 구조를 알 수 있다. 우선, 실선은 generative model $p_{\theta}(Z)p_{\theta}(X \mid Z)$을 나타내며, 점선은 variational approximation $q_{\phi}(Z \mid X)$과정을 나타낸다.</p>
 <h2 id="Method">
 <a class="anchor" href="#Method" aria-hidden="true"><span class="octicon octicon-link"></span></a>Method<a class="anchor-link" href="#Method"> </a>
 </h2>
@@ -260,7 +260,7 @@ $$<p>아래에는 $\theta, \phi$을 함께 학습시키는 방법을 소개할 �
 추후 작성 예정</p>
 </blockquote>
 <p>$q_{\phi}(Z \mid X)$는 probabilistic encoder 역할을 하고 $p_{\theta}(X \mid Z)$는 probabilistic decoder의 역할을 한다.</p>
-<p><img src="/images/copied_from_nb/./images/2020-03-25-VAE/VAE.png" alt=""></p>
+<p><img src="https://datascienceschool.net/upfiles/f38b90fa89cb46eba22178edbae07a26.png" alt=""></p>
 <h3 id="The-variational-bound">
 <a class="anchor" href="#The-variational-bound" aria-hidden="true"><span class="octicon octicon-link"></span></a>The variational bound<a class="anchor-link" href="#The-variational-bound"> </a>
 </h3>
