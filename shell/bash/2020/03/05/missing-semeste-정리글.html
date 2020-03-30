@@ -100,7 +100,7 @@
     •<span class="read-time" title="Estimated read time">
     
     
-      18 min read
+      19 min read
     
 </span></p>
 
@@ -1106,8 +1106,99 @@ Line #    Mem usage  Increment   Line Contents
   <li><strong>Memory Usage</strong> - <a href="http://man7.org/linux/man-pages/man1/free.1.html"><code class="language-plaintext highlighter-rouge">free</code></a> displays the total amount of free and used memory in the system. Memory is also displayed in tools like <code class="language-plaintext highlighter-rouge">htop</code>.</li>
   <li><strong>Open Files</strong> - <a href="http://man7.org/linux/man-pages/man8/lsof.8.html"><code class="language-plaintext highlighter-rouge">lsof</code></a> lists file information about files opened by processes. It can be quite useful for checking which process has opened a specific file.</li>
   <li><strong>Network Connections and Config</strong> - <a href="http://man7.org/linux/man-pages/man8/ss.8.html"><code class="language-plaintext highlighter-rouge">ss</code></a> lets you monitor incoming and outgoing network packets statistics as well as interface statistics. A common use case of <code class="language-plaintext highlighter-rouge">ss</code> is figuring out what process is using a given port in a machine. For displaying routing, network devices and interfaces you can use <a href="http://man7.org/linux/man-pages/man8/ip.8.html"><code class="language-plaintext highlighter-rouge">ip</code></a>. Note that <code class="language-plaintext highlighter-rouge">netstat</code> and <code class="language-plaintext highlighter-rouge">ifconfig</code> have been deprecated in favor of the former tools respectively.</li>
+  <li><strong>Network Usage</strong> - <a href="https://github.com/raboof/nethogs"><code class="language-plaintext highlighter-rouge">nethogs</code></a> and <a href="http://www.ex-parrot.com/pdw/iftop/"><code class="language-plaintext highlighter-rouge">iftop</code></a> are good interactive CLI tools for monitoring network usage.</li>
+</ul>
+
+<h2 id="6-metaprogramming">6. Metaprogramming</h2>
+
+<ul>
+  <li>paper</li>
+  <li>source code</li>
+  <li>tool</li>
+  <li>dependency</li>
+</ul>
+
+<h3 id="build-systems">Build systems</h3>
+
+<p><strong>make</strong></p>
+
+<p>ubuntu에서 make 명령어는 파일 관리 유틸리티이다. make 명령어를 실행하는 위치에 Makefile이 있어야 한다.</p>
+
+<p>Makefile은 다음과 같은 구조를 가진다.</p>
+
+<ul>
+  <li>Target: 명령어가 실행되어 나온 결과를 저장할 파일</li>
+  <li>Dependency: Target을 만들기 위해 필요한 재료</li>
+  <li>Command: 실행되어야 할 명령어들</li>
+  <li>macro: 코드를 단순화 시키기 위한 방법</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CC=&lt;컴파일러&gt;
+CFLAGS=&lt;컴파일 옵션&gt;
+LDFLAGS=&lt;링크 옵션&gt;
+LDLIBS=&lt;링크 라이브러리 목록&gt;
+OBJS=&lt;Object 파일 목록&gt;
+TARGET=&lt;빌드 대상 이름&gt;
+ 
+all: $(TARGET)
+ 
+clean:
+    rm -f *.o
+    rm -f $(TARGET)
+ 
+$(TARGET): $(OBJS)
+$(CC) -o $@ $(OBJS)
+</code></pre></div></div>
+
+<p>빌드규칙 블록</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;Target&gt;: &lt;Dependencies&gt;
+    &lt;Recipe&gt;
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Target:</strong> 빌드 대상 이름. 통상 이 Rule에서 최종적으로 생성해내는 파일명을 써 줍니다.</li>
+  <li><strong>Dependencies:</strong> 빌드 대상이 의존하는 Target이나 파일 목록. 여기에 나열된 대상들을 먼저 만들고 빌드 대상을 생성합니다.</li>
+  <li><strong>Recipe:</strong> 빌드 대상을 생성하는 명령. 여러 줄로 작성할 수 있으며, 각 줄 시작에 반드시 Tab문자로 된 Indent가 있어야 합니다.</li>
+</ul>
+
+<p>예시</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>paper.pdf: paper.tex plot-data.png
+	pdflatex paper.tex
+
+plot-%.png: %.dat plot.py
+	./plot.py -i $*.dat -o $@
+
+# %: pattern
+# $@: current target
+# reference: http://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html
+</code></pre></div></div>
+
+<ul>
+  <li>자세한 정보를 알고 싶다면, https://www.tuwlab.com/ece/27193</li>
+</ul>
+
+<h3 id="dependency-management">Dependency management</h3>
+
+<p><a href="https://spoqa.github.io/2012/12/18/semantic-versioning.html">semantic versioning</a></p>
+
+<h3 id="continuous-integration-systems">Continuous integration systems</h3>
+
+<ul>
+  <li>Github Actions</li>
+  <li>Travis CI</li>
+  <li>Pipelines</li>
+</ul>
+
+<h3 id="a-brief-aside-on-testing">A brief aside on testing</h3>
+<ul>
+  <li>test suite</li>
+  <li>unit test</li>
+  <li>intergration test</li>
+  <li>regression test</li>
   <li>
-    <p><strong>Network Usage</strong> - <a href="https://github.com/raboof/nethogs"><code class="language-plaintext highlighter-rouge">nethogs</code></a> and <a href="http://www.ex-parrot.com/pdw/iftop/"><code class="language-plaintext highlighter-rouge">iftop</code></a> are good interactive CLI tools for monitoring network usage.</p>
+    <p>Mocking</p>
   </li>
   <li>Reference: https://missing.csail.mit.edu/2020/?fbclid=IwAR2gQe5LToKuqVUwbfegqSOk6BnIqscbnqjK0e3js64EceMswNqW0KgeSEo</li>
 </ul>

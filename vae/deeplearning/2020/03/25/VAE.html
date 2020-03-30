@@ -212,17 +212,15 @@
 </h3>
 <p>i.i.d dataset $X = \{ x^{(i)} \}^N_{i=1}$ 은 관측되지 않고 연속적인 변수인 $z$에 생성된 것이라고 가정하고 이는 다음과 같은 과정을 통해서 이루어진다.</p>
 <ol>
-<li>$z$는 prior distribution에서 생성된다. </li>
+<li>
+<p>$z$는 prior distribution에서 생성된다.</p>
+<p>$$z \sim p_{\theta *}(z)$$</p>
+</li>
+<li>
+<p>데이터는 조건부 확률을 통해서 생성된다.</p>
+<p>$$x^{(i)} \sim p_{\theta *}(x \mid z)$$</p>
+</li>
 </ol>
-<p>
-$$z \sim p_{\theta *}(z)$$
-</p>
-<ol>
-<li>데이터는 조건부 확률을 통해서 생성된다.</li>
-</ol>
-<p>
-$$x^{(i)} \sim p_{\theta *}(x \mid z)$$
-</p>
 <p>그리고, $p_{\theta *}(z)$와 $p_{\theta *}(x \mid z)$는 각각 미분가능한($\theta, z$에 대해서) PDF(확률밀도함수)를 가진 $p_{\theta}(z)$와 $p_{\theta}(x \mid z)$에서 출발했다고 가정한다.</p>
 <p>중요한 점은 위의 과정에서는 marginal probability와 posterior probability에 대해서는 어떤 가정도 하지 않았다는 점이다. 이는 아래의 경우에서 보편적으로 사용할 수 있다는 뜻이다.</p>
 <ol>
@@ -305,6 +303,7 @@ $$<p>또한, kl-divergence term $D_{KL}(q_{\phi}(Z \mid X^{(i)}) \mid \mid p_{\t
 <p>kl-divergence는 $\phi$를 regularization한다고 해석할 수 있는데, approximate posterior가 prior $p_{\theta}(z)$를 근사하도록 한다.</p>
 <p>이러한 관점을 바탕으로 아래와 같은 SGVB(stochastic gradient variational bayes)가 전개된다.</p>
 <p><strong>SGVB(stochastic gradient variational bayes) 2</strong></p>
+<p>sampling을 통해서 gradient estimate 방법보다 더 낮은 variance를 가진다. $\log p_{\theta}(x^{(i)}) \mid z^{(i, l)})$은 reconstruction error를 나타낸다.</p>
 $$
 \tilde{\mathcal{L}}^B(\theta, \phi; X^{(i)}) = -D_{KL}(q_{\phi}(Z \mid X^{(i)}) \mid \mid p_{\theta}(Z)) + \frac{1}{L} \sum_{l=1}^L ( \log p_{\theta}(x^{(i)}) \mid z^{(i, l)})
 \text{    where   } Z^{(i, l)} = g_{\phi}(\epsilon^{(i, l)}, X^{(i)}), \ \ \epsilon^{(l)} \sim p(\epsilon)
