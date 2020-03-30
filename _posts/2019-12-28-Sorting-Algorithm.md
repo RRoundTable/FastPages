@@ -1,7 +1,16 @@
 ---
 title: "Sorting Algorithm"
-date: 2019-12-28
+toc: true
+branch: master
+badges: true
+categories: ['algorithm']
 ---
+
+# Sorting Algorithm
+
+
+
+
 
 ## Content
 

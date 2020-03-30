@@ -1,7 +1,12 @@
 ---
 title: attention is all you need 정리글
-date: 2019-11-18
+toc: true
+badges: true
+branch: master
+categories: ['deeplearning', 'nlp', 'transformer']
 ---
+
+# attention is all you need 정리글
 
 
 

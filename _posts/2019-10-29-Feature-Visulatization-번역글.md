@@ -1,11 +1,13 @@
 ---
 title: "Feature Visulatization 번역글"
-date: 2019-10-29
+toc: true
+badges: true
+categories: ['deeplearning', 'interpretability']
 ---
 
 
 
-
+#  Feature Visulatization 번역글
 
 ## Introduction
 
@@ -13,7 +15,7 @@ neural network의 해석가능성에 대한 필요성이 늘어나고 있다. De
 
 1. feature visualization
 
-   <img src="https://user-images.githubusercontent.com/27891090/67741701-62eb4880-fa5d-11e9-84d4-f92d023cab58.png">
+   ![]({{ site.baseurl }}/images/2019-10-29-Feature-Visulatization-번역글/img1.png "Figure1")
 
    network 혹은 network의 부분이 무엇을 보고자 하는가
 
@@ -29,7 +31,9 @@ neural network의 해석가능성에 대한 필요성이 늘어나고 있다. De
 
 일반적으로 neural network는 input에 대해서 differentiable하다. 만약 당신이 어떤 종류의 input이 특정한 행동양상을 가지는지 알고 싶다면(내부적인 뉴런의 동작 혹은 마지막 결과물의 양상이 예시가 될 수 있다.),  iteratively 미분하면서 목표를 이룰수 있다. 이렇게 얘기하면 매우 쉬울 거 같지만, 이를 하기 위해서는 많은 문제를 해결해야 한다.
 
-<img src="https://user-images.githubusercontent.com/27891090/67742020-2704b300-fa5e-11e9-9953-6a0b01ec647d.png">
+![]({{ site.baseurl }}/images/2019-10-29-Feature-Visulatization-번역글/img2.png "Figure1")
+
+
 
 위의 예시는 random noise를 input으로 두고 특정 뉴런을 활성화 시키기 위해서 input을 변화시켜나가는 과정으로 보인다.
 
@@ -37,7 +41,11 @@ neural network의 해석가능성에 대한 필요성이 늘어나고 있다. De
 
 ### Optimization Objective
 
-<img src="https://user-images.githubusercontent.com/27891090/67742810-53b9ca00-fa60-11e9-8c7a-e9b3b50d2952.png">
+![]({{ site.baseurl }}/images/2019-10-29-Feature-Visulatization-번역글/img2.png )
+
+![]({{ site.baseurl }}/images/2019-10-29-Feature-Visulatization-번역글/img3.png)
+
+
 
 - Neuron: $layer_n [x,y,z]$
 - Channel: $layer_n[:, :, z]$
@@ -63,7 +71,9 @@ neural network의 해석가능성에 대한 필요성이 늘어나고 있다. De
 
 그 이유는 optimization이 model의 행동을 유발하는 요소와 상관관계가 있는 요소를 분리할 수 있기 때문이다.  아래의 예시 이미지를 보면 쉽게 알 수 있다. 
 
-<img src="https://user-images.githubusercontent.com/27891090/67744171-1fe0a380-fa64-11e9-8563-4ebf5d4f44ec.png">
+
+
+![]({{ site.baseurl }}/images/2019-10-29-Feature-Visulatization-번역글/img4.png)
 
 
 
@@ -78,8 +88,9 @@ optimization을 사용할 때는 주의할 필요가 있다.예를 들어,  genu
 
 
 여기서 Dataset example이 매우 큰 장점을 가진다. 이를 통해서 diverse example을 찾을 수 있었다.
+![]({{ site.baseurl }}/images/2019-10-29-Feature-Visulatization-번역글/img5.png)
 
-<img src="https://user-images.githubusercontent.com/27891090/67744675-887c5000-fa65-11e9-8e4e-c893331ff385.png">
+
 
 
 
@@ -101,15 +112,17 @@ nework는 inputs의 넓은 범위에 활성화될 수 있다. 예를 들어서 c
 
 이 글에서 제시하는 방법은 간단하게 적용할 수 있다. diversity term을 objective에 추가해서 multiple example이 서로 다르다고 하게끔 학습이 진행된다. 결과가 개선되었는데 정확한 이유는 아직 알 수 없다. 다만 추측하기로는 penalize the cosine similarity 혹은 feature가 다른 style로 보일 수 있게끔 학습이 진행되어서 그런것이라고 보고 있다.(style transfer)
 
+![]({{ site.baseurl }}/images/2019-10-29-Feature-Visulatization-번역글/img6.png)
 
 
-<img src="https://user-images.githubusercontent.com/27891090/67851761-75917a80-fb4e-11e9-942c-babc277684a6.png">
 
 
 
 오른쪽을 보면 다양한 뷰의 강아진 사진이있다. 그리고 왼쪽의 결과물은 diversity를 고려한 optimization의 결과물이다.
 
-<img src="https://distill.pub/2017/feature-visualization/images/diversity/mixed4a_143_optimized.png">
+![]({{ site.baseurl }}/images/2019-10-29-Feature-Visulatization-번역글/img7.png)
+
+
 
 
 
@@ -131,17 +144,27 @@ activation space를  activation의 모든 조합이 나올 수 있는 공간이�
 
 그리고 이글에서의 실험도 위의 견해와 일치하게 결과가 나왔다.
 
-<img src="https://user-images.githubusercontent.com/27891090/67852505-dff6ea80-fb4f-11e9-8b6e-188c98c3ea79.png">
+![]({{ site.baseurl }}/images/2019-10-29-Feature-Visulatization-번역글/img8.png)
+
+
+
+
 
 위의 이미지는 각 이미지에 대한 optimization을 적용하였을 때의 결과물이다.
 
-<img src="https://user-images.githubusercontent.com/27891090/67854508-cfe10a00-fb53-11e9-8c33-146c7b0a7aee.png">
+
+
+![]({{ site.baseurl }}/images/2019-10-29-Feature-Visulatization-번역글/img9.png)
+
+
 
 위의 결과물도 흥미롭다. direction을 정의할 수 있다는 것인데, mosaic neuron에 흑백의 neruon을 더하면 흑백의 mosaic neuron이 나오게 된다. 이는 word2vector 혹은 generative model의 latent space와 유사한 개념이다.
 
 (interpolation)
 
-<img src="https://user-images.githubusercontent.com/27891090/67854832-6e6d6b00-fb54-11e9-8390-05fa0ece1da9.png">
+![]({{ site.baseurl }}/images/2019-10-29-Feature-Visulatization-번역글/img10.png)
+
+
 
 위의 이미지는  두 뉴런의 interpolation의 결과물이다. 해당 뉴런이 어떤식으로 결합되는지 확인할 수 있다. 위의 방법으로는 아주 작은 힌트만 얻을 수 있다. 예를 들면, 몇개의 interaction이 존재하는지 하지만 실제상황에서는 수백개의 interaction이 존재한다.
 
@@ -151,13 +174,15 @@ activation space를  activation의 모든 조합이 나올 수 있는 공간이�
 
 위에서 말한 optimization 방법론은 실제로 잘 작동하지 않는다. 아래 이미지와 같은 약간 이상하면서 자주 나타나는 패턴이 있다. 이 이미지는 실제 data상에서 잘 보이지 않는 패턴이며, 특정 뉴런을 활성화 시키기 위한 cheeting 같은 느낌이 든다. 이는 adversarial attack과 유사해보인다
 
-<img src="https://user-images.githubusercontent.com/27891090/68006959-93c9b880-fcbd-11e9-91fc-2b1f1e197832.png">
+![]({{ site.baseurl }}/images/2019-10-29-Feature-Visulatization-번역글/img11.png)
+
+
 
 
 
 위에서 언급한 자주 보이는 패턴이 convolution과 pooling 연산에 의존적임을 확인할 수 있었다. 
 
-<img src="https://user-images.githubusercontent.com/27891090/68007106-f15e0500-fcbd-11e9-89d0-52a72fb2e46b.png">
+![]({{ site.baseurl }}/images/2019-10-29-Feature-Visulatization-번역글/img12.png)
 
 정리하자면, constraint없는 optimization은 매력적이긴 하지만, 위의 예시처럼 의미없는 결과를 불러올 수 있다. (결국 adversarial example과 유사하게 만들어진다.)
 

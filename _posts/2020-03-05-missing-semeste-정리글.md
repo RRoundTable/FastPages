@@ -1073,6 +1073,93 @@ Line #    Mem usage  Increment   Line Contents
 
 
 
+## 6. Metaprogramming
+
+- paper
+- source code
+- tool
+- dependency
+
+### Build systems
+
+**make** 
+
+ubuntu에서 make 명령어는 파일 관리 유틸리티이다. make 명령어를 실행하는 위치에 Makefile이 있어야 한다.
+
+Makefile은 다음과 같은 구조를 가진다.
+
+- Target: 명령어가 실행되어 나온 결과를 저장할 파일
+- Dependency: Target을 만들기 위해 필요한 재료
+- Command: 실행되어야 할 명령어들
+- macro: 코드를 단순화 시키기 위한 방법
+
+```
+CC=<컴파일러>
+CFLAGS=<컴파일 옵션>
+LDFLAGS=<링크 옵션>
+LDLIBS=<링크 라이브러리 목록>
+OBJS=<Object 파일 목록>
+TARGET=<빌드 대상 이름>
+ 
+all: $(TARGET)
+ 
+clean:
+    rm -f *.o
+    rm -f $(TARGET)
+ 
+$(TARGET): $(OBJS)
+$(CC) -o $@ $(OBJS)
+```
+
+빌드규칙 블록
+
+```
+<Target>: <Dependencies>
+    <Recipe>
+```
+
+- **Target:** 빌드 대상 이름. 통상 이 Rule에서 최종적으로 생성해내는 파일명을 써 줍니다.
+- **Dependencies:** 빌드 대상이 의존하는 Target이나 파일 목록. 여기에 나열된 대상들을 먼저 만들고 빌드 대상을 생성합니다.
+- **Recipe:** 빌드 대상을 생성하는 명령. 여러 줄로 작성할 수 있으며, 각 줄 시작에 반드시 Tab문자로 된 Indent가 있어야 합니다.
+
+
+
+예시
+
+```
+paper.pdf: paper.tex plot-data.png
+	pdflatex paper.tex
+
+plot-%.png: %.dat plot.py
+	./plot.py -i $*.dat -o $@
+
+# %: pattern
+# $@: current target
+# reference: http://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html
+```
+
+- 자세한 정보를 알고 싶다면, https://www.tuwlab.com/ece/27193
+
+
+
+### Dependency management
+
+[semantic versioning](https://spoqa.github.io/2012/12/18/semantic-versioning.html)
+
+
+### Continuous integration systems
+
+- Github Actions
+- Travis CI
+- Pipelines
+
+
+### A brief aside on testing
+- test suite
+- unit test
+- intergration test
+- regression test
+- Mocking
 
 
 - Reference: https://missing.csail.mit.edu/2020/?fbclid=IwAR2gQe5LToKuqVUwbfegqSOk6BnIqscbnqjK0e3js64EceMswNqW0KgeSEo

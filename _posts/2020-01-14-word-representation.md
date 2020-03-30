@@ -1,9 +1,12 @@
 ---
 title: "word representation"
-date: 2020-01-14
+toc: true
+branch: master
+badges: true
+categories: ['nlp']
 ---
 
-
+# Word Representation 정리글
 
 ## Word2vec: distributed representation
 

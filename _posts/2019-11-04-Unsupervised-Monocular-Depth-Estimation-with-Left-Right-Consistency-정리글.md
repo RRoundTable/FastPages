@@ -1,7 +1,13 @@
 ---
 title: Unsupervised Monocular Depth Estimation with Left-Right Consistency 정리글
-date: 2019-11-04
+toc: true
+badges: true
+branch: master
+categories: ['deeplearning', 'computer vision']
 ---
+
+#  Unsupervised Monocular Depth Estimation with Left-Right Consistency 정리글
+
 
 
 ## Abstract
