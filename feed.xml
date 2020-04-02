@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://rroundtable.github.io/FastPages/feed.xml" rel="self" type="application/atom+xml" /><link href="https://rroundtable.github.io/FastPages/" rel="alternate" type="text/html" /><updated>2020-04-02T06:43:36-05:00</updated><id>https://rroundtable.github.io/FastPages/feed.xml</id><title type="html">RoundTable</title><subtitle>Tech Blog for RoundTable</subtitle><entry><title type="html">RAPP: NOVELTY DETECTION WITH RECONSTRUCTION ALONG PROJECTION PATHWAY 정리글</title><link href="https://rroundtable.github.io/FastPages/2020/04/02/RaPP.html" rel="alternate" type="text/html" title="RAPP: NOVELTY DETECTION WITH RECONSTRUCTION ALONG PROJECTION PATHWAY 정리글" /><published>2020-04-02T00:00:00-05:00</published><updated>2020-04-02T00:00:00-05:00</updated><id>https://rroundtable.github.io/FastPages/2020/04/02/RaPP</id><content type="html" xml:base="https://rroundtable.github.io/FastPages/2020/04/02/RaPP.html">&lt;h2 id=&quot;abstract&quot;&gt;Abstract&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://rroundtable.github.io/FastPages/feed.xml" rel="self" type="application/atom+xml" /><link href="https://rroundtable.github.io/FastPages/" rel="alternate" type="text/html" /><updated>2020-04-02T06:59:34-05:00</updated><id>https://rroundtable.github.io/FastPages/feed.xml</id><title type="html">RoundTable</title><subtitle>Tech Blog for RoundTable</subtitle><entry><title type="html">RAPP: NOVELTY DETECTION WITH RECONSTRUCTION ALONG PROJECTION PATHWAY 정리글</title><link href="https://rroundtable.github.io/FastPages/2020/04/02/RaPP.html" rel="alternate" type="text/html" title="RAPP: NOVELTY DETECTION WITH RECONSTRUCTION ALONG PROJECTION PATHWAY 정리글" /><published>2020-04-02T00:00:00-05:00</published><updated>2020-04-02T00:00:00-05:00</updated><id>https://rroundtable.github.io/FastPages/2020/04/02/RaPP</id><content type="html" xml:base="https://rroundtable.github.io/FastPages/2020/04/02/RaPP.html">&lt;h2 id=&quot;abstract&quot;&gt;Abstract&lt;/h2&gt;
 
 &lt;p&gt;autoencoder를 활용하여 anomaly detection을 수행하는 시도들이 있다. 하지만, 이러한 방법론은 주로 input과 reconstruct된 output간의 차이에 집중하고, hidden space간의 관계에 대해서는 고려하지 않는다는 한계를 가지고 있다. 본 연구에서는 autoencoder 구조를 바탕으로 input space와 output간의 관계뿐만 아니라, hidden space간의 관계를 고려하는 방법을 제안한다. (encoder hidden space와 대응되는 decoder hidden space와 비교) 또한,  reconstructed된 output을 다시 동일한 autoencoder에 넣어서 발생되는 activation value가 original input을 동일한 모델에 넣었을때의 대응되는 decoder activation value와 동일하다는 것을 보였다.&lt;/p&gt;
 
@@ -16,7 +16,7 @@
 
 &lt;h2 id=&quot;proposed-method-rapp&quot;&gt;Proposed Method RaPP&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/2020-04-02-RaPP/img1.png&quot; alt=&quot;&quot; title=&quot;hidden space&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../images/2020-04-02-RaPP/img1.png&quot; alt=&quot;&quot; title=&quot;hidden space&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;위의 이미지 처럼 encoder와 decoder간의 hidden space를  비교하는 것이 목표이지만, 위에서 언급한 한계때문에 불가능하다.  그래서 새롭게 제안하는 방법은 reconstruction output을 다시 autoencoder에 넣어서 decoder의 hidden space들을 재현하는 것이다.&lt;/p&gt;
 
@@ -28,7 +28,7 @@
 
 &lt;h3 id=&quot;reconstruction-error-in-hidden-spaces&quot;&gt;Reconstruction Error In Hidden Spaces&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/2020-04-02-RaPP/figure1_a.png&quot; alt=&quot;&quot; title=&quot;Figure1 (a)&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../images/2020-04-02-RaPP/figure1_a.png&quot; alt=&quot;&quot; title=&quot;Figure1 (a)&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;위에 보이는 이미지처럼, $h_i(x), \hat{h}_i(x)$를 각각 구한다.&lt;/p&gt;
 
@@ -42,7 +42,7 @@
 &lt;script type=&quot;math/tex&quot;&gt;H(x) = \{ (h_i(x), \hat{h}_i(x)) : i \le i \le l \}&lt;/script&gt;
 $H(x)$를 활용해서 novelty score를 얻기 위해 다음과 같은 과정을 진행한다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/2020-04-02-RaPP/algorithm1.png&quot; alt=&quot;&quot; title=&quot;Algorithm1&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../images/2020-04-02-RaPP/algorithm1.png&quot; alt=&quot;&quot; title=&quot;Algorithm1&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;여기서 $S$ 는 novelty score를 측정하는 함수로 본 연구에서는 크게 두 가지 방향을 제시한다.&lt;/p&gt;
 
@@ -71,7 +71,7 @@ $H(x)$를 활용해서 novelty score를 얻기 위해 다음과 같은 과정을
 
 &lt;p&gt;그럼에도 불구하고, $\hat{h}&lt;em&gt;i(x) = g&lt;/em&gt;(A(x))$의 관계를 바탕으로, 위의 문제의식을 실현할 수 있었다. 전반적인 프로세스는 아래의 Figure1 (b)를 확인하면 알 수 있다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/2020-04-02-RaPP/figure1_b.png&quot; alt=&quot;&quot; title=&quot;Figure1 (b)&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../images/2020-04-02-RaPP/figure1_b.png&quot; alt=&quot;&quot; title=&quot;Figure1 (b)&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;computation-of-hidden-reconstruction&quot;&gt;Computation Of Hidden Reconstruction&lt;/h3&gt;
 
@@ -86,7 +86,7 @@ $H(x)$를 활용해서 novelty score를 얻기 위해 다음과 같은 과정을
   &lt;li&gt;$M_i = { g_{:i(x)}: x \in M_0 }$&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/2020-04-02-RaPP/M.png&quot; alt=&quot;&quot; title=&quot;M&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../images/2020-04-02-RaPP/M.png&quot; alt=&quot;&quot; title=&quot;M&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;다음과 같은 decoder $\tilde{f}$ 가 있다고 가정하자.
 &lt;script type=&quot;math/tex&quot;&gt;x \in M_l, \tilde{f}(x) = f(x)\\  
