@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://rroundtable.github.io/FastPages/feed.xml" rel="self" type="application/atom+xml" /><link href="https://rroundtable.github.io/FastPages/" rel="alternate" type="text/html" /><updated>2020-04-02T07:16:26-05:00</updated><id>https://rroundtable.github.io/FastPages/feed.xml</id><title type="html">RoundTable</title><subtitle>Tech Blog for RoundTable</subtitle><entry><title type="html">RAPP: NOVELTY DETECTION WITH RECONSTRUCTION ALONG PROJECTION PATHWAY 정리글</title><link href="https://rroundtable.github.io/FastPages/2020/04/02/RaPP.html" rel="alternate" type="text/html" title="RAPP: NOVELTY DETECTION WITH RECONSTRUCTION ALONG PROJECTION PATHWAY 정리글" /><published>2020-04-02T00:00:00-05:00</published><updated>2020-04-02T00:00:00-05:00</updated><id>https://rroundtable.github.io/FastPages/2020/04/02/RaPP</id><content type="html" xml:base="https://rroundtable.github.io/FastPages/2020/04/02/RaPP.html">&lt;h2 id=&quot;abstract&quot;&gt;Abstract&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://rroundtable.github.io/FastPages/feed.xml" rel="self" type="application/atom+xml" /><link href="https://rroundtable.github.io/FastPages/" rel="alternate" type="text/html" /><updated>2020-04-09T06:26:20-05:00</updated><id>https://rroundtable.github.io/FastPages/feed.xml</id><title type="html">RoundTable</title><subtitle>Tech Blog for RoundTable</subtitle><entry><title type="html">RAPP: NOVELTY DETECTION WITH RECONSTRUCTION ALONG PROJECTION PATHWAY 정리글</title><link href="https://rroundtable.github.io/FastPages/2020/04/02/RaPP.html" rel="alternate" type="text/html" title="RAPP: NOVELTY DETECTION WITH RECONSTRUCTION ALONG PROJECTION PATHWAY 정리글" /><published>2020-04-02T00:00:00-05:00</published><updated>2020-04-02T00:00:00-05:00</updated><id>https://rroundtable.github.io/FastPages/2020/04/02/RaPP</id><content type="html" xml:base="https://rroundtable.github.io/FastPages/2020/04/02/RaPP.html">&lt;h2 id=&quot;abstract&quot;&gt;Abstract&lt;/h2&gt;
 
 &lt;p&gt;autoencoder를 활용하여 anomaly detection을 수행하는 시도들이 있다. 하지만, 이러한 방법론은 주로 input과 reconstruct된 output간의 차이에 집중하고, hidden space간의 관계에 대해서는 고려하지 않는다는 한계를 가지고 있다. 본 연구에서는 autoencoder 구조를 바탕으로 input space와 output간의 관계뿐만 아니라, hidden space간의 관계를 고려하는 방법을 제안한다. (encoder hidden space와 대응되는 decoder hidden space와 비교) 또한,  reconstructed된 output을 다시 동일한 autoencoder에 넣어서 발생되는 activation value가 original input을 동일한 모델에 넣었을때의 대응되는 decoder activation value와 동일하다는 것을 보였다.&lt;/p&gt;
 
@@ -88,9 +88,10 @@ $H(x)$를 활용해서 novelty score를 얻기 위해 다음과 같은 과정을
 
 &lt;p&gt;&lt;img src=&quot;/FastPages/images/2020-04-02-RaPP/M.png&quot; alt=&quot;&quot; title=&quot;M&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;다음과 같은 decoder $\tilde{f}$ 가 있다고 가정하자.
-&lt;script type=&quot;math/tex&quot;&gt;x \in M_l, \tilde{f}(x) = f(x)\\  
-a \in M_i, a = (g_i \circ \tilde{f})(a)&lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;다음과 같은 decoder $\tilde{f}$ 가 있다고 가정하자.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\forall x \in M_l, \tilde{f}(x) = f(x)\\  
+\forall a \in M_i, a = (g_i \circ \tilde{f})(a)&lt;/script&gt;
 
 &lt;p&gt;첫 번째 조건 $x \in M_l, \tilde{f}(x) = f(x)\ $은 feed foward의 결과가 같다는 것을 의미한다.&lt;/p&gt;
 
@@ -1233,6 +1234,13 @@ $$&lt;p&gt;또한, kl-divergence term $D_{KL}(q_{\phi}(Z \mid X^{(i)}) \mid \mid
 $$
 \tilde{\mathcal{L}}^B(\theta, \phi; X^{(i)}) = -D_{KL}(q_{\phi}(Z \mid X^{(i)}) \mid \mid p_{\theta}(Z)) + \frac{1}{L} \sum_{l=1}^L ( \log p_{\theta}(x^{(i)}) \mid z^{(i, l)})
 \text{    where   } Z^{(i, l)} = g_{\phi}(\epsilon^{(i, l)}, X^{(i)}), \ \ \epsilon^{(l)} \sim p(\epsilon)
+$$&lt;ul&gt;
+&lt;li&gt;$\log p_{\theta}(x^{(i)}) \mid z^{(i, l)})$ 은 다음과 같은 관계를 가진다.&lt;/li&gt;
+&lt;/ul&gt;
+$$
+p_{\theta}(x^{(i)}) \mid z^{(i, l)}) = p_{\theta}(x^{(i)}_1) \mid z^{(i, l)}) \times \cdots \times p_{\theta}(x^{(i)}_M) \mid z^{(i, l)}) 
+$$$$
+\log p_{\theta}(x^{(i)}) \mid z^{(i, l)}) = \log p_{\theta}(x^{(i)}_1) \mid z^{(i, l)}) + \cdots + \log p_{\theta}(x^{(i)}_M) \mid z^{(i, l)}) 
 $$&lt;h3 id=&quot;The-reparameterization-trick&quot;&gt;The reparameterization trick&lt;a class=&quot;anchor-link&quot; href=&quot;#The-reparameterization-trick&quot;&gt; &lt;/a&gt;&lt;/h3&gt;&lt;p&gt;reparameterize를 통해서 $\tilde{z} \sim q_{\phi}(z \mid x)$를 다음과 같은 미분가능한 fuction의 형태로 바꿔줄 수 있다.&lt;/p&gt;
 $$
 \tilde{z} = g_{\phi}(\epsilon, X) \text{  with } \epsilon \sim p(\epsilon) 
@@ -1508,7 +1516,7 @@ $$&lt;/p&gt;
 
 &lt;div class=&quot;inner_cell&quot;&gt;
     &lt;div class=&quot;input_area&quot;&gt;
-&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reconstruction_function&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BCELoss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size_average&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reconstruction_function&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BCELoss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size_average&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 각 element들의 BCE loss를 모두 sum해야 kld scale과 일치한다.&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;loss_function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recon_x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logvar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;BCE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reconstruction_function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recon_x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# reconstruction error&lt;/span&gt;

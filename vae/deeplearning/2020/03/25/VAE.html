@@ -307,6 +307,13 @@ $$<p>또한, kl-divergence term $D_{KL}(q_{\phi}(Z \mid X^{(i)}) \mid \mid p_{\t
 $$
 \tilde{\mathcal{L}}^B(\theta, \phi; X^{(i)}) = -D_{KL}(q_{\phi}(Z \mid X^{(i)}) \mid \mid p_{\theta}(Z)) + \frac{1}{L} \sum_{l=1}^L ( \log p_{\theta}(x^{(i)}) \mid z^{(i, l)})
 \text{    where   } Z^{(i, l)} = g_{\phi}(\epsilon^{(i, l)}, X^{(i)}), \ \ \epsilon^{(l)} \sim p(\epsilon)
+$$<ul>
+<li>$\log p_{\theta}(x^{(i)}) \mid z^{(i, l)})$ 은 다음과 같은 관계를 가진다.</li>
+</ul>
+$$
+p_{\theta}(x^{(i)}) \mid z^{(i, l)}) = p_{\theta}(x^{(i)}_1) \mid z^{(i, l)}) \times \cdots \times p_{\theta}(x^{(i)}_M) \mid z^{(i, l)}) 
+$$$$
+\log p_{\theta}(x^{(i)}) \mid z^{(i, l)}) = \log p_{\theta}(x^{(i)}_1) \mid z^{(i, l)}) + \cdots + \log p_{\theta}(x^{(i)}_M) \mid z^{(i, l)}) 
 $$<h3 id="The-reparameterization-trick">
 <a class="anchor" href="#The-reparameterization-trick" aria-hidden="true"><span class="octicon octicon-link"></span></a>The reparameterization trick<a class="anchor-link" href="#The-reparameterization-trick"> </a>
 </h3>
@@ -607,7 +614,7 @@ $$</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">reconstruction_function</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BCELoss</span><span class="p">(</span><span class="n">size_average</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">reconstruction_function</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BCELoss</span><span class="p">(</span><span class="n">size_average</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># 각 element들의 BCE loss를 모두 sum해야 kld scale과 일치한다.</span>
 
 <span class="k">def</span> <span class="nf">loss_function</span><span class="p">(</span><span class="n">recon_x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">logvar</span><span class="p">):</span>
     <span class="n">BCE</span> <span class="o">=</span> <span class="n">reconstruction_function</span><span class="p">(</span><span class="n">recon_x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="c1"># reconstruction error</span>

@@ -226,9 +226,10 @@ $H(x)$를 활용해서 novelty score를 얻기 위해 다음과 같은 과정을
 
 <p><img src="/FastPages/images/2020-04-02-RaPP/M.png" alt="" title="M"></p>
 
-<p>다음과 같은 decoder $\tilde{f}$ 가 있다고 가정하자.
-<script type="math/tex">x \in M_l, \tilde{f}(x) = f(x)\\  
-a \in M_i, a = (g_i \circ \tilde{f})(a)</script></p>
+<p>다음과 같은 decoder $\tilde{f}$ 가 있다고 가정하자.</p>
+
+<script type="math/tex; mode=display">\forall x \in M_l, \tilde{f}(x) = f(x)\\  
+\forall a \in M_i, a = (g_i \circ \tilde{f})(a)</script>
 
 <p>첫 번째 조건 $x \in M_l, \tilde{f}(x) = f(x)\ $은 feed foward의 결과가 같다는 것을 의미한다.</p>
 
