@@ -5,7 +5,6 @@ branch: master
 badges: true
 comments: true
 categories: ['deeplearning', 'XAI']
-metadata_key1: integrated gradient
 ---
 
 
