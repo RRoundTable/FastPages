@@ -520,7 +520,6 @@ tree
 
 - Modeling history: relating snapshots
 
-  
 
 ```
 o <-- o <-- o <-- o
@@ -667,14 +666,30 @@ git commit --amend: edit a commit’s contents/message
 git reset HEAD <file>: unstage a file
 git checkout -- <file>: discard changes
 ```
-
-
-
-
-
-
-
 - https://git-scm.com/book/en/v2
+
+
+### Github로 협업하기
+
+**checkout**
+https://mytory.net/archives/10078
+
+**stash**
+
+
+특정 커밋 선택해서 반영하기:cherry pick
+
+```
+git cherry-pick {Commit ID}
+```
+
+여러개의 커밋을 반영하기: rebase
+
+```
+git rebase {가져올 Branch 이름}
+```
+
+- https://www.tuwlab.com/ece/22218
 
 
 
